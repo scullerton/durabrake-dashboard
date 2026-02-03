@@ -1,0 +1,988 @@
+{
+  "metadata": {
+    "reporting_month": "December",
+    "reporting_year": 2025,
+    "generated_at": "2026-01-30T20:58:46.657884",
+    "source_file": "inputs\\25.12\\DuraBrake Monthly Financial Package.xlsx"
+  },
+  "current_month": {
+    "revenue": 654567.94,
+    "gross_profit": 236487.93,
+    "gross_margin_pct": 36.128859289992114,
+    "ebitda": 145435.27,
+    "ebitda_margin_pct": 22.218514093433907,
+    "net_income": -317717.91,
+    "accounts_receivable": 728537.88,
+    "inventory": 2030151.2,
+    "accounts_payable": 727259.22,
+    "nwc": 2031429.86,
+    "operating_cash_flow": -395438.9
+  },
+  "l3m_comparison": {
+    "revenue": {
+      "current": 654567.94,
+      "l3m_avg": 830231.9166666666,
+      "variance_pct": -21.158422501022056
+    },
+    "gross_profit": {
+      "current": 236487.93,
+      "l3m_avg": 290458.24666666664,
+      "variance_pct": -18.58109290613588
+    },
+    "gross_margin_pct": {
+      "current": 36.128859289992114,
+      "l3m_avg": 34.640507441231335,
+      "variance_pts": 1.4883518487607788
+    },
+    "ebitda": {
+      "current": 145435.27,
+      "l3m_avg": 188943.65333333332,
+      "variance_pct": -23.02717374506149
+    },
+    "ebitda_margin_pct": {
+      "current": 22.218514093433907,
+      "l3m_avg": 22.00591771660829,
+      "variance_pts": 0.2125963768256156
+    },
+    "net_income": {
+      "current": -317717.91,
+      "l3m_avg": -4896.84,
+      "variance_pct": -6388.223221506113
+    }
+  },
+  "monthly_series": [
+    {
+      "month": "Jan",
+      "month_num": 1,
+      "revenue": 700066.91,
+      "gross_profit": 353436.74,
+      "gross_margin_pct": 50.48613710366627,
+      "ebitda": 265047.62,
+      "ebitda_margin_pct": 37.860326807904684,
+      "net_income": 74494.58,
+      "nwc": 1851150.75,
+      "operating_cf": -305517.58,
+      "accounts_receivable": 747429.54,
+      "inventory": 1701118.3,
+      "accounts_payable": 597397.09
+    },
+    {
+      "month": "Feb",
+      "month_num": 2,
+      "revenue": 582312.43,
+      "gross_profit": 176945.16,
+      "gross_margin_pct": 30.38663625985109,
+      "ebitda": 83190.37,
+      "ebitda_margin_pct": 14.286208865574102,
+      "net_income": -98448.44,
+      "nwc": 1713906.4099999997,
+      "operating_cf": 43329.42,
+      "accounts_receivable": 783224.95,
+      "inventory": 1644786.69,
+      "accounts_payable": 714105.23
+    },
+    {
+      "month": "Mar",
+      "month_num": 3,
+      "revenue": 1076656.18,
+      "gross_profit": 340396.13,
+      "gross_margin_pct": 31.616047566828627,
+      "ebitda": 232808.75,
+      "ebitda_margin_pct": 21.623314324912897,
+      "net_income": 43270.28,
+      "nwc": 1875928.9600000002,
+      "operating_cf": -185886.83,
+      "accounts_receivable": 1051759.07,
+      "inventory": 1552395.38,
+      "accounts_payable": 728225.49
+    },
+    {
+      "month": "Apr",
+      "month_num": 4,
+      "revenue": 781935.72,
+      "gross_profit": 235521.31,
+      "gross_margin_pct": 30.120290450473348,
+      "ebitda": 148331.1,
+      "ebitda_margin_pct": 18.969730657655596,
+      "net_income": -48362.71,
+      "nwc": 1539394.42,
+      "operating_cf": 228255.87,
+      "accounts_receivable": 763251.94,
+      "inventory": 1631921.63,
+      "accounts_payable": 855779.15
+    },
+    {
+      "month": "May",
+      "month_num": 5,
+      "revenue": 576571.97,
+      "gross_profit": 222743.1,
+      "gross_margin_pct": 38.632315060338435,
+      "ebitda": 148046.62,
+      "ebitda_margin_pct": 25.677040803769906,
+      "net_income": -40966.2,
+      "nwc": 1551249.77,
+      "operating_cf": -67767.8,
+      "accounts_receivable": 709610.72,
+      "inventory": 1607708.01,
+      "accounts_payable": 766068.96
+    },
+    {
+      "month": "Jun",
+      "month_num": 6,
+      "revenue": 572576.8,
+      "gross_profit": 183806.63,
+      "gross_margin_pct": 32.10165518407312,
+      "ebitda": 114873.34,
+      "ebitda_margin_pct": 20.06252087056269,
+      "net_income": -87788.66,
+      "nwc": 1511527.6999999997,
+      "operating_cf": 11369.29,
+      "accounts_receivable": 574207.96,
+      "inventory": 1671816.72,
+      "accounts_payable": 734496.98
+    },
+    {
+      "month": "Jul",
+      "month_num": 7,
+      "revenue": 1157325.78,
+      "gross_profit": 522592.21,
+      "gross_margin_pct": 45.15515155983132,
+      "ebitda": 418090.3,
+      "ebitda_margin_pct": 36.12554971340913,
+      "net_income": 234149.56,
+      "nwc": 2093773.22,
+      "operating_cf": -225590.48,
+      "accounts_receivable": 1086464.72,
+      "inventory": 1587863.72,
+      "accounts_payable": 580555.22
+    },
+    {
+      "month": "Aug",
+      "month_num": 8,
+      "revenue": 652939.5,
+      "gross_profit": 252891.58,
+      "gross_margin_pct": 38.73124232796453,
+      "ebitda": 165652.28,
+      "ebitda_margin_pct": 25.37023414879939,
+      "net_income": -18418.68,
+      "nwc": 1938490.0700000003,
+      "operating_cf": 112850.78,
+      "accounts_receivable": 1040302.24,
+      "inventory": 1740057.58,
+      "accounts_payable": 841869.75
+    },
+    {
+      "month": "Sep",
+      "month_num": 9,
+      "revenue": 683278.65,
+      "gross_profit": 260137.02,
+      "gross_margin_pct": 38.07187887401428,
+      "ebitda": 149461.15,
+      "ebitda_margin_pct": 21.874113877259298,
+      "net_income": -31741.63,
+      "nwc": 1894402.63,
+      "operating_cf": 71290.12,
+      "accounts_receivable": 774054.23,
+      "inventory": 1897166.86,
+      "accounts_payable": 776818.46
+    },
+    {
+      "month": "Oct",
+      "month_num": 10,
+      "revenue": 1113610.25,
+      "gross_profit": 409492.19,
+      "gross_margin_pct": 36.771589521558376,
+      "ebitda": 294709.65,
+      "ebitda_margin_pct": 26.46434423533728,
+      "net_income": 91672.78,
+      "nwc": 1900412.2999999998,
+      "operating_cf": 79217.92,
+      "accounts_receivable": 951305.94,
+      "inventory": 1923602.75,
+      "accounts_payable": 974496.39
+    },
+    {
+      "month": "Nov",
+      "month_num": 11,
+      "revenue": 693806.85,
+      "gross_profit": 201745.53,
+      "gross_margin_pct": 29.07805392812135,
+      "ebitda": 122660.16,
+      "ebitda_margin_pct": 17.6792950372283,
+      "net_income": -74621.67,
+      "nwc": 1727981.73,
+      "operating_cf": 123400.15,
+      "accounts_receivable": 712304.23,
+      "inventory": 1976757.39,
+      "accounts_payable": 961079.89
+    },
+    {
+      "month": "Dec",
+      "month_num": 12,
+      "revenue": 654567.94,
+      "gross_profit": 236487.93,
+      "gross_margin_pct": 36.128859289992114,
+      "ebitda": 145435.27,
+      "ebitda_margin_pct": 22.218514093433907,
+      "net_income": -317717.91,
+      "nwc": 2031429.86,
+      "operating_cf": -395438.9,
+      "accounts_receivable": 728537.88,
+      "inventory": 2030151.2,
+      "accounts_payable": 727259.22
+    }
+  ],
+  "rolling_l3m": [
+    {
+      "month": "Apr",
+      "month_num": 4,
+      "revenue_vs_l3m_pct": -0.5607528961666547,
+      "ebitda_vs_l3m_pct": -23.4152316214699,
+      "gm_vs_l3m_pts": -7.375983192975319
+    },
+    {
+      "month": "May",
+      "month_num": 5,
+      "revenue_vs_l3m_pct": -29.136267704519174,
+      "ebitda_vs_l3m_pct": -4.348276104019245,
+      "gm_vs_l3m_pts": 7.924656967954082
+    },
+    {
+      "month": "Jun",
+      "month_num": 6,
+      "revenue_vs_l3m_pct": -29.461404172360684,
+      "ebitda_vs_l3m_pct": -34.877393974188344,
+      "gm_vs_l3m_pts": -1.354562508473684
+    },
+    {
+      "month": "Jul",
+      "month_num": 7,
+      "revenue_vs_l3m_pct": 79.79417047671488,
+      "ebitda_vs_l3m_pct": 204.98909838676153,
+      "gm_vs_l3m_pts": 11.537064661536348
+    },
+    {
+      "month": "Aug",
+      "month_num": 8,
+      "revenue_vs_l3m_pct": -15.073049472841568,
+      "ebitda_vs_l3m_pct": -27.02652673690996,
+      "gm_vs_l3m_pts": 0.10153505988357381
+    },
+    {
+      "month": "Sep",
+      "month_num": 9,
+      "revenue_vs_l3m_pct": -13.97516573989662,
+      "ebitda_vs_l3m_pct": -35.81831773888003,
+      "gm_vs_l3m_pts": -0.5908041499420449
+    },
+    {
+      "month": "Oct",
+      "month_num": 10,
+      "revenue_vs_l3m_pct": 33.97922169351955,
+      "ebitda_vs_l3m_pct": 20.58434972773531,
+      "gm_vs_l3m_pts": -3.8811680657116625
+    },
+    {
+      "month": "Nov",
+      "month_num": 11,
+      "revenue_vs_l3m_pct": -15.038108383428003,
+      "ebitda_vs_l3m_pct": -39.657829939791725,
+      "gm_vs_l3m_pts": -8.78018297972438
+    },
+    {
+      "month": "Dec",
+      "month_num": 12,
+      "revenue_vs_l3m_pct": -21.158422501022056,
+      "ebitda_vs_l3m_pct": -23.02717374506149,
+      "gm_vs_l3m_pts": 1.4883518487607788
+    }
+  ],
+  "ytd_summary": {
+    "total_revenue": 9245648.98,
+    "total_gross_profit": 3396195.53,
+    "avg_gross_margin_pct": 36.43998809389274,
+    "total_ebitda": 2288306.61,
+    "avg_ebitda_margin_pct": 24.017599452987266,
+    "total_net_income": -274478.69999999995,
+    "avg_nwc": 1802470.6516666666,
+    "total_operating_cf": -510488.04000000004
+  },
+  "q4_summary": {
+    "total_revenue": 2461985.04,
+    "total_gross_profit": 847725.65,
+    "avg_gross_margin_pct": 33.99283424655728,
+    "total_ebitda": 562805.0800000001,
+    "avg_ebitda_margin_pct": 22.120717788666497,
+    "total_net_income": -300666.8,
+    "avg_nwc": 1886607.9633333331,
+    "total_operating_cf": -192820.83000000002
+  },
+  "products": {
+    "cast_drums": {
+      "name": "Cast Drums",
+      "current_month": {
+        "sales": 336624.02,
+        "gross_profit": 149901.11000000002,
+        "gross_margin_pct": 44.5307230304005
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 336624.02,
+          "l3m_avg": 515013.94333333336,
+          "variance_pct": -34.63788226367955
+        },
+        "gross_profit": {
+          "current": 149901.11000000002,
+          "l3m_avg": 173948.83000000002,
+          "variance_pct": -13.824594278673791
+        },
+        "gross_margin_pct": {
+          "current": 44.5307230304005,
+          "l3m_avg": 32.967393390068715,
+          "variance_pts": 11.563329640331787
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": 530521.96,
+          "gross_profit": 237555.36999999994,
+          "gross_margin_pct": 44.77766952380255
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": 290781.45,
+          "gross_profit": 143461.08000000002,
+          "gross_margin_pct": 49.33639336346937
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": 540059.08,
+          "gross_profit": 218811.17999999993,
+          "gross_margin_pct": 40.51615612128954
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": 547381.11,
+          "gross_profit": 197698.07,
+          "gross_margin_pct": 36.11707937820507
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 460293.15,
+          "gross_profit": 188286.22000000003,
+          "gross_margin_pct": 40.90571845355509
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 311345.56,
+          "gross_profit": 154916.28,
+          "gross_margin_pct": 49.75702239016995
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 715244.88,
+          "gross_profit": 312074.49,
+          "gross_margin_pct": 43.631838371216304
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 374310.62,
+          "gross_profit": 151214.59,
+          "gross_margin_pct": 40.398156482976624
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 397994.2,
+          "gross_profit": 141118.95,
+          "gross_margin_pct": 35.45753933097518
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 682343.42,
+          "gross_profit": 269306.61000000004,
+          "gross_margin_pct": 39.46789873052487
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 464704.21,
+          "gross_profit": 111420.93,
+          "gross_margin_pct": 23.97674210870609
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 336624.02,
+          "gross_profit": 149901.11000000002,
+          "gross_margin_pct": 44.5307230304005
+        }
+      ]
+    },
+    "steel_shell_drums": {
+      "name": "Steel Shell Drums",
+      "current_month": {
+        "sales": 32200.0,
+        "gross_profit": 14070.64,
+        "gross_margin_pct": 43.69763975155279
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 32200.0,
+          "l3m_avg": 96438.66666666667,
+          "variance_pct": -66.61090295732002
+        },
+        "gross_profit": {
+          "current": 14070.64,
+          "l3m_avg": 38132.183333333334,
+          "variance_pct": -63.10035573625253
+        },
+        "gross_margin_pct": {
+          "current": 43.69763975155279,
+          "l3m_avg": 39.39951771609855,
+          "variance_pts": 4.2981220354542415
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": 58040.0,
+          "gross_profit": 26521.65,
+          "gross_margin_pct": 45.695468642315646
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": 186104.0,
+          "gross_profit": 72114.18,
+          "gross_margin_pct": 38.74939818596053
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": 165117.0,
+          "gross_profit": 57516.25,
+          "gross_margin_pct": 34.833633120756794
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": 128282.14,
+          "gross_profit": 55930.240000000005,
+          "gross_margin_pct": 43.59939739078254
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 17208.0,
+          "gross_profit": 8692.7,
+          "gross_margin_pct": 50.51545792654579
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 94650.43,
+          "gross_profit": 37989.469999999994,
+          "gross_margin_pct": 40.13660582418907
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 44036.0,
+          "gross_profit": 18409.31,
+          "gross_margin_pct": 41.80513670633118
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 56304.67,
+          "gross_profit": 24381.829999999998,
+          "gross_margin_pct": 43.30338851111284
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 96484.0,
+          "gross_profit": 37742.63,
+          "gross_margin_pct": 39.11801956801128
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 135472.0,
+          "gross_profit": 54272.96000000001,
+          "gross_margin_pct": 40.06212353844337
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 57360.0,
+          "gross_profit": 22380.96,
+          "gross_margin_pct": 39.018410041841
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 32200.0,
+          "gross_profit": 14070.64,
+          "gross_margin_pct": 43.69763975155279
+        }
+      ]
+    },
+    "rotors": {
+      "name": "Rotors",
+      "current_month": {
+        "sales": 186779.95,
+        "gross_profit": 74569.18000000001,
+        "gross_margin_pct": 39.923546397779845
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 186779.95,
+          "l3m_avg": 115003.51666666668,
+          "variance_pct": 62.41238130254278
+        },
+        "gross_profit": {
+          "current": 74569.18000000001,
+          "l3m_avg": 59904.256666666675,
+          "variance_pct": 24.480603131318933
+        },
+        "gross_margin_pct": {
+          "current": 39.923546397779845,
+          "l3m_avg": 56.83424231694102,
+          "variance_pts": -16.910695919161178
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": 40141.24,
+          "gross_profit": 24500.93,
+          "gross_margin_pct": 61.0368040449174
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": 91278.39,
+          "gross_profit": 58727.07,
+          "gross_margin_pct": 64.33841569729702
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": 323243.96,
+          "gross_profit": 157483.88000000003,
+          "gross_margin_pct": 48.71982140052981
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": 43298.28,
+          "gross_profit": 27342.8,
+          "gross_margin_pct": 63.14985260384477
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 66026.97,
+          "gross_profit": 45593.100000000006,
+          "gross_margin_pct": 69.05223729030729
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 84616.93,
+          "gross_profit": 55417.45,
+          "gross_margin_pct": 65.49215387511695
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 123223.23,
+          "gross_profit": 78148.1,
+          "gross_margin_pct": 63.4199411912835
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 139530.31,
+          "gross_profit": 65970.93,
+          "gross_margin_pct": 47.28071628307856
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 81532.33,
+          "gross_profit": 54721.53,
+          "gross_margin_pct": 67.11635740080038
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 197698.7,
+          "gross_profit": 85398.49,
+          "gross_margin_pct": 43.19628303069267
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 65779.52,
+          "gross_profit": 39592.75,
+          "gross_margin_pct": 60.19008651933002
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 186779.95,
+          "gross_profit": 74569.18000000001,
+          "gross_margin_pct": 39.923546397779845
+        }
+      ]
+    },
+    "pads": {
+      "name": "Pads",
+      "current_month": {
+        "sales": 9072.0,
+        "gross_profit": 6226.91,
+        "gross_margin_pct": 68.63877865961199
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 9072.0,
+          "l3m_avg": 2698.6666666666665,
+          "variance_pct": 236.16600790513837
+        },
+        "gross_profit": {
+          "current": 6226.91,
+          "l3m_avg": 1715.3633333333335,
+          "variance_pct": 263.0082256625904
+        },
+        "gross_margin_pct": {
+          "current": 68.63877865961199,
+          "l3m_avg": 59.76822156800636,
+          "variance_pts": 8.870557091605626
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": 6732.0,
+          "gross_profit": 4942.48,
+          "gross_margin_pct": 73.41770647653
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": null,
+          "gross_profit": null,
+          "gross_margin_pct": null
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": 1610.0,
+          "gross_profit": 1292.91,
+          "gross_margin_pct": 80.30496894409939
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": 297.78,
+          "gross_profit": 175.87999999999997,
+          "gross_margin_pct": 59.06373833031097
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 17484.0,
+          "gross_profit": 12599.89,
+          "gross_margin_pct": 72.06525966598032
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 7295.0,
+          "gross_profit": 5466.72,
+          "gross_margin_pct": 74.93790267306375
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 4418.0,
+          "gross_profit": 3010.7799999999997,
+          "gross_margin_pct": 68.1480307831598
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 1568.0,
+          "gross_profit": 1053.53,
+          "gross_margin_pct": 67.18941326530611
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 5782.0,
+          "gross_profit": 3981.3199999999997,
+          "gross_margin_pct": 68.85714285714285
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 1804.0,
+          "gross_profit": 838.55,
+          "gross_margin_pct": 46.482815964523276
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 510.0,
+          "gross_profit": 326.22,
+          "gross_margin_pct": 63.964705882352945
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 9072.0,
+          "gross_profit": 6226.91,
+          "gross_margin_pct": 68.63877865961199
+        }
+      ]
+    },
+    "calipers": {
+      "name": "Calipers",
+      "current_month": {
+        "sales": 20661.54,
+        "gross_profit": 11039.730000000001,
+        "gross_margin_pct": 53.43130279737135
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 20661.54,
+          "l3m_avg": 38208.333333333336,
+          "variance_pct": -45.92399563794984
+        },
+        "gross_profit": {
+          "current": 11039.730000000001,
+          "l3m_avg": 20700.846666666668,
+          "variance_pct": -46.6701522997288
+        },
+        "gross_margin_pct": {
+          "current": 53.43130279737135,
+          "l3m_avg": 54.2206921543524,
+          "variance_pts": -0.7893893569810473
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": 41705.0,
+          "gross_profit": 21863.88,
+          "gross_margin_pct": 52.42508092554849
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": 16605.4,
+          "gross_profit": 9527.600000000002,
+          "gross_margin_pct": 57.37651607308467
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": 29635.11,
+          "gross_profit": 18738.18,
+          "gross_margin_pct": 63.22966238357138
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": 44317.35,
+          "gross_profit": 27881.8,
+          "gross_margin_pct": 62.913960333819595
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 3042.0,
+          "gross_profit": 1985.32,
+          "gross_margin_pct": 65.26364234056543
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 20949.0,
+          "gross_profit": 13145.880000000001,
+          "gross_margin_pct": 62.75182586280968
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 42023.0,
+          "gross_profit": 25426.09,
+          "gross_margin_pct": 60.50517573709635
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 23987.43,
+          "gross_profit": 12467.54,
+          "gross_margin_pct": 51.97530539953634
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 43914.0,
+          "gross_profit": 24234.97,
+          "gross_margin_pct": 55.18734344400419
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 32518.0,
+          "gross_profit": 18223.0,
+          "gross_margin_pct": 56.039731840826626
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 38193.0,
+          "gross_profit": 19644.57,
+          "gross_margin_pct": 51.43500117822638
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 20661.54,
+          "gross_profit": 11039.730000000001,
+          "gross_margin_pct": 53.43130279737135
+        }
+      ]
+    },
+    "hubs": {
+      "name": "Hubs",
+      "current_month": {
+        "sales": 66038.4,
+        "gross_profit": 37957.92,
+        "gross_margin_pct": 57.47855792993168
+      },
+      "l3m_comparison": {
+        "sales": {
+          "current": 66038.4,
+          "l3m_avg": 55154.293333333335,
+          "variance_pct": 19.73392461197338
+        },
+        "gross_profit": {
+          "current": 37957.92,
+          "l3m_avg": 34215.55,
+          "variance_pct": 10.937629235829894
+        },
+        "gross_margin_pct": {
+          "current": 57.47855792993168,
+          "l3m_avg": 62.0550952173281,
+          "variance_pts": -4.57653728739642
+        }
+      },
+      "monthly_series": [
+        {
+          "month": "Jan",
+          "month_num": 1,
+          "sales": null,
+          "gross_profit": null,
+          "gross_margin_pct": null
+        },
+        {
+          "month": "Feb",
+          "month_num": 2,
+          "sales": null,
+          "gross_profit": null,
+          "gross_margin_pct": null
+        },
+        {
+          "month": "Mar",
+          "month_num": 3,
+          "sales": null,
+          "gross_profit": null,
+          "gross_margin_pct": null
+        },
+        {
+          "month": "Apr",
+          "month_num": 4,
+          "sales": null,
+          "gross_profit": null,
+          "gross_margin_pct": null
+        },
+        {
+          "month": "May",
+          "month_num": 5,
+          "sales": 733.76,
+          "gross_profit": -1570.2299999999998,
+          "gross_margin_pct": -213.99776493676404
+        },
+        {
+          "month": "Jun",
+          "month_num": 6,
+          "sales": 55032.0,
+          "gross_profit": 34037.09,
+          "gross_margin_pct": 61.84963294083442
+        },
+        {
+          "month": "Jul",
+          "month_num": 7,
+          "sales": 220128.0,
+          "gross_profit": 122507.18,
+          "gross_margin_pct": 55.652702064253525
+        },
+        {
+          "month": "Aug",
+          "month_num": 8,
+          "sales": 55032.0,
+          "gross_profit": 30187.54,
+          "gross_margin_pct": 54.854521005960166
+        },
+        {
+          "month": "Sep",
+          "month_num": 9,
+          "sales": 55398.88,
+          "gross_profit": 29621.67,
+          "gross_margin_pct": 53.46979938944614
+        },
+        {
+          "month": "Oct",
+          "month_num": 10,
+          "sales": 55032.0,
+          "gross_profit": 36283.740000000005,
+          "gross_margin_pct": 65.93207588312255
+        },
+        {
+          "month": "Nov",
+          "month_num": 11,
+          "sales": 55032.0,
+          "gross_profit": 36741.240000000005,
+          "gross_margin_pct": 66.76341037941562
+        },
+        {
+          "month": "Dec",
+          "month_num": 12,
+          "sales": 66038.4,
+          "gross_profit": 37957.92,
+          "gross_margin_pct": 57.47855792993168
+        }
+      ]
+    }
+  }
+}

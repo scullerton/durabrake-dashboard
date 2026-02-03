@@ -1,0 +1,155 @@
+{
+  "total_customers": 227,
+  "total_revenue": 9304587.67,
+  "avg_revenue_per_customer": 40989.37299559471,
+  "avg_recency_days": 134.39647577092512,
+  "avg_frequency": 7.6255506607929515,
+  "top_10_customers": [
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "monetary_value": 1093612.46,
+      "frequency": 80,
+      "recency_days": 28,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Volvo Group NA, Inc",
+      "monetary_value": 821331.7999999999,
+      "frequency": 75,
+      "recency_days": 7,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "monetary_value": 468883.4099999999,
+      "frequency": 79,
+      "recency_days": 29,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "monetary_value": 260206.6,
+      "frequency": 16,
+      "recency_days": 40,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Velocity Vehicle Group - CANADA",
+      "monetary_value": 233787.07999999996,
+      "frequency": 22,
+      "recency_days": 47,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Blue Bird Body Co.",
+      "monetary_value": 218092.0,
+      "frequency": 18,
+      "recency_days": 26,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "monetary_value": 203042.97,
+      "frequency": 15,
+      "recency_days": 64,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "South Sacramento Parts",
+      "monetary_value": 186969.52000000002,
+      "frequency": 33,
+      "recency_days": 27,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Atlantic Utility Trailer Sales",
+      "monetary_value": 181760.32,
+      "frequency": 43,
+      "recency_days": 44,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Traction Heavy Duty Parts-Abbotsford",
+      "monetary_value": 157319.4,
+      "frequency": 31,
+      "recency_days": 9,
+      "rfm_score": "555",
+      "segment": "Champions"
+    }
+  ],
+  "segment_summary": [
+    {
+      "segment": "At Risk",
+      "customer_count": 16,
+      "total_revenue": 613286.82,
+      "avg_revenue": 38330.42625,
+      "avg_recency": 235.0625,
+      "avg_frequency": 5.75
+    },
+    {
+      "segment": "Champions",
+      "customer_count": 48,
+      "total_revenue": 6424831.24,
+      "avg_revenue": 133850.65083333335,
+      "avg_recency": 33.208333333333336,
+      "avg_frequency": 22.583333333333332
+    },
+    {
+      "segment": "Hibernating",
+      "customer_count": 56,
+      "total_revenue": 558230.21,
+      "avg_revenue": 9968.396607142857,
+      "avg_recency": 254.82142857142858,
+      "avg_frequency": 1.6071428571428572
+    },
+    {
+      "segment": "Loyal Customers",
+      "customer_count": 37,
+      "total_revenue": 1092565.45,
+      "avg_revenue": 29528.795945945945,
+      "avg_recency": 67.86486486486487,
+      "avg_frequency": 6.837837837837838
+    },
+    {
+      "segment": "Need Attention",
+      "customer_count": 32,
+      "total_revenue": 100754.67,
+      "avg_revenue": 3148.5834375,
+      "avg_recency": 167.90625,
+      "avg_frequency": 2.21875
+    },
+    {
+      "segment": "New Customers",
+      "customer_count": 17,
+      "total_revenue": 218181.38,
+      "avg_revenue": 12834.198823529412,
+      "avg_recency": 44.0,
+      "avg_frequency": 1.588235294117647
+    },
+    {
+      "segment": "Other",
+      "customer_count": 13,
+      "total_revenue": 63501.01,
+      "avg_revenue": 4884.693076923077,
+      "avg_recency": 103.53846153846153,
+      "avg_frequency": 7.6923076923076925
+    },
+    {
+      "segment": "Potential Loyalists",
+      "customer_count": 8,
+      "total_revenue": 233236.89,
+      "avg_revenue": 29154.61125,
+      "avg_recency": 113.125,
+      "avg_frequency": 1.75
+    }
+  ]
+}

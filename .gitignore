@@ -1,0 +1,40 @@
+# Sensitive data files - DO NOT COMMIT
+inputs/
+
+# Note: generated/ folder IS included (safe processed data only)
+
+# Excel files with financial data
+*.xlsx
+*.xls
+
+# CSV files with detailed customer data
+generated/**/rfm_analysis_results.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Temporary files
+*.log
+*.tmp

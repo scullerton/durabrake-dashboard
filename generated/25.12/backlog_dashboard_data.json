@@ -1,0 +1,196 @@
+{
+  "metadata": {
+    "generated_at": "2026-01-30T20:58:49.190860",
+    "analysis_date": "2025-12-31",
+    "source_file": "Backlog_2025-12-31.xlsx"
+  },
+  "summary": {
+    "total_backlog_value": 1478748.73,
+    "total_orders": 58,
+    "avg_order_value": 25495.66775862069,
+    "avg_age_days": 64.91379310344827
+  },
+  "top_customers": [
+    {
+      "customer": "Kenworth of  Louisiana",
+      "order_count": 9,
+      "total_value": 328320.0
+    },
+    {
+      "customer": "Washington Foundries",
+      "order_count": 5,
+      "total_value": 170984.0
+    },
+    {
+      "customer": "Volvo Group NA, Inc",
+      "order_count": 7,
+      "total_value": 154204.0
+    },
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "order_count": 5,
+      "total_value": 102758.70999999999
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "order_count": 3,
+      "total_value": 99345.6
+    },
+    {
+      "customer": "Peterbilt Pacific / TRP - Langley",
+      "order_count": 5,
+      "total_value": 96500.0
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "order_count": 3,
+      "total_value": 77806.08
+    },
+    {
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "order_count": 1,
+      "total_value": 62139.45
+    },
+    {
+      "customer": "Westrans Co",
+      "order_count": 2,
+      "total_value": 51348.0
+    },
+    {
+      "customer": "Tag Truck Centers",
+      "order_count": 1,
+      "total_value": 45760.0
+    }
+  ],
+  "by_sales_rep": [
+    {
+      "sales_rep": "Shroff",
+      "order_count": 32,
+      "total_value": 733062.99
+    },
+    {
+      "sales_rep": "Chris Johnson",
+      "order_count": 10,
+      "total_value": 374080.0
+    },
+    {
+      "sales_rep": "Caroline",
+      "order_count": 14,
+      "total_value": 339091.29
+    }
+  ],
+  "by_region": [
+    {
+      "region": "LA",
+      "order_count": 9,
+      "total_value": 328320.0
+    },
+    {
+      "region": "CA",
+      "order_count": 10,
+      "total_value": 261375.52
+    },
+    {
+      "region": "BC",
+      "order_count": 10,
+      "total_value": 208841.44
+    },
+    {
+      "region": "PA",
+      "order_count": 3,
+      "total_value": 129456.0
+    },
+    {
+      "region": "WI",
+      "order_count": 7,
+      "total_value": 107518.70999999999
+    },
+    {
+      "region": "TX",
+      "order_count": 3,
+      "total_value": 79959.45
+    },
+    {
+      "region": "QC",
+      "order_count": 3,
+      "total_value": 74364.0
+    },
+    {
+      "region": "AB",
+      "order_count": 3,
+      "total_value": 65700.0
+    },
+    {
+      "region": "MB",
+      "order_count": 2,
+      "total_value": 51348.0
+    },
+    {
+      "region": "WA",
+      "order_count": 2,
+      "total_value": 47936.41
+    },
+    {
+      "region": "MO",
+      "order_count": 1,
+      "total_value": 45760.0
+    },
+    {
+      "region": "GA",
+      "order_count": 1,
+      "total_value": 33408.0
+    },
+    {
+      "region": "ON",
+      "order_count": 1,
+      "total_value": 23980.0
+    },
+    {
+      "region": "WY",
+      "order_count": 1,
+      "total_value": 18750.0
+    },
+    {
+      "region": "IL",
+      "order_count": 1,
+      "total_value": 1160.0
+    },
+    {
+      "region": "SD",
+      "order_count": 1,
+      "total_value": 871.2
+    }
+  ],
+  "age_distribution": {
+    "order_count": {
+      "0-30 days": 15,
+      "31-60 days": 18,
+      "61-90 days": 9,
+      "91-180 days": 14,
+      "180+ days": 2
+    },
+    "order_value": {
+      "0-30 days": 344856.42,
+      "31-60 days": 436533.65,
+      "61-90 days": 220596.66,
+      "91-180 days": 472002.0,
+      "180+ days": 4760.0
+    }
+  },
+  "ship_date_distribution": {
+    "order_count": {
+      "Past due": 0,
+      "0-30 days": 39,
+      "31-60 days": 13,
+      "61-90 days": 3,
+      "90+ days": 0
+    },
+    "order_value": {
+      "Past due": 0.0,
+      "0-30 days": 952734.65,
+      "31-60 days": 307979.68,
+      "61-90 days": 90114.4,
+      "90+ days": 0.0
+    }
+  }
+}
