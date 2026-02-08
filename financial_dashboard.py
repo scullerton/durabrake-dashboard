@@ -41,14 +41,26 @@ def check_password():
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        entered_username = st.session_state["username"]
-        entered_password = st.session_state["password"]
+        # Check if both fields exist in session state
+        if "username" not in st.session_state or "password" not in st.session_state:
+            return
+
+        entered_username = st.session_state.get("username", "")
+        entered_password = st.session_state.get("password", "")
+
+        # Only validate if both fields have values
+        if not entered_username or not entered_password:
+            return
+
         entered_hash = hashlib.sha256(entered_password.encode()).hexdigest()
 
         if entered_username == DASHBOARD_USERNAME and entered_hash == DASHBOARD_PASSWORD_HASH:
             st.session_state["password_correct"] = True
-            del st.session_state["password"]  # Don't store password
-            del st.session_state["username"]
+            # Don't store password
+            if "password" in st.session_state:
+                del st.session_state["password"]
+            if "username" in st.session_state:
+                del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
 
