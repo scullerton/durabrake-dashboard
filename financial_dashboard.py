@@ -573,8 +573,11 @@ if data:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            nwc_pct_revenue = (cm['nwc'] / cm['revenue'] * 100) if cm['revenue'] else 0
+            # Use YTD (annualized) revenue for more meaningful ratio
+            ytd = data['ytd_summary']
+            nwc_pct_revenue = (cm['nwc'] / ytd['total_revenue'] * 100) if ytd['total_revenue'] else 0
             st.metric("NWC as % of Revenue", f"{nwc_pct_revenue:.1f}%")
+            st.caption("Based on YTD revenue")
 
         with col2:
             # DSO = (A/R / Revenue) * 365
@@ -654,13 +657,15 @@ if data:
 
         st.plotly_chart(fig_nwc_total, use_container_width=True)
 
-        # NWC as % of Revenue trend
-        df_monthly['nwc_pct_revenue'] = (df_monthly['nwc'] / df_monthly['revenue'] * 100)
+        # NWC as % of Revenue trend (using YTD/annualized revenue)
+        # Calculate cumulative YTD revenue for each month
+        df_monthly['ytd_revenue'] = df_monthly['revenue'].cumsum()
+        df_monthly['nwc_pct_revenue'] = (df_monthly['nwc'] / df_monthly['ytd_revenue'] * 100)
 
         fig_nwc_pct = go.Figure()
 
         fig_nwc_pct.add_trace(go.Scatter(
-            name='NWC as % of Revenue',
+            name='NWC as % of YTD Revenue',
             x=df_monthly['month'],
             y=df_monthly['nwc_pct_revenue'],
             mode='lines+markers',
@@ -669,8 +674,8 @@ if data:
         ))
 
         fig_nwc_pct.update_layout(
-            title='NWC as % of Revenue',
-            yaxis=dict(title='NWC % of Revenue'),
+            title='NWC as % of YTD Revenue',
+            yaxis=dict(title='NWC % of YTD Revenue'),
             hovermode='x unified',
             height=400
         )
@@ -682,7 +687,7 @@ if data:
         # Data table
         with st.expander("📋 View Detailed NWC Data"):
             nwc_detail = df_monthly[['month', 'accounts_receivable', 'inventory', 'accounts_payable', 'nwc', 'nwc_pct_revenue']]
-            nwc_detail.columns = ['Month', 'A/R', 'Inventory', 'A/P', 'NWC', 'NWC % of Revenue']
+            nwc_detail.columns = ['Month', 'A/R', 'Inventory', 'A/P', 'NWC', 'NWC % of YTD Revenue']
             st.dataframe(nwc_detail, use_container_width=True)
 
         # Footer
