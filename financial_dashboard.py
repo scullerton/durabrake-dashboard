@@ -90,6 +90,82 @@ if not check_password():
     st.stop()
 
 # ============================================================================
+# PERFORMANCE INDICATOR CONFIGURATION
+# ============================================================================
+
+# Working Capital Thresholds
+WC_THRESHOLDS = {
+    "dso": {"green": 30, "yellow": 45},      # Days Sales Outstanding
+    "dio": {"green": 85, "yellow": 105},     # Days Inventory Outstanding
+    "dpo": {"green": 30, "yellow": 20},      # Days Payable Outstanding (reversed - higher is better)
+    "ccc": {"green": 30, "yellow": 60},      # Cash Conversion Cycle
+    "nwc_pct": {"green": 15, "yellow": 25}   # NWC as % of Revenue
+}
+
+# Backlog Thresholds
+BACKLOG_THRESHOLDS = {
+    "avg_age": {"green": 45, "yellow": 60},  # Average order age in days
+    "old_orders_pct": {"green": 10, "yellow": 20}  # % of orders > 90 days
+}
+
+# Helper functions for color coding
+def get_color_for_metric(value, green_threshold, yellow_threshold, reverse=False):
+    """
+    Returns color for a metric based on thresholds.
+    reverse=False: lower is better (e.g., DSO, DIO, CCC)
+    reverse=True: higher is better (e.g., DPO, margins)
+    """
+    if not reverse:
+        # Lower is better
+        if value <= green_threshold:
+            return 'background-color: #d4edda'  # Light green
+        elif value <= yellow_threshold:
+            return 'background-color: #fff3cd'  # Light yellow
+        else:
+            return 'background-color: #f8d7da'  # Light red
+    else:
+        # Higher is better
+        if value >= green_threshold:
+            return 'background-color: #d4edda'  # Light green
+        elif value >= yellow_threshold:
+            return 'background-color: #fff3cd'  # Light yellow
+        else:
+            return 'background-color: #f8d7da'  # Light red
+
+def color_gp_margin(val, avg_margin):
+    """Color code GP margin based on company average"""
+    try:
+        margin = float(val)
+        if margin >= avg_margin:
+            return 'background-color: #d4edda'  # Green - above average
+        elif margin >= avg_margin - 5:
+            return 'background-color: #fff3cd'  # Yellow - within 5% of average
+        else:
+            return 'background-color: #f8d7da'  # Red - more than 5% below average
+    except:
+        return ''
+
+def color_sales_trend(l3m_sales, l12m_sales):
+    """Color code based on sales trend (L3M vs L12M run rate)"""
+    try:
+        l3m_monthly = l3m_sales / 3
+        l12m_monthly = l12m_sales / 12
+
+        if l12m_monthly == 0:
+            return ''
+
+        change_pct = ((l3m_monthly - l12m_monthly) / l12m_monthly) * 100
+
+        if change_pct > 10:
+            return 'background-color: #d4edda'  # Green - growing >10%
+        elif change_pct < -10:
+            return 'background-color: #f8d7da'  # Red - declining >10%
+        else:
+            return 'background-color: #fff3cd'  # Yellow - stable ±10%
+    except:
+        return ''
+
+# ============================================================================
 # CONFIGURATION - Update this to match the period you want to view
 # ============================================================================
 PERIOD = "25.12"  # Format: YY.MM
@@ -576,24 +652,82 @@ if data:
             # Use YTD (annualized) revenue for more meaningful ratio
             ytd = data['ytd_summary']
             nwc_pct_revenue = (cm['nwc'] / ytd['total_revenue'] * 100) if ytd['total_revenue'] else 0
-            st.metric("NWC as % of Revenue", f"{nwc_pct_revenue:.1f}%")
+
+            # Determine color for NWC %
+            if nwc_pct_revenue <= WC_THRESHOLDS['nwc_pct']['green']:
+                nwc_color = "🟢"
+            elif nwc_pct_revenue <= WC_THRESHOLDS['nwc_pct']['yellow']:
+                nwc_color = "🟡"
+            else:
+                nwc_color = "🔴"
+
+            st.metric("NWC as % of Revenue", f"{nwc_color} {nwc_pct_revenue:.1f}%")
             st.caption("Based on YTD revenue")
 
         with col2:
             # DSO = (A/R / Revenue) * 365
             ar_days = (cm['accounts_receivable'] / (cm['revenue'] / 30)) if cm['revenue'] else 0
-            st.metric("Days Sales Outstanding", f"{ar_days:.0f} days")
+
+            # Determine color for DSO (lower is better)
+            if ar_days <= WC_THRESHOLDS['dso']['green']:
+                dso_color = "🟢"
+            elif ar_days <= WC_THRESHOLDS['dso']['yellow']:
+                dso_color = "🟡"
+            else:
+                dso_color = "🔴"
+
+            st.metric("Days Sales Outstanding", f"{dso_color} {ar_days:.0f} days")
 
         with col3:
             # DIO = (Inventory / COGS) * 365, approximating monthly COGS from revenue
             cogs_monthly = cm['revenue'] * (1 - cm['gross_margin_pct'] / 100) if cm['revenue'] and cm['gross_margin_pct'] else cm['revenue']
             inv_days = (cm['inventory'] / (cogs_monthly / 30)) if cogs_monthly else 0
-            st.metric("Days Inventory Outstanding", f"{inv_days:.0f} days")
+
+            # Determine color for DIO (lower is better)
+            if inv_days <= WC_THRESHOLDS['dio']['green']:
+                dio_color = "🟢"
+            elif inv_days <= WC_THRESHOLDS['dio']['yellow']:
+                dio_color = "🟡"
+            else:
+                dio_color = "🔴"
+
+            st.metric("Days Inventory Outstanding", f"{dio_color} {inv_days:.0f} days")
 
         with col4:
             # DPO = (A/P / COGS) * 365
             ap_days = (cm['accounts_payable'] / (cogs_monthly / 30)) if cogs_monthly else 0
-            st.metric("Days Payable Outstanding", f"{ap_days:.0f} days")
+
+            # Determine color for DPO (higher is better - reverse logic)
+            if ap_days >= WC_THRESHOLDS['dpo']['green']:
+                dpo_color = "🟢"
+            elif ap_days >= WC_THRESHOLDS['dpo']['yellow']:
+                dpo_color = "🟡"
+            else:
+                dpo_color = "🔴"
+
+            st.metric("Days Payable Outstanding", f"{dpo_color} {ap_days:.0f} days")
+
+        # Add Cash Conversion Cycle below the 4 main ratios
+        st.divider()
+        col1, col2, col3 = st.columns([1, 1, 2])
+
+        with col1:
+            # CCC = DSO + DIO - DPO
+            ccc = ar_days + inv_days - ap_days
+
+            # Determine color for CCC (lower is better)
+            if ccc <= WC_THRESHOLDS['ccc']['green']:
+                ccc_color = "🟢"
+            elif ccc <= WC_THRESHOLDS['ccc']['yellow']:
+                ccc_color = "🟡"
+            else:
+                ccc_color = "🔴"
+
+            st.metric("Cash Conversion Cycle", f"{ccc_color} {ccc:.0f} days")
+            st.caption("DSO + DIO - DPO")
+
+        # Add legend for thresholds
+        st.caption(f"💡 Targets: DSO ≤{WC_THRESHOLDS['dso']['green']}d, DIO ≤{WC_THRESHOLDS['dio']['green']}d, DPO ≥{WC_THRESHOLDS['dpo']['green']}d, CCC ≤{WC_THRESHOLDS['ccc']['green']}d, NWC ≤{WC_THRESHOLDS['nwc_pct']['green']}% revenue")
 
         st.divider()
 
@@ -837,19 +971,24 @@ if data:
                 # Select columns to display
                 display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', '% of Total Sales', 'RFM Segment']
 
-                # Create formatted version for display using Pandas styling
+                # Get company average GP margin for comparison
+                avg_gp_margin = customer_data['summary']['avg_gp_margin']
+
+                # Create formatted version for display using Pandas styling with color coding
                 styled_l3m = display_l3m[display_cols].style.format({
                     'Sales': '${:,.0f}',
                     'Gross Profit': '${:,.0f}',
                     'GP Margin %': '{:.1f}%',
                     '% of Total Sales': '{:.1f}%'
-                })
+                }).apply(lambda x: [color_gp_margin(v, avg_gp_margin) if x.name == 'GP Margin %' else '' for v in x], axis=0)
 
                 st.dataframe(
                     styled_l3m,
                     use_container_width=True,
                     hide_index=True
                 )
+
+                st.caption(f"💡 GP Margin color coded: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}%")
 
                 # L3M Chart
                 fig_l3m = go.Figure()
@@ -890,6 +1029,9 @@ if data:
                 # Display table - use styled dataframe with proper formatting
                 display_l12m = df_top15.copy()
 
+                # Calculate sales trend (L3M vs L12M monthly run rate)
+                display_l12m['Trend %'] = ((display_l12m['l3m_sales'] / 3) - (display_l12m['l12m_sales'] / 12)) / (display_l12m['l12m_sales'] / 12) * 100
+
                 # Rename columns for display
                 display_l12m = display_l12m.rename(columns={
                     'customer': 'Customer',
@@ -900,22 +1042,45 @@ if data:
                     'rfm_segment': 'RFM Segment'
                 })
 
-                # Select columns to display
-                display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', '% of Total Sales', 'RFM Segment']
+                # Select columns to display - now including Trend %
+                display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', 'Trend %', 'RFM Segment']
 
-                # Create formatted version for display using Pandas styling
+                # Get company average GP margin for comparison
+                avg_gp_margin = customer_data['summary']['avg_gp_margin']
+
+                # Create formatted version for display using Pandas styling with color coding
+                def apply_colors(row):
+                    styles = [''] * len(row)
+                    # Color GP Margin
+                    if 'GP Margin %' in row.index:
+                        idx = row.index.get_loc('GP Margin %')
+                        styles[idx] = color_gp_margin(row['GP Margin %'], avg_gp_margin)
+                    # Color Trend %
+                    if 'Trend %' in row.index:
+                        idx = row.index.get_loc('Trend %')
+                        trend_val = row['Trend %']
+                        if trend_val > 10:
+                            styles[idx] = 'background-color: #d4edda'  # Green - growing
+                        elif trend_val < -10:
+                            styles[idx] = 'background-color: #f8d7da'  # Red - declining
+                        else:
+                            styles[idx] = 'background-color: #fff3cd'  # Yellow - stable
+                    return styles
+
                 styled_l12m = display_l12m[display_cols].style.format({
                     'Sales': '${:,.0f}',
                     'Gross Profit': '${:,.0f}',
                     'GP Margin %': '{:.1f}%',
-                    '% of Total Sales': '{:.1f}%'
-                })
+                    'Trend %': '{:+.1f}%',  # Show + or - sign
+                }).apply(apply_colors, axis=1)
 
                 st.dataframe(
                     styled_l12m,
                     use_container_width=True,
                     hide_index=True
                 )
+
+                st.caption(f"💡 GP Margin: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}% | Trend %: L3M vs L12M monthly rate (Green >+10%, Yellow ±10%, Red <-10%)")
 
                 # L12M Chart
                 fig_l12m = go.Figure()
@@ -1022,10 +1187,35 @@ if data:
                 )
 
             with col4:
+                # Color code average order age
+                avg_age = summary['avg_age_days']
+
+                if avg_age <= BACKLOG_THRESHOLDS['avg_age']['green']:
+                    age_color = "🟢"
+                elif avg_age <= BACKLOG_THRESHOLDS['avg_age']['yellow']:
+                    age_color = "🟡"
+                else:
+                    age_color = "🔴"
+
                 st.metric(
                     "Average Order Age",
-                    f"{summary['avg_age_days']:.0f} days"
+                    f"{age_color} {avg_age:.0f} days"
                 )
+
+            # Show percentage of orders > 90 days
+            age_dist = backlog_data['age_distribution']
+            orders_90plus = age_dist.get('91-180 days', {}).get('count', 0) + age_dist.get('180+ days', {}).get('count', 0)
+            total_orders = summary['total_orders']
+            pct_old_orders = (orders_90plus / total_orders * 100) if total_orders else 0
+
+            if pct_old_orders <= BACKLOG_THRESHOLDS['old_orders_pct']['green']:
+                old_color = "🟢"
+            elif pct_old_orders <= BACKLOG_THRESHOLDS['old_orders_pct']['yellow']:
+                old_color = "🟡"
+            else:
+                old_color = "🔴"
+
+            st.caption(f"{old_color} **{pct_old_orders:.1f}%** of orders are >90 days old (Target: ≤{BACKLOG_THRESHOLDS['old_orders_pct']['yellow']}%)")
 
             st.divider()
 
