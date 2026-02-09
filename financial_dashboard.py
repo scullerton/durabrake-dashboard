@@ -971,8 +971,11 @@ if data:
                 # Select columns to display
                 display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', '% of Total Sales', 'RFM Segment']
 
-                # Get company average GP margin for comparison
-                avg_gp_margin = customer_data['summary']['avg_gp_margin']
+                # Calculate company average GP margin for comparison (weighted average from top 15)
+                top_15 = customer_data['top_15_customers']
+                total_sales = sum(c['l12m_sales'] for c in top_15)
+                weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
+                avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
 
                 # Create formatted version for display using Pandas styling with color coding
                 styled_l3m = display_l3m[display_cols].style.format({
@@ -1045,8 +1048,11 @@ if data:
                 # Select columns to display - now including Trend %
                 display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', 'Trend %', 'RFM Segment']
 
-                # Get company average GP margin for comparison
-                avg_gp_margin = customer_data['summary']['avg_gp_margin']
+                # Calculate company average GP margin for comparison (weighted average from top 15)
+                top_15 = customer_data['top_15_customers']
+                total_sales = sum(c['l12m_sales'] for c in top_15)
+                weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
+                avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
 
                 # Create formatted version for display using Pandas styling with color coding
                 def apply_colors(row):
