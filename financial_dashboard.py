@@ -166,11 +166,9 @@ def color_sales_trend(l3m_sales, l12m_sales):
         return ''
 
 # ============================================================================
-# CONFIGURATION - Update this to match the period you want to view
+# DATA LOADING FUNCTIONS
 # ============================================================================
-PERIOD = "25.12"  # Format: YY.MM
 
-# Load data
 @st.cache_data(ttl=60)  # Cache for 60 seconds to allow for updates
 def load_data(period):
     try:
@@ -214,6 +212,12 @@ def get_available_periods():
                os.path.exists(os.path.join(generated_path, d, 'dashboard_data.json'))]
     # Sort periods in reverse chronological order (newest first)
     return sorted(periods, reverse=True)
+
+# ============================================================================
+# AUTO-DETECT CURRENT PERIOD - always displays most recent month
+# ============================================================================
+_available = get_available_periods()
+PERIOD = _available[0] if _available else "26.01"
 
 data = load_data(PERIOD)
 customer_data = load_customer_data(PERIOD)
