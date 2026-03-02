@@ -337,8 +337,7 @@ if data:
             notes = st.text_area(
                 "Critical notes for this period",
                 value=saved_notes.get("critical_notes", ""),
-                height=150,
-                placeholder="Enter critical notes for this period...",
+                height=200,
                 key="critical_notes"
             )
 
@@ -347,8 +346,7 @@ if data:
             actions = st.text_area(
                 "Action items to address",
                 value=saved_notes.get("action_items", ""),
-                height=150,
-                placeholder="Enter action items...",
+                height=200,
                 key="action_items"
             )
 
@@ -360,9 +358,6 @@ if data:
                 st.success("Notes saved successfully!")
             except Exception as e:
                 st.error(f"Could not save notes: {e}")
-
-        if not (notes or actions):
-            st.info("💡 Add critical notes and action items for this period, then click Save Notes to persist them.")
 
         st.divider()
 
@@ -517,13 +512,14 @@ if data:
                 prior_3 = ltm_series[i-3:i]
                 avg_rev = sum(p.get('revenue', 0) or 0 for p in prior_3) / 3
                 curr_rev = m.get('revenue', 0) or 0
-                if avg_rev and avg_rev != 0:
-                    var_pct = ((curr_rev - avg_rev) / avg_rev) * 100
-                else:
-                    var_pct = 0
+                avg_gp = sum(p.get('gross_profit', 0) or 0 for p in prior_3) / 3
+                curr_gp = m.get('gross_profit', 0) or 0
+                rev_var = ((curr_rev - avg_rev) / avg_rev * 100) if avg_rev else 0
+                gp_var = ((curr_gp - avg_gp) / avg_gp * 100) if avg_gp else 0
                 rolling_data.append({
                     'month': m.get('label', m.get('month', '')),
-                    'revenue_vs_l3m_pct': var_pct
+                    'revenue_vs_l3m_pct': rev_var,
+                    'gp_vs_l3m_pct': gp_var
                 })
         elif data.get('rolling_l3m'):
             rolling_data = data['rolling_l3m']
@@ -537,14 +533,25 @@ if data:
                 name='Revenue vs L3M %',
                 x=df_rolling['month'],
                 y=df_rolling['revenue_vs_l3m_pct'],
-                marker_color=['red' if x < 0 else 'green' for x in df_rolling['revenue_vs_l3m_pct']]
+                marker_color=['#ef5350' if x < 0 else '#66bb6a' for x in df_rolling['revenue_vs_l3m_pct']],
+                opacity=0.7
             ))
 
+            if 'gp_vs_l3m_pct' in df_rolling.columns:
+                fig3.add_trace(go.Scatter(
+                    name='Gross Profit vs L3M %',
+                    x=df_rolling['month'],
+                    y=df_rolling['gp_vs_l3m_pct'],
+                    mode='lines+markers',
+                    marker_color='#ff9800',
+                    line=dict(width=3)
+                ))
+
             fig3.update_layout(
-                title='Revenue Variance vs Prior 3-Month Average (LTM)',
+                title='Revenue & Gross Profit Variance vs Prior 3-Month Average (LTM)',
                 yaxis=dict(title='Variance %'),
                 hovermode='x unified',
-                height=300
+                height=350
             )
 
             st.plotly_chart(fig3, use_container_width=True)
@@ -770,9 +777,9 @@ if data:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            # Use YTD (annualized) revenue for more meaningful ratio
-            ytd = data['ytd_summary']
-            nwc_pct_revenue = (cm['nwc'] / ytd['total_revenue'] * 100) if ytd['total_revenue'] else 0
+            # Use LTM (Last Twelve Months) revenue for more meaningful ratio
+            ltm_total_revenue = sum(m.get('revenue', 0) or 0 for m in ltm_series) if ltm_series else data['ytd_summary']['total_revenue']
+            nwc_pct_revenue = (cm['nwc'] / ltm_total_revenue * 100) if ltm_total_revenue else 0
 
             # Determine color for NWC %
             if nwc_pct_revenue <= WC_THRESHOLDS['nwc_pct']['green']:
@@ -783,7 +790,7 @@ if data:
                 nwc_color = "🔴"
 
             st.metric("NWC as % of Revenue", f"{nwc_color} {nwc_pct_revenue:.1f}%")
-            st.caption("Based on YTD revenue")
+            st.caption("Based on LTM revenue")
 
         with col2:
             # DSO = (A/R / Revenue) * 365
@@ -918,32 +925,6 @@ if data:
             )
 
             st.plotly_chart(fig_nwc_total, use_container_width=True)
-
-        # NWC as % of Revenue trend (rolling 12M)
-        if 'nwc' in df_nwc_trend.columns and 'revenue' in df_nwc_trend.columns:
-            # Use trailing 12-month cumulative revenue for ratio
-            df_nwc_trend['trailing_revenue'] = df_nwc_trend['revenue'].cumsum()
-            df_nwc_trend['nwc_pct_revenue'] = (df_nwc_trend['nwc'] / df_nwc_trend['trailing_revenue'] * 100)
-
-            fig_nwc_pct = go.Figure()
-
-            fig_nwc_pct.add_trace(go.Scatter(
-                name='NWC as % of Trailing Revenue',
-                x=nwc_x,
-                y=df_nwc_trend['nwc_pct_revenue'],
-                mode='lines+markers',
-                marker_color='#8c564b',
-                line=dict(width=3)
-            ))
-
-            fig_nwc_pct.update_layout(
-                title='NWC as % of Trailing Revenue',
-                yaxis=dict(title='NWC % of Trailing Revenue'),
-                hovermode='x unified',
-                height=400
-            )
-
-            st.plotly_chart(fig_nwc_pct, use_container_width=True)
 
         st.divider()
 
@@ -1080,6 +1061,10 @@ if data:
             # ==================================================================
             # TOP 15 CUSTOMERS PERFORMANCE
             # ==================================================================
+            # Dynamic L3M period label
+            _l3m_period = customer_data['metadata'].get('analysis_period_l3m', 'L3M')
+            _l12m_period = customer_data['metadata'].get('analysis_period_l12m', 'L12M')
+
             st.subheader("🏆 Top 15 Customers Performance")
             st.markdown("Sales and Gross Profit over Last 3 Months (L3M) and Last 12 Months (L12M)")
             st.caption(f"Note: GP margins based on annual income by customer. L3M ({_l3m_period}) and L12M ({_l12m_period}) GP calculated using annual margin %.")
@@ -1087,10 +1072,6 @@ if data:
             # Prepare top customers data
             top_15 = customer_data['top_15_customers']
             df_top15 = pd.DataFrame(top_15)
-
-            # Dynamic L3M period label
-            _l3m_period = customer_data['metadata'].get('analysis_period_l3m', 'L3M')
-            _l12m_period = customer_data['metadata'].get('analysis_period_l12m', 'L12M')
 
             # Create tabs for L3M and L12M views
             l3m_tab, l12m_tab = st.tabs([f"Last 3 Months ({_l3m_period})", f"Last 12 Months ({_l12m_period})"])
@@ -1735,7 +1716,7 @@ if data:
                         st.divider()
                         st.markdown("### Top 10 Customers (L12M)")
 
-                        customers = hist_customer['top_customers'][:10]
+                        customers = hist_customer.get('top_15_customers', hist_customer.get('top_customers', []))[:10]
                         if customers:
                             df_top = pd.DataFrame([
                                 {

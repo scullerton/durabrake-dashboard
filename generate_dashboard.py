@@ -102,6 +102,18 @@ print("[OK] Backlog analysis complete")
 print()
 
 # ============================================================================
+# STEP 5: Generate Critical Notes & Action Items
+# ============================================================================
+print("STEP 5: Generating critical notes & action items...")
+print("-" * 80)
+
+from generate_notes import run_generate_notes
+
+notes_result = run_generate_notes(PERIOD, YEAR, MONTH)
+print("[OK] Notes generation complete")
+print()
+
+# ============================================================================
 # SUMMARY
 # ============================================================================
 print("=" * 80)
@@ -115,6 +127,7 @@ print(f"  - customer_dashboard_data.json")
 print(f"  - backlog_dashboard_data.json")
 print(f"  - rfm_analysis_results.csv")
 print(f"  - rfm_summary.json")
+print(f"  - dashboard_notes.json")
 print()
 print("To launch dashboard, run:")
 print(f"  streamlit run financial_dashboard.py")
