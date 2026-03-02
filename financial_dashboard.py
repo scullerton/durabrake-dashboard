@@ -223,6 +223,60 @@ data = load_data(PERIOD)
 customer_data = load_customer_data(PERIOD)
 backlog_data = load_backlog_data(PERIOD)
 
+MONTH_NAMES = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"]
+
+# Load prior year data for LTM (Last Twelve Months) views
+prior_year_data = None
+current_year = data['metadata']['reporting_year'] if data else 2026
+current_month_num = MONTH_NAMES.index(data['metadata']['reporting_month']) + 1 if data else 1
+if data and current_month_num < 12:
+    prior_period = f"{(current_year - 1) % 100:02d}.12"
+    prior_year_data = load_data(prior_period)
+
+# Build LTM (Last 12 Months) series combining prior year + current year
+ltm_series = []
+ltm_products = {}
+if data:
+    if prior_year_data:
+        # Take months after current month from prior year (e.g., Feb-Dec 2025 for Jan 2026)
+        prior_months = prior_year_data.get('monthly_series', [])
+        for m in prior_months:
+            if m['month_num'] > current_month_num:
+                entry = m.copy()
+                entry['label'] = f"{m['month']} {current_year - 1}"
+                ltm_series.append(entry)
+        # Append same-numbered month from prior year if needed to fill 12 months
+        if current_month_num == prior_months[current_month_num - 1]['month_num']:
+            pass  # current year has this month
+
+    # Add current year months (up to current month)
+    current_months = data.get('monthly_series', [])
+    for m in current_months:
+        if m['month_num'] <= current_month_num and m.get('revenue') is not None:
+            entry = m.copy()
+            entry['label'] = f"{m['month']} {current_year}"
+            ltm_series.append(entry)
+
+    # Build LTM product series
+    if prior_year_data:
+        prior_products = prior_year_data.get('products', {})
+        current_products = data.get('products', {})
+        for prod_key in current_products:
+            ltm_prod_series = []
+            if prod_key in prior_products:
+                for m in prior_products[prod_key].get('monthly_series', []):
+                    if m['month_num'] > current_month_num:
+                        entry = m.copy()
+                        entry['label'] = f"{m['month']} {current_year - 1}"
+                        ltm_prod_series.append(entry)
+            for m in current_products[prod_key].get('monthly_series', []):
+                if m['month_num'] <= current_month_num and m.get('sales') is not None:
+                    entry = m.copy()
+                    entry['label'] = f"{m['month']} {current_year}"
+                    ltm_prod_series.append(entry)
+            ltm_products[prod_key] = ltm_prod_series
+
 if data:
     # Header
     st.title("📊 DuraBrake Financial Dashboard")
@@ -265,28 +319,50 @@ if data:
         # ==================================================================
         st.header("⚠️ Critical Notes & Action Items")
 
+        # Load saved notes for current period from JSON file
+        import os as _os
+        notes_file = _os.path.join('generated', PERIOD, 'dashboard_notes.json')
+        saved_notes = {"critical_notes": "", "action_items": ""}
+        if _os.path.exists(notes_file):
+            try:
+                with open(notes_file, 'r') as _f:
+                    saved_notes = json.load(_f)
+            except Exception:
+                pass
+
         col1, col2 = st.columns(2)
 
         with col1:
             st.subheader("📝 Critical Notes")
             notes = st.text_area(
-                "Add critical notes for this period",
+                "Critical notes for this period",
+                value=saved_notes.get("critical_notes", ""),
                 height=150,
-                placeholder="Example:\n• Revenue declined due to seasonal slowdown\n• Major customer order delayed to next month\n• Supply chain issues affecting margins",
+                placeholder="Enter critical notes for this period...",
                 key="critical_notes"
             )
 
         with col2:
             st.subheader("✅ Action Items")
             actions = st.text_area(
-                "Add action items to address",
+                "Action items to address",
+                value=saved_notes.get("action_items", ""),
                 height=150,
-                placeholder="Example:\n• Follow up with top 3 customers on Q1 orders\n• Review pricing strategy for Rotors product line\n• Reduce inventory levels by 10%",
+                placeholder="Enter action items...",
                 key="action_items"
             )
 
-        if notes or actions:
-            st.info("💡 **Tip:** Copy these notes to a separate document for record-keeping. They are not automatically saved.")
+        # Save button for notes
+        if st.button("💾 Save Notes", key="save_notes_btn"):
+            try:
+                with open(notes_file, 'w') as _f:
+                    json.dump({"critical_notes": notes, "action_items": actions}, _f, indent=2)
+                st.success("Notes saved successfully!")
+            except Exception as e:
+                st.error(f"Could not save notes: {e}")
+
+        if not (notes or actions):
+            st.info("💡 Add critical notes and action items for this period, then click Save Notes to persist them.")
 
         st.divider()
 
@@ -358,35 +434,37 @@ if data:
         st.divider()
 
         # ==================================================================
-        # MONTHLY TRENDS
+        # MONTHLY TRENDS (LTM - Last Twelve Months)
         # ==================================================================
-        st.header("📊 Monthly Trends")
+        st.header("📊 Monthly Trends (LTM)")
 
-        # Convert monthly series to DataFrame
-        df_monthly = pd.DataFrame(data['monthly_series'])
+        # Use LTM series if available, otherwise fall back to current year data
+        trend_source = ltm_series if ltm_series else data['monthly_series']
+        df_trend = pd.DataFrame(trend_source)
+        trend_x = df_trend['label'] if 'label' in df_trend.columns else df_trend['month']
 
         # Revenue & EBITDA chart
         fig = go.Figure()
 
         fig.add_trace(go.Bar(
             name='Revenue',
-            x=df_monthly['month'],
-            y=df_monthly['revenue'],
+            x=trend_x,
+            y=df_trend['revenue'],
             yaxis='y',
             marker_color='#1f77b4'
         ))
 
         fig.add_trace(go.Scatter(
             name='EBITDA',
-            x=df_monthly['month'],
-            y=df_monthly['ebitda'],
+            x=trend_x,
+            y=df_trend['ebitda'],
             yaxis='y2',
             marker_color='#ff7f0e',
             line=dict(width=3)
         ))
 
         fig.update_layout(
-            title='Revenue & EBITDA Trend',
+            title='Revenue & EBITDA Trend (Last 12 Months)',
             yaxis=dict(title='Revenue ($)', side='left'),
             yaxis2=dict(title='EBITDA ($)', side='right', overlaying='y'),
             hovermode='x unified',
@@ -400,22 +478,22 @@ if data:
 
         fig2.add_trace(go.Scatter(
             name='Gross Margin %',
-            x=df_monthly['month'],
-            y=df_monthly['gross_margin_pct'],
+            x=trend_x,
+            y=df_trend['gross_margin_pct'],
             marker_color='#2ca02c',
             line=dict(width=2)
         ))
 
         fig2.add_trace(go.Scatter(
             name='EBITDA Margin %',
-            x=df_monthly['month'],
-            y=df_monthly['ebitda_margin_pct'],
+            x=trend_x,
+            y=df_trend['ebitda_margin_pct'],
             marker_color='#d62728',
             line=dict(width=2)
         ))
 
         fig2.update_layout(
-            title='Margin Trends',
+            title='Margin Trends (Last 12 Months)',
             yaxis=dict(title='Margin %'),
             hovermode='x unified',
             height=400
@@ -426,13 +504,32 @@ if data:
         st.divider()
 
         # ==================================================================
-        # ROLLING L3M VARIANCE
+        # ROLLING L3M VARIANCE (LTM)
         # ==================================================================
-        st.header("🔄 Rolling 3-Month Variance")
+        st.header("🔄 Rolling 3-Month Variance (LTM)")
         st.markdown("Each month compared to its prior 3-month average")
 
-        if data['rolling_l3m']:
-            df_rolling = pd.DataFrame(data['rolling_l3m'])
+        # Build rolling L3M from LTM series if available
+        rolling_data = []
+        if ltm_series and len(ltm_series) >= 4:
+            for i in range(3, len(ltm_series)):
+                m = ltm_series[i]
+                prior_3 = ltm_series[i-3:i]
+                avg_rev = sum(p.get('revenue', 0) or 0 for p in prior_3) / 3
+                curr_rev = m.get('revenue', 0) or 0
+                if avg_rev and avg_rev != 0:
+                    var_pct = ((curr_rev - avg_rev) / avg_rev) * 100
+                else:
+                    var_pct = 0
+                rolling_data.append({
+                    'month': m.get('label', m.get('month', '')),
+                    'revenue_vs_l3m_pct': var_pct
+                })
+        elif data.get('rolling_l3m'):
+            rolling_data = data['rolling_l3m']
+
+        if rolling_data:
+            df_rolling = pd.DataFrame(rolling_data)
 
             fig3 = go.Figure()
 
@@ -444,7 +541,7 @@ if data:
             ))
 
             fig3.update_layout(
-                title='Revenue Variance vs Prior 3-Month Average',
+                title='Revenue Variance vs Prior 3-Month Average (LTM)',
                 yaxis=dict(title='Variance %'),
                 hovermode='x unified',
                 height=300
@@ -482,11 +579,19 @@ if data:
         st.divider()
 
         # ==================================================================
-        # Q4 SUMMARY
+        # PRIOR QUARTER SUMMARY
         # ==================================================================
-        st.header("Q4 2025 Summary")
-
+        # Use prior year Q4 data when current year Q4 is empty
         q4 = data['q4_summary']
+        q4_has_data = q4['total_revenue'] != 0 or q4['total_gross_profit'] != 0
+
+        if not q4_has_data and prior_year_data:
+            q4 = prior_year_data.get('q4_summary', q4)
+            q4_label = f"Q4 {current_year - 1}"
+        else:
+            q4_label = f"Q4 {current_year}"
+
+        st.header(f"{q4_label} Summary")
 
         col1, col2, col3, col4 = st.columns(4)
 
@@ -495,11 +600,13 @@ if data:
 
         with col2:
             st.metric("Q4 Gross Profit", f"${q4['total_gross_profit']:,.0f}")
-            st.caption(f"Avg GP%: {q4['avg_gross_margin_pct']:.1f}%")
+            if q4.get('avg_gross_margin_pct') is not None:
+                st.caption(f"Avg GP%: {q4['avg_gross_margin_pct']:.1f}%")
 
         with col3:
             st.metric("Q4 EBITDA", f"${q4['total_ebitda']:,.0f}")
-            st.caption(f"Avg EBITDA%: {q4['avg_ebitda_margin_pct']:.1f}%")
+            if q4.get('avg_ebitda_margin_pct') is not None:
+                st.caption(f"Avg EBITDA%: {q4['avg_ebitda_margin_pct']:.1f}%")
 
         with col4:
             st.metric("Q4 Net Income", f"${q4['total_net_income']:,.0f}")
@@ -510,7 +617,7 @@ if data:
         # DATA TABLE
         # ==================================================================
         with st.expander("📋 View Detailed Monthly Data"):
-            st.dataframe(df_monthly, use_container_width=True)
+            st.dataframe(df_trend, use_container_width=True)
 
         # Footer
         st.caption(f"Source: {data['metadata']['source_file']}")
@@ -568,45 +675,55 @@ if data:
 
                     st.divider()
 
-            # Product trend charts
-            st.header("📊 Product Trends")
+            # Product trend charts (LTM)
+            st.header("📊 Product Trends (LTM)")
 
-            # Sales trend by product
+            # Sales trend by product - use LTM data if available
             fig_sales = go.Figure()
             for product_key in product_keys:
                 if product_key in products:
                     prod = products[product_key]
-                    df_prod = pd.DataFrame(prod['monthly_series'])
+                    if product_key in ltm_products and ltm_products[product_key]:
+                        df_prod = pd.DataFrame(ltm_products[product_key])
+                        prod_x = df_prod['label'] if 'label' in df_prod.columns else df_prod['month']
+                    else:
+                        df_prod = pd.DataFrame(prod['monthly_series'])
+                        prod_x = df_prod['month']
                     fig_sales.add_trace(go.Scatter(
                         name=prod['name'],
-                        x=df_prod['month'],
+                        x=prod_x,
                         y=df_prod['sales'],
                         mode='lines+markers'
                     ))
 
             fig_sales.update_layout(
-                title='Monthly Sales by Product',
+                title='Monthly Sales by Product (Last 12 Months)',
                 yaxis=dict(title='Sales ($)'),
                 hovermode='x unified',
                 height=400
             )
             st.plotly_chart(fig_sales, use_container_width=True)
 
-            # Gross margin % trend by product
+            # Gross margin % trend by product - use LTM data if available
             fig_gm = go.Figure()
             for product_key in product_keys:
                 if product_key in products:
                     prod = products[product_key]
-                    df_prod = pd.DataFrame(prod['monthly_series'])
+                    if product_key in ltm_products and ltm_products[product_key]:
+                        df_prod = pd.DataFrame(ltm_products[product_key])
+                        prod_x = df_prod['label'] if 'label' in df_prod.columns else df_prod['month']
+                    else:
+                        df_prod = pd.DataFrame(prod['monthly_series'])
+                        prod_x = df_prod['month']
                     fig_gm.add_trace(go.Scatter(
                         name=prod['name'],
-                        x=df_prod['month'],
+                        x=prod_x,
                         y=df_prod['gross_margin_pct'],
                         mode='lines+markers'
                     ))
 
             fig_gm.update_layout(
-                title='Gross Margin % by Product',
+                title='Gross Margin % by Product (Last 12 Months)',
                 yaxis=dict(title='Gross Margin %'),
                 hovermode='x unified',
                 height=400
@@ -735,40 +852,46 @@ if data:
 
         st.divider()
 
-        # NWC Trends
-        st.header("📊 NWC Trends")
+        # NWC Trends (LTM)
+        st.header("📊 NWC Trends (LTM)")
 
-        df_monthly = pd.DataFrame(data['monthly_series'])
+        # Use LTM series for NWC trends if available
+        nwc_source = ltm_series if ltm_series else data['monthly_series']
+        df_nwc_trend = pd.DataFrame(nwc_source)
+        nwc_x = df_nwc_trend['label'] if 'label' in df_nwc_trend.columns else df_nwc_trend['month']
 
         # NWC components chart
         fig_nwc = go.Figure()
 
-        fig_nwc.add_trace(go.Scatter(
-            name='Accounts Receivable',
-            x=df_monthly['month'],
-            y=df_monthly['accounts_receivable'],
-            mode='lines+markers',
-            marker_color='#1f77b4'
-        ))
+        if 'accounts_receivable' in df_nwc_trend.columns:
+            fig_nwc.add_trace(go.Scatter(
+                name='Accounts Receivable',
+                x=nwc_x,
+                y=df_nwc_trend['accounts_receivable'],
+                mode='lines+markers',
+                marker_color='#1f77b4'
+            ))
 
-        fig_nwc.add_trace(go.Scatter(
-            name='Inventory',
-            x=df_monthly['month'],
-            y=df_monthly['inventory'],
-            mode='lines+markers',
-            marker_color='#ff7f0e'
-        ))
+        if 'inventory' in df_nwc_trend.columns:
+            fig_nwc.add_trace(go.Scatter(
+                name='Inventory',
+                x=nwc_x,
+                y=df_nwc_trend['inventory'],
+                mode='lines+markers',
+                marker_color='#ff7f0e'
+            ))
 
-        fig_nwc.add_trace(go.Scatter(
-            name='Accounts Payable',
-            x=df_monthly['month'],
-            y=df_monthly['accounts_payable'],
-            mode='lines+markers',
-            marker_color='#2ca02c'
-        ))
+        if 'accounts_payable' in df_nwc_trend.columns:
+            fig_nwc.add_trace(go.Scatter(
+                name='Accounts Payable',
+                x=nwc_x,
+                y=df_nwc_trend['accounts_payable'],
+                mode='lines+markers',
+                marker_color='#2ca02c'
+            ))
 
         fig_nwc.update_layout(
-            title='NWC Components Trend',
+            title='NWC Components Trend (Last 12 Months)',
             yaxis=dict(title='Amount ($)'),
             hovermode='x unified',
             height=400
@@ -777,55 +900,67 @@ if data:
         st.plotly_chart(fig_nwc, use_container_width=True)
 
         # Net Working Capital trend
-        fig_nwc_total = go.Figure()
+        if 'nwc' in df_nwc_trend.columns:
+            fig_nwc_total = go.Figure()
 
-        fig_nwc_total.add_trace(go.Bar(
-            name='Net Working Capital',
-            x=df_monthly['month'],
-            y=df_monthly['nwc'],
-            marker_color='#9467bd'
-        ))
+            fig_nwc_total.add_trace(go.Bar(
+                name='Net Working Capital',
+                x=nwc_x,
+                y=df_nwc_trend['nwc'],
+                marker_color='#9467bd'
+            ))
 
-        fig_nwc_total.update_layout(
-            title='Net Working Capital Trend',
-            yaxis=dict(title='NWC ($)'),
-            hovermode='x unified',
-            height=400
-        )
+            fig_nwc_total.update_layout(
+                title='Net Working Capital Trend (Last 12 Months)',
+                yaxis=dict(title='NWC ($)'),
+                hovermode='x unified',
+                height=400
+            )
 
-        st.plotly_chart(fig_nwc_total, use_container_width=True)
+            st.plotly_chart(fig_nwc_total, use_container_width=True)
 
-        # NWC as % of Revenue trend (using YTD/annualized revenue)
-        # Calculate cumulative YTD revenue for each month
-        df_monthly['ytd_revenue'] = df_monthly['revenue'].cumsum()
-        df_monthly['nwc_pct_revenue'] = (df_monthly['nwc'] / df_monthly['ytd_revenue'] * 100)
+        # NWC as % of Revenue trend (rolling 12M)
+        if 'nwc' in df_nwc_trend.columns and 'revenue' in df_nwc_trend.columns:
+            # Use trailing 12-month cumulative revenue for ratio
+            df_nwc_trend['trailing_revenue'] = df_nwc_trend['revenue'].cumsum()
+            df_nwc_trend['nwc_pct_revenue'] = (df_nwc_trend['nwc'] / df_nwc_trend['trailing_revenue'] * 100)
 
-        fig_nwc_pct = go.Figure()
+            fig_nwc_pct = go.Figure()
 
-        fig_nwc_pct.add_trace(go.Scatter(
-            name='NWC as % of YTD Revenue',
-            x=df_monthly['month'],
-            y=df_monthly['nwc_pct_revenue'],
-            mode='lines+markers',
-            marker_color='#8c564b',
-            line=dict(width=3)
-        ))
+            fig_nwc_pct.add_trace(go.Scatter(
+                name='NWC as % of Trailing Revenue',
+                x=nwc_x,
+                y=df_nwc_trend['nwc_pct_revenue'],
+                mode='lines+markers',
+                marker_color='#8c564b',
+                line=dict(width=3)
+            ))
 
-        fig_nwc_pct.update_layout(
-            title='NWC as % of YTD Revenue',
-            yaxis=dict(title='NWC % of YTD Revenue'),
-            hovermode='x unified',
-            height=400
-        )
+            fig_nwc_pct.update_layout(
+                title='NWC as % of Trailing Revenue',
+                yaxis=dict(title='NWC % of Trailing Revenue'),
+                hovermode='x unified',
+                height=400
+            )
 
-        st.plotly_chart(fig_nwc_pct, use_container_width=True)
+            st.plotly_chart(fig_nwc_pct, use_container_width=True)
 
         st.divider()
 
         # Data table
         with st.expander("📋 View Detailed NWC Data"):
-            nwc_detail = df_monthly[['month', 'accounts_receivable', 'inventory', 'accounts_payable', 'nwc', 'nwc_pct_revenue']]
-            nwc_detail.columns = ['Month', 'A/R', 'Inventory', 'A/P', 'NWC', 'NWC % of YTD Revenue']
+            nwc_cols = [c for c in ['month', 'label', 'accounts_receivable', 'inventory', 'accounts_payable', 'nwc'] if c in df_nwc_trend.columns]
+            nwc_detail = df_nwc_trend[nwc_cols].copy()
+            # Use label column if available, otherwise month
+            if 'label' in nwc_detail.columns:
+                nwc_detail = nwc_detail.drop(columns=['month'], errors='ignore')
+                nwc_detail = nwc_detail.rename(columns={'label': 'Month'})
+            else:
+                nwc_detail = nwc_detail.rename(columns={'month': 'Month'})
+            nwc_detail = nwc_detail.rename(columns={
+                'accounts_receivable': 'A/R', 'inventory': 'Inventory',
+                'accounts_payable': 'A/P', 'nwc': 'NWC'
+            })
             st.dataframe(nwc_detail, use_container_width=True)
 
         # Footer
@@ -947,17 +1082,21 @@ if data:
             # ==================================================================
             st.subheader("🏆 Top 15 Customers Performance")
             st.markdown("Sales and Gross Profit over Last 3 Months (L3M) and Last 12 Months (L12M)")
-            st.caption("Note: GP margins based on actual 2025 annual income by customer. L3M and L12M GP calculated using annual margin %.")
+            st.caption(f"Note: GP margins based on annual income by customer. L3M ({_l3m_period}) and L12M ({_l12m_period}) GP calculated using annual margin %.")
 
             # Prepare top customers data
             top_15 = customer_data['top_15_customers']
             df_top15 = pd.DataFrame(top_15)
 
+            # Dynamic L3M period label
+            _l3m_period = customer_data['metadata'].get('analysis_period_l3m', 'L3M')
+            _l12m_period = customer_data['metadata'].get('analysis_period_l12m', 'L12M')
+
             # Create tabs for L3M and L12M views
-            l3m_tab, l12m_tab = st.tabs(["Last 3 Months (Oct-Dec)", "Last 12 Months (Full Year)"])
+            l3m_tab, l12m_tab = st.tabs([f"Last 3 Months ({_l3m_period})", f"Last 12 Months ({_l12m_period})"])
 
             with l3m_tab:
-                st.markdown("### L3M Performance (Oct-Dec 2025)")
+                st.markdown(f"### L3M Performance ({_l3m_period})")
 
                 # Display table - use styled dataframe with proper formatting
                 display_l3m = df_top15.copy()
@@ -1031,7 +1170,7 @@ if data:
                     st.metric("Avg L3M Sales (Top 15)", f"${avg_l3m_sales:,.0f}")
 
             with l12m_tab:
-                st.markdown("### L12M Performance (Jan-Dec 2025)")
+                st.markdown(f"### L12M Performance ({_l12m_period})")
 
                 # Display table - use styled dataframe with proper formatting
                 display_l12m = df_top15.copy()
@@ -1145,7 +1284,7 @@ if data:
                 st.dataframe(display_rfm, use_container_width=True, hide_index=True)
 
             # Footer
-            st.caption("Customer analysis based on RFM segmentation and sales data through December 2025")
+            st.caption(f"Customer analysis based on RFM segmentation | L3M: {_l3m_period} | L12M: {_l12m_period}")
 
         else:
             st.warning("Customer data not available. Please run the RFM analysis first.")
@@ -1214,7 +1353,8 @@ if data:
 
             # Show percentage of orders > 90 days
             age_dist = backlog_data['age_distribution']
-            orders_90plus = age_dist.get('91-180 days', {}).get('count', 0) + age_dist.get('180+ days', {}).get('count', 0)
+            age_counts = age_dist.get('order_count', {})
+            orders_90plus = age_counts.get('91-180 days', 0) + age_counts.get('180+ days', 0)
             total_orders = summary['total_orders']
             pct_old_orders = (orders_90plus / total_orders * 100) if total_orders else 0
 
@@ -1557,26 +1697,38 @@ if data:
 
                     # Revenue trend for this period
                     st.markdown("### Revenue Trend")
-                    months = hist_data['monthly_data']['months'][:month]
-                    revenue = hist_data['monthly_data']['revenue'][:month]
 
-                    fig = go.Figure()
-                    fig.add_trace(go.Scatter(
-                        x=months,
-                        y=revenue,
-                        mode='lines+markers',
-                        name='Revenue',
-                        line=dict(color='#1f77b4', width=3),
-                        marker=dict(size=8)
-                    ))
-                    fig.update_layout(
-                        title=f"Monthly Revenue - {year}",
-                        xaxis_title="Month",
-                        yaxis_title="Revenue ($)",
-                        height=400,
-                        hovermode='x unified'
-                    )
-                    st.plotly_chart(fig, use_container_width=True)
+                    # Support both old 'monthly_data' format and new 'monthly_series' format
+                    if 'monthly_series' in hist_data:
+                        hist_series = hist_data['monthly_series'][:month]
+                        months = [m['month'] for m in hist_series]
+                        revenue = [m['revenue'] for m in hist_series]
+                    elif 'monthly_data' in hist_data:
+                        months = hist_data['monthly_data']['months'][:month]
+                        revenue = hist_data['monthly_data']['revenue'][:month]
+                    else:
+                        months, revenue = [], []
+
+                    if months and revenue:
+                        fig = go.Figure()
+                        fig.add_trace(go.Scatter(
+                            x=months,
+                            y=revenue,
+                            mode='lines+markers',
+                            name='Revenue',
+                            line=dict(color='#1f77b4', width=3),
+                            marker=dict(size=8)
+                        ))
+                        fig.update_layout(
+                            title=f"Monthly Revenue - {year}",
+                            xaxis_title="Month",
+                            yaxis_title="Revenue ($)",
+                            height=400,
+                            hovermode='x unified'
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
+                    else:
+                        st.info("Monthly revenue trend data not available for this period.")
 
                     # Customer summary if available
                     if hist_customer:
