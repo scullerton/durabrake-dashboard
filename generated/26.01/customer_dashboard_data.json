@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-03T12:20:48.747483",
+    "generated_at": "2026-03-03T12:29:49.571658",
     "analysis_period_l3m": "Nov-Jan 2026",
     "analysis_period_l12m": "Jan-Dec 2026",
     "total_customers": 124,
@@ -364,22 +364,6 @@
   },
   "customers_needing_attention": [
     {
-      "customer": "VALLEY FREIGHTLINER - BROOK PARK",
-      "reasons": [
-        "Past Due",
-        "At Risk"
-      ],
-      "l3m_sales": 4304.860000000001,
-      "l12m_sales": 0.0,
-      "recency_days": 61,
-      "days_overdue": 55.0,
-      "trend_pct": 0,
-      "gp_margin": 29.47505842234126,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "Kenworth of  Louisiana",
       "reasons": [
         "Low Margin"
@@ -387,7 +371,7 @@
       "l3m_sales": 200400.0,
       "l12m_sales": 200400.0,
       "recency_days": 4,
-      "days_overdue": 1.0,
+      "days_overdue": 0.0,
       "trend_pct": 300.0,
       "gp_margin": 9.435129740518962,
       "rfm_segment": "Champions",
@@ -423,21 +407,6 @@
       "rfm_segment": "Champions",
       "has_backlog_order": true,
       "backlog_value": 96500.0
-    },
-    {
-      "customer": "Rush Enterprises, Inc. - Billing",
-      "reasons": [
-        "Past Due"
-      ],
-      "l3m_sales": 187178.1,
-      "l12m_sales": 62139.45,
-      "recency_days": 18,
-      "days_overdue": 14.0,
-      "trend_pct": 1104.9,
-      "gp_margin": 28.682772715283853,
-      "rfm_segment": "Champions",
-      "has_backlog_order": false,
-      "backlog_value": 0
     },
     {
       "customer": "Hunnings Inc.",
@@ -547,44 +516,14 @@
     {
       "customer": "Haldex Brake Products",
       "reasons": [
-        "Past Due"
+        "Order Overdue"
       ],
       "l3m_sales": 7428.82,
       "l12m_sales": 0.0,
       "recency_days": 67,
-      "days_overdue": 61.0,
+      "days_overdue": 1.0,
       "trend_pct": 0,
       "gp_margin": 55.4698961190209,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "JTC Field Repair",
-      "reasons": [
-        "Past Due"
-      ],
-      "l3m_sales": 2762.0,
-      "l12m_sales": 0.0,
-      "recency_days": 45,
-      "days_overdue": 17.0,
-      "trend_pct": 0,
-      "gp_margin": 83.31772255325934,
-      "rfm_segment": "Other",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Jerry & Keith's Inc",
-      "reasons": [
-        "Past Due"
-      ],
-      "l3m_sales": 3358.89,
-      "l12m_sales": 0.0,
-      "recency_days": 79,
-      "days_overdue": 63.0,
-      "trend_pct": 0,
-      "gp_margin": 63.439952389283214,
       "rfm_segment": "Loyal Customers",
       "has_backlog_order": false,
       "backlog_value": 0
@@ -607,12 +546,12 @@
     {
       "customer": "Municipal Truck Parts",
       "reasons": [
-        "Past Due"
+        "Order Overdue"
       ],
       "l3m_sales": 4970.5,
       "l12m_sales": 0.0,
       "recency_days": 39,
-      "days_overdue": 23.0,
+      "days_overdue": 6.0,
       "trend_pct": 0,
       "gp_margin": 21.784392070366703,
       "rfm_segment": "Loyal Customers",
@@ -650,36 +589,6 @@
       "backlog_value": 19580.0
     },
     {
-      "customer": "Ogburn's Truck Parts",
-      "reasons": [
-        "Past Due"
-      ],
-      "l3m_sales": 20057.0,
-      "l12m_sales": 0.0,
-      "recency_days": 51,
-      "days_overdue": 31.0,
-      "trend_pct": 0,
-      "gp_margin": 44.26523346947787,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "P & O Brake",
-      "reasons": [
-        "Past Due"
-      ],
-      "l3m_sales": 2715.0,
-      "l12m_sales": 0.0,
-      "recency_days": 39,
-      "days_overdue": 8.0,
-      "trend_pct": 0,
-      "gp_margin": 53.1277119609822,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "Peck's Heavy Friction",
       "reasons": [
         "At Risk"
@@ -697,12 +606,12 @@
     {
       "customer": "RWC Group - Phoenix",
       "reasons": [
-        "Past Due"
+        "Order Overdue"
       ],
       "l3m_sales": 2580.0,
       "l12m_sales": 0.0,
       "recency_days": 82,
-      "days_overdue": 46.0,
+      "days_overdue": 32.0,
       "trend_pct": 0,
       "gp_margin": 54.080067274858564,
       "rfm_segment": "Loyal Customers",
@@ -738,20 +647,24 @@
       "rfm_segment": "Need Attention",
       "has_backlog_order": false,
       "backlog_value": 0
+    },
+    {
+      "customer": "VALLEY FREIGHTLINER - BROOK PARK",
+      "reasons": [
+        "At Risk"
+      ],
+      "l3m_sales": 4304.860000000001,
+      "l12m_sales": 0.0,
+      "recency_days": 61,
+      "days_overdue": 43.0,
+      "trend_pct": 0,
+      "gp_margin": 29.47505842234126,
+      "rfm_segment": "Need Attention",
+      "has_backlog_order": false,
+      "backlog_value": 0
     }
   ],
   "overdue_customers": [
-    {
-      "customer": "Rush Enterprises, Inc. - Billing",
-      "expected_interval_days": 3.0,
-      "recency_days": 18,
-      "days_overdue": 14.0,
-      "last_purchase_date": "2026-01-13",
-      "l12m_sales": 531022.86,
-      "segment": "Champions",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
     {
       "customer": "Jackson Group Peterbilt - HQ",
       "expected_interval_days": 22.0,
@@ -765,9 +678,9 @@
     },
     {
       "customer": "Haldex Brake Products",
-      "expected_interval_days": 4.0,
+      "expected_interval_days": 50.0,
       "recency_days": 67,
-      "days_overdue": 61.0,
+      "days_overdue": 1.0,
       "last_purchase_date": "2025-11-25",
       "l12m_sales": 108688.81,
       "segment": "Loyal Customers",
@@ -776,9 +689,9 @@
     },
     {
       "customer": "Greatwest Kenworth",
-      "expected_interval_days": 7.0,
+      "expected_interval_days": 17.0,
       "recency_days": 292,
-      "days_overdue": 283.0,
+      "days_overdue": 270.0,
       "last_purchase_date": "2025-04-14",
       "l12m_sales": 80640.0,
       "segment": "At Risk",
@@ -786,43 +699,10 @@
       "backlog_value": 0
     },
     {
-      "customer": "Ogburn's Truck Parts",
-      "expected_interval_days": 15.0,
-      "recency_days": 51,
-      "days_overdue": 31.0,
-      "last_purchase_date": "2025-12-11",
-      "l12m_sales": 72472.0,
-      "segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Power & Transmission",
-      "expected_interval_days": 64.0,
-      "recency_days": 184,
-      "days_overdue": 101.0,
-      "last_purchase_date": "2025-07-31",
-      "l12m_sales": 71376.0,
-      "segment": "Hibernating",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Truck Parts & Eqp - Sparks",
-      "expected_interval_days": 38.0,
-      "recency_days": 213,
-      "days_overdue": 164.0,
-      "last_purchase_date": "2025-07-02",
-      "l12m_sales": 60187.55,
-      "segment": "Hibernating",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "Webb Wheel Products",
-      "expected_interval_days": 5.0,
+      "expected_interval_days": 7.0,
       "recency_days": 311,
-      "days_overdue": 304.0,
+      "days_overdue": 302.0,
       "last_purchase_date": "2025-03-26",
       "l12m_sales": 54725.0,
       "segment": "At Risk",
@@ -831,9 +711,9 @@
     },
     {
       "customer": "Cassens - Aurora",
-      "expected_interval_days": 11.0,
+      "expected_interval_days": 19.0,
       "recency_days": 213,
-      "days_overdue": 199.0,
+      "days_overdue": 188.0,
       "last_purchase_date": "2025-07-02",
       "l12m_sales": 52125.0,
       "segment": "At Risk",
@@ -842,9 +722,9 @@
     },
     {
       "customer": "Brake & Eqp (Auto Brake Clutch)",
-      "expected_interval_days": 16.0,
+      "expected_interval_days": 40.0,
       "recency_days": 108,
-      "days_overdue": 87.0,
+      "days_overdue": 57.0,
       "last_purchase_date": "2025-10-15",
       "l12m_sales": 48328.6,
       "segment": "At Risk",
@@ -853,9 +733,9 @@
     },
     {
       "customer": "Municipal Truck Parts",
-      "expected_interval_days": 12.0,
+      "expected_interval_days": 25.0,
       "recency_days": 39,
-      "days_overdue": 23.0,
+      "days_overdue": 6.0,
       "last_purchase_date": "2025-12-23",
       "l12m_sales": 41856.16,
       "segment": "Loyal Customers",
@@ -875,9 +755,9 @@
     },
     {
       "customer": "Bremskerl CV",
-      "expected_interval_days": 40.0,
+      "expected_interval_days": 80.0,
       "recency_days": 109,
-      "days_overdue": 57.0,
+      "days_overdue": 4.0,
       "last_purchase_date": "2025-10-14",
       "l12m_sales": 32890.0,
       "segment": "At Risk",
@@ -885,21 +765,10 @@
       "backlog_value": 0
     },
     {
-      "customer": "ABS Trucking",
-      "expected_interval_days": 3.0,
-      "recency_days": 309,
-      "days_overdue": 305.0,
-      "last_purchase_date": "2025-03-28",
-      "l12m_sales": 27363.0,
-      "segment": "At Risk",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "Betts Truck Parts",
-      "expected_interval_days": 10.0,
+      "expected_interval_days": 30.0,
       "recency_days": 148,
-      "days_overdue": 136.0,
+      "days_overdue": 109.0,
       "last_purchase_date": "2025-09-05",
       "l12m_sales": 26005.910000000003,
       "segment": "At Risk",
@@ -907,21 +776,10 @@
       "backlog_value": 0
     },
     {
-      "customer": "COLUMBIA CORPORATION - HEad Office",
-      "expected_interval_days": 3.0,
-      "recency_days": 99,
-      "days_overdue": 95.0,
-      "last_purchase_date": "2025-10-24",
-      "l12m_sales": 24478.0,
-      "segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "Plaza Truck Service",
-      "expected_interval_days": 45.0,
+      "expected_interval_days": 60.0,
       "recency_days": 137,
-      "days_overdue": 79.0,
+      "days_overdue": 59.0,
       "last_purchase_date": "2025-09-16",
       "l12m_sales": 23760.0,
       "segment": "At Risk",
@@ -930,9 +788,9 @@
     },
     {
       "customer": "RWC Group - Phoenix",
-      "expected_interval_days": 28.0,
+      "expected_interval_days": 39.0,
       "recency_days": 82,
-      "days_overdue": 46.0,
+      "days_overdue": 32.0,
       "last_purchase_date": "2025-11-10",
       "l12m_sales": 19121.0,
       "segment": "Loyal Customers",
@@ -940,21 +798,10 @@
       "backlog_value": 0
     },
     {
-      "customer": "Woodward's Auto Spring",
-      "expected_interval_days": 10.0,
-      "recency_days": 116,
-      "days_overdue": 103.0,
-      "last_purchase_date": "2025-10-07",
-      "l12m_sales": 18345.76,
-      "segment": "At Risk",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
       "customer": "West World Truck & Tr",
-      "expected_interval_days": 30.0,
+      "expected_interval_days": 44.0,
       "recency_days": 243,
-      "days_overdue": 204.0,
+      "days_overdue": 185.0,
       "last_purchase_date": "2025-06-02",
       "l12m_sales": 16084.0,
       "segment": "At Risk",
@@ -962,125 +809,15 @@
       "backlog_value": 0
     },
     {
-      "customer": "Jerry & Keith's Inc",
-      "expected_interval_days": 12.0,
-      "recency_days": 79,
-      "days_overdue": 63.0,
-      "last_purchase_date": "2025-11-13",
-      "l12m_sales": 12803.84,
-      "segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "P & O Brake",
-      "expected_interval_days": 24.0,
-      "recency_days": 39,
-      "days_overdue": 8.0,
-      "last_purchase_date": "2025-12-23",
-      "l12m_sales": 11039.06,
-      "segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Utility Tri-State - Mulberry",
-      "expected_interval_days": 7.0,
-      "recency_days": 213,
-      "days_overdue": 204.0,
-      "last_purchase_date": "2025-07-02",
-      "l12m_sales": 5886.0,
-      "segment": "Other",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "JTC Field Repair",
-      "expected_interval_days": 22.0,
-      "recency_days": 45,
-      "days_overdue": 17.0,
-      "last_purchase_date": "2025-12-17",
-      "l12m_sales": 5017.9,
-      "segment": "Other",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Westman Equipment",
-      "expected_interval_days": 41.0,
-      "recency_days": 120,
-      "days_overdue": 67.0,
-      "last_purchase_date": "2025-10-03",
-      "l12m_sales": 4964.0,
-      "segment": "Other",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "VALLEY FREIGHTLINER - BROOK PARK",
-      "expected_interval_days": 5.0,
-      "recency_days": 61,
-      "days_overdue": 55.0,
-      "last_purchase_date": "2025-12-01",
-      "l12m_sales": 4304.86,
-      "segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Craig Stanley/ Mobile Parts",
-      "expected_interval_days": 6.0,
-      "recency_days": 200,
-      "days_overdue": 192.0,
-      "last_purchase_date": "2025-07-15",
-      "l12m_sales": 1668.0,
-      "segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "TRP Montreal",
-      "expected_interval_days": 18.0,
-      "recency_days": 80,
-      "days_overdue": 57.0,
-      "last_purchase_date": "2025-11-12",
-      "l12m_sales": 120699.6,
-      "segment": "Loyal Customers",
-      "has_backlog_order": true,
-      "backlog_value": 26584.0
-    },
-    {
-      "customer": "Traction Heavy Duty Parts-Abbotsford",
-      "expected_interval_days": 7.0,
-      "recency_days": 40,
-      "days_overdue": 31.0,
-      "last_purchase_date": "2025-12-22",
-      "l12m_sales": 157319.4,
-      "segment": "Loyal Customers",
-      "has_backlog_order": true,
-      "backlog_value": 32400.0
-    },
-    {
       "customer": "Atlanta Safety Brake Service",
-      "expected_interval_days": 18.0,
+      "expected_interval_days": 36.0,
       "recency_days": 51,
-      "days_overdue": 27.0,
+      "days_overdue": 4.0,
       "last_purchase_date": "2025-12-11",
       "l12m_sales": 82625.04000000001,
       "segment": "Loyal Customers",
       "has_backlog_order": true,
       "backlog_value": 33408.0
-    },
-    {
-      "customer": "Kenworth of  Louisiana",
-      "expected_interval_days": 2.0,
-      "recency_days": 4,
-      "days_overdue": 1.0,
-      "last_purchase_date": "2026-01-27",
-      "l12m_sales": 200400.0,
-      "segment": "Champions",
-      "has_backlog_order": true,
-      "backlog_value": 127920.0
     }
   ],
   "cross_sell_opportunities": [

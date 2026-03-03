@@ -198,7 +198,7 @@ def _analyze_customers(cust_data, notes, actions):
     if truly_overdue:
         overdue_revenue = sum(o.get('l12m_sales', 0) for o in truly_overdue[:10])
         top_overdue = [o['customer'].split('/')[0].strip() for o in truly_overdue[:3]]
-        notes.append(f"- {len(truly_overdue)} customers are past due to order (${overdue_revenue:,.0f} L12M at risk): {', '.join(top_overdue)}")
+        notes.append(f"- {len(truly_overdue)} customers are overdue to order (${overdue_revenue:,.0f} L12M at risk): {', '.join(top_overdue)}")
         actions.append(f"- Contact {len(truly_overdue)} overdue customers — top accounts: {', '.join(top_overdue)}")
 
     # Cross-sell opportunities

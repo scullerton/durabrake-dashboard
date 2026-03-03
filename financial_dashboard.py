@@ -1250,7 +1250,7 @@ if data:
             attention_list = customer_data.get('customers_needing_attention', [])
             if attention_list:
                 st.subheader("🚨 Customers Needing Attention")
-                st.markdown("Customers flagged by one or more signals: **Past Due** (overdue to order), **At Risk** (RFM segment), **Declining** (L3M trend down >25%), **Low Margin** (<15% GP on significant volume)")
+                st.markdown("Customers flagged by one or more signals: **Order Overdue** (overdue to order), **At Risk** (RFM segment), **Declining** (L3M trend down >25%), **Low Margin** (<15% GP on significant volume)")
 
                 attention_rows = []
                 for a in attention_list:
@@ -1273,9 +1273,9 @@ if data:
                 df_attention = pd.DataFrame(attention_rows)
 
                 def color_attention_flags(val):
-                    if 'Past Due' in str(val) and 'At Risk' in str(val):
+                    if 'Order Overdue' in str(val) and 'At Risk' in str(val):
                         return 'background-color: #f8d7da; font-weight: bold'
-                    elif 'Past Due' in str(val) or 'At Risk' in str(val):
+                    elif 'Order Overdue' in str(val) or 'At Risk' in str(val):
                         return 'background-color: #fff3cd'
                     elif 'Declining' in str(val):
                         return 'background-color: #fff3cd'

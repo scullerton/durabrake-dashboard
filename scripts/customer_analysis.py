@@ -273,18 +273,40 @@ def calculate_category_metrics(transactions_df, l3m_start):
     return customer_category_map, cat_summary
 
 
-def calculate_order_frequency(rfm_df, analysis_date):
-    """Calculate expected order interval and overdue status for each customer."""
+def calculate_order_frequency(transactions_df, rfm_df, analysis_date, l12m_start):
+    """Calculate expected order interval using unique order dates within L12M.
+
+    Uses unique transaction dates (not line item counts) so a single order
+    with many line items counts as one order event.  Only L12M activity is
+    used for the interval calculation so the metric reflects recent
+    purchasing behaviour.
+    """
+    # Build per-customer unique order dates within L12M
+    l12m_trans = transactions_df[transactions_df['date'] >= l12m_start].copy()
+    l12m_trans['order_date'] = l12m_trans['date'].dt.date
+
+    order_dates_by_cust = (
+        l12m_trans.groupby('customer')['order_date']
+        .apply(lambda x: sorted(x.unique()))
+        .to_dict()
+    )
+
     results = []
     for _, row in rfm_df.iterrows():
-        freq = row['frequency']
+        cust = row['customer']
         recency = row['recency_days']
-        first = pd.to_datetime(row['first_purchase_date'])
         last = pd.to_datetime(row['last_purchase_date'])
+        segment = row['segment']
+        monetary = float(row['monetary_value'])
 
-        if freq >= 2:
-            span_days = (last - first).days
-            expected_interval = span_days / (freq - 1) if freq > 1 else None
+        dates = order_dates_by_cust.get(cust, [])
+        n_orders = len(dates)
+
+        if n_orders >= 2:
+            first_l12m = pd.Timestamp(dates[0])
+            last_l12m = pd.Timestamp(dates[-1])
+            span_days = (last_l12m - first_l12m).days
+            expected_interval = span_days / (n_orders - 1)
         else:
             expected_interval = None
 
@@ -293,14 +315,14 @@ def calculate_order_frequency(rfm_df, analysis_date):
             days_overdue = max(0, recency - expected_interval * 1.3)
 
         results.append({
-            'customer': row['customer'],
+            'customer': cust,
             'recency_days': int(recency),
-            'frequency': int(freq),
-            'monetary_value': float(row['monetary_value']),
+            'l12m_order_count': n_orders,
+            'monetary_value': monetary,
             'expected_interval_days': round(expected_interval, 0) if expected_interval else None,
             'days_overdue': round(days_overdue, 0),
             'last_purchase_date': str(last.date()),
-            'segment': row['segment'],
+            'segment': segment,
         })
 
     return results
@@ -368,9 +390,11 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     print(f"[OK] Loaded RFM data for {len(rfm_df)} customers")
     print()
 
-    # Calculate order frequency and overdue status
+    # Calculate order frequency and overdue status (using trailing 12-month unique order dates)
     print("Calculating order frequency and overdue status...")
-    frequency_data = calculate_order_frequency(rfm_df, analysis_date)
+    from dateutil.relativedelta import relativedelta
+    trailing_12m_start = analysis_date - relativedelta(months=12)
+    frequency_data = calculate_order_frequency(transactions_df, rfm_df, analysis_date, trailing_12m_start)
     print(f"[OK] Frequency analysis complete")
     print()
 
@@ -431,7 +455,7 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     # --- Overdue customers ---
     overdue_list = []
     for fd in frequency_data:
-        if fd['days_overdue'] > 0 and fd['frequency'] >= 3:
+        if fd['days_overdue'] > 0 and fd['l12m_order_count'] >= 3:
             has_backlog = fd['customer'] in backlog_customers
             backlog_val = backlog_customers.get(fd['customer'], 0)
             overdue_list.append({
@@ -479,8 +503,8 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
         # Signal 1: Overdue to order (excluding backlog-covered)
         days_overdue = rfm_info.get('days_overdue', 0)
         has_backlog = cust in backlog_customers
-        if days_overdue > 0 and rfm_info.get('frequency', 0) >= 3 and not has_backlog:
-            reasons.append('Past Due')
+        if days_overdue > 0 and rfm_info.get('l12m_order_count', 0) >= 3 and not has_backlog:
+            reasons.append('Order Overdue')
 
         # Signal 2: At Risk or Need Attention segment
         if segment in ('At Risk', 'Need Attention', 'Cannot Lose Them'):
