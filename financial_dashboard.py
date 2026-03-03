@@ -1242,6 +1242,208 @@ if data:
 
                 st.dataframe(display_rfm, use_container_width=True, hide_index=True)
 
+            st.divider()
+
+            # ==================================================================
+            # CUSTOMERS NEEDING ATTENTION
+            # ==================================================================
+            attention_list = customer_data.get('customers_needing_attention', [])
+            if attention_list:
+                st.subheader("🚨 Customers Needing Attention")
+                st.markdown("Customers flagged by one or more signals: **Past Due** (overdue to order), **At Risk** (RFM segment), **Declining** (L3M trend down >25%), **Low Margin** (<15% GP on significant volume)")
+
+                attention_rows = []
+                for a in attention_list:
+                    reason_tags = ', '.join(a['reasons'])
+                    backlog_note = ''
+                    if a.get('has_backlog_order'):
+                        backlog_note = f" (${a['backlog_value']:,.0f} in backlog)"
+                    attention_rows.append({
+                        'Customer': a['customer'].split('/')[0].strip(),
+                        'Flags': reason_tags,
+                        'L3M Sales': a['l3m_sales'],
+                        'L12M Sales': a['l12m_sales'],
+                        'Trend %': a['trend_pct'],
+                        'GP Margin %': a['gp_margin'],
+                        'Days Since Order': a['recency_days'],
+                        'Segment': a['rfm_segment'],
+                        'Backlog': backlog_note,
+                    })
+
+                df_attention = pd.DataFrame(attention_rows)
+
+                def color_attention_flags(val):
+                    if 'Past Due' in str(val) and 'At Risk' in str(val):
+                        return 'background-color: #f8d7da; font-weight: bold'
+                    elif 'Past Due' in str(val) or 'At Risk' in str(val):
+                        return 'background-color: #fff3cd'
+                    elif 'Declining' in str(val):
+                        return 'background-color: #fff3cd'
+                    return ''
+
+                styled_attention = df_attention.style.format({
+                    'L3M Sales': '${:,.0f}',
+                    'L12M Sales': '${:,.0f}',
+                    'Trend %': '{:+.0f}%',
+                    'GP Margin %': '{:.1f}%',
+                    'Days Since Order': '{:.0f}',
+                }).applymap(color_attention_flags, subset=['Flags'])
+
+                st.dataframe(styled_attention, use_container_width=True, hide_index=True)
+
+                st.caption("Customers with active backlog orders are noted — they may not need immediate outreach despite overdue signals.")
+
+            st.divider()
+
+            # ==================================================================
+            # OVERDUE CUSTOMERS
+            # ==================================================================
+            overdue_list = customer_data.get('overdue_customers', [])
+            if overdue_list:
+                st.subheader("⏰ Overdue to Order")
+                st.markdown("Customers past their expected purchase interval based on historical ordering patterns. Minimum 3 prior orders required for interval calculation.")
+
+                # Split into truly overdue vs backlog-covered
+                truly_overdue = [o for o in overdue_list if not o['has_backlog_order']]
+                backlog_covered = [o for o in overdue_list if o['has_backlog_order']]
+
+                if truly_overdue:
+                    overdue_rows = []
+                    for o in truly_overdue:
+                        overdue_rows.append({
+                            'Customer': o['customer'].split('/')[0].strip(),
+                            'Last Order': o['last_purchase_date'],
+                            'Avg Interval (days)': o['expected_interval_days'],
+                            'Days Since Order': o['recency_days'],
+                            'Days Overdue': o['days_overdue'],
+                            'L12M Sales': o['l12m_sales'],
+                            'Segment': o['segment'],
+                        })
+
+                    df_overdue = pd.DataFrame(overdue_rows)
+                    styled_overdue = df_overdue.style.format({
+                        'Avg Interval (days)': '{:.0f}',
+                        'Days Since Order': '{:.0f}',
+                        'Days Overdue': '{:.0f}',
+                        'L12M Sales': '${:,.0f}',
+                    })
+                    st.dataframe(styled_overdue, use_container_width=True, hide_index=True)
+
+                if backlog_covered:
+                    with st.expander(f"📦 {len(backlog_covered)} Overdue Customers Covered by Active Backlog"):
+                        covered_rows = []
+                        for o in backlog_covered:
+                            covered_rows.append({
+                                'Customer': o['customer'].split('/')[0].strip(),
+                                'Last Order': o['last_purchase_date'],
+                                'Days Overdue': o['days_overdue'],
+                                'L12M Sales': o['l12m_sales'],
+                                'Backlog Value': o['backlog_value'],
+                            })
+                        df_covered = pd.DataFrame(covered_rows)
+                        styled_covered = df_covered.style.format({
+                            'Days Overdue': '{:.0f}',
+                            'L12M Sales': '${:,.0f}',
+                            'Backlog Value': '${:,.0f}',
+                        })
+                        st.dataframe(styled_covered, use_container_width=True, hide_index=True)
+                        st.caption("These customers are technically past their expected order interval but have active orders in the backlog.")
+
+            st.divider()
+
+            # ==================================================================
+            # CROSS-SELL OPPORTUNITIES
+            # ==================================================================
+            cross_sell = customer_data.get('cross_sell_opportunities', [])
+            category_heatmap = customer_data.get('category_heatmap', [])
+            if cross_sell:
+                st.subheader("🎯 Cross-Sell Opportunities")
+                st.markdown("Active customers buying from fewer product categories than available. Categories: **Drums**, **Rotors**, **ADB** (calipers/pads/shoes), **Hubs**")
+
+                cross_rows = []
+                for cs in cross_sell[:20]:
+                    cross_rows.append({
+                        'Customer': cs['customer'].split('/')[0].strip(),
+                        'Buying': ', '.join(cs['categories_purchased']),
+                        'Missing': ', '.join(cs['missing_categories']),
+                        'L3M Sales': cs['l3m_sales'],
+                        'Categories': f"{cs['category_count']}/4",
+                    })
+
+                df_cross = pd.DataFrame(cross_rows)
+                styled_cross = df_cross.style.format({
+                    'L3M Sales': '${:,.0f}',
+                })
+                st.dataframe(styled_cross, use_container_width=True, hide_index=True)
+
+            # Category heatmap for top 15
+            if category_heatmap:
+                st.markdown("#### Top 15 Customer Category Mix (L3M Revenue)")
+                df_heatmap = pd.DataFrame(category_heatmap)
+                cats_in_data = [c for c in ['Drums', 'Rotors', 'ADB', 'Hubs'] if c in df_heatmap.columns]
+
+                if cats_in_data:
+                    fig_heatmap = go.Figure()
+
+                    colors = {'Drums': '#1f77b4', 'Rotors': '#ff7f0e', 'ADB': '#2ca02c', 'Hubs': '#d62728'}
+                    for cat in cats_in_data:
+                        fig_heatmap.add_trace(go.Bar(
+                            name=cat,
+                            y=df_heatmap['customer'],
+                            x=df_heatmap[cat],
+                            orientation='h',
+                            marker_color=colors.get(cat, '#999999'),
+                        ))
+
+                    fig_heatmap.update_layout(
+                        barmode='stack',
+                        title='Product Category Mix by Customer (L3M)',
+                        xaxis_title='Revenue ($)',
+                        height=500,
+                        legend=dict(orientation='h', yanchor='bottom', y=1.02),
+                        yaxis=dict(autorange='reversed'),
+                    )
+                    st.plotly_chart(fig_heatmap, use_container_width=True)
+
+            st.divider()
+
+            # ==================================================================
+            # PRODUCT CATEGORY SUMMARY
+            # ==================================================================
+            product_cats = customer_data.get('product_category_summary', [])
+            if product_cats:
+                st.subheader("📊 Product Category Mix (L3M)")
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    df_cats = pd.DataFrame(product_cats)
+                    fig_pie = go.Figure(data=[go.Pie(
+                        labels=df_cats['category'],
+                        values=df_cats['l3m_revenue'],
+                        textinfo='label+percent',
+                        hovertemplate='%{label}<br>Revenue: $%{value:,.0f}<br>%{percent}<extra></extra>',
+                    )])
+                    fig_pie.update_layout(title='Revenue by Product Category', height=400)
+                    st.plotly_chart(fig_pie, use_container_width=True)
+
+                with col2:
+                    cat_rows = []
+                    for pc in product_cats:
+                        cat_rows.append({
+                            'Category': pc['category'],
+                            'L3M Revenue': pc['l3m_revenue'],
+                            'Transactions': pc['l3m_transactions'],
+                            'Customers': pc['l3m_customers'],
+                        })
+                    df_cat_table = pd.DataFrame(cat_rows)
+                    styled_cats = df_cat_table.style.format({
+                        'L3M Revenue': '${:,.0f}',
+                    })
+                    st.dataframe(styled_cats, use_container_width=True, hide_index=True)
+
+            st.divider()
+
             # Footer
             st.caption(f"Customer analysis based on RFM segmentation | L3M: {_l3m_period} | L12M: {_l12m_period}")
 

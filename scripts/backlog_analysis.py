@@ -165,6 +165,14 @@ def run_backlog_analysis(period, year, month, last_day, base_path="."):
             }
             for _, row in metrics['orders_by_customer'].head(10).iterrows()
         ],
+        'backlog_by_customer': [
+            {
+                'customer': row['customer'],
+                'order_count': int(row['order_count']),
+                'total_value': float(row['total_value'])
+            }
+            for _, row in metrics['orders_by_customer'].iterrows()
+        ],
         'by_sales_rep': [
             {
                 'sales_rep': row['sales_rep'] if pd.notna(row['sales_rep']) else 'Unassigned',

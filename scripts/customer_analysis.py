@@ -1,6 +1,8 @@
 """
 Customer Analysis Module
-Parameterized version for dashboard generation
+Parameterized version for dashboard generation.
+Extracts product categories, computes cross-sell opportunities,
+order frequency analysis, and customers needing attention.
 """
 
 import pandas as pd
@@ -11,8 +13,101 @@ import os
 from file_utils import find_input_file
 
 
+# ---------------------------------------------------------------------------
+# Product category classification
+# ---------------------------------------------------------------------------
+NON_PRODUCT_ITEMS = {
+    'buying group discount', 'gst', 'freight', 'customs and duty',
+    'surcharge', 'restocking fee', 'promotion discount',
+    'product/service full name',
+}
+
+def classify_product(product_service, description):
+    """Classify a product/service into a business category."""
+    if not product_service or pd.isna(product_service):
+        return None
+    ps = str(product_service).strip()
+    ps_lower = ps.lower()
+
+    # Filter non-product line items
+    if ps_lower in NON_PRODUCT_ITEMS:
+        return None
+    if ps_lower.startswith('credit memo adjustment'):
+        return None
+
+    desc = str(description).strip().lower() if description and pd.notna(description) else ''
+
+    # Air Disc Brake components (calipers, pads, shoes, sensors, kits)
+    if ps.startswith('BC') or ps.startswith('BP') or ps.startswith('BS'):
+        return 'ADB Components'
+    if 'brake shoe' in desc:
+        return 'ADB Components'
+    if 'brake pad' in desc or 'caliper' in desc or 'sensor' in desc:
+        return 'ADB Components'
+
+    # Hub assemblies
+    if '91101' in ps or 'hub' in desc.lower():
+        return 'Hub Assemblies'
+    if ps.startswith('3281908') or ps.startswith('3281909'):
+        return 'Hub Assemblies'
+
+    # Brake Rotors (including RT-prefix remanufactured rotors)
+    if ps.startswith('RT') or 'rotor' in desc:
+        return 'Brake Rotors'
+
+    # Steel Shell Brake Drums
+    if 'steel shell' in desc:
+        return 'Steel Shell Drums'
+
+    # Balanced Brake Drums
+    if 'balanced' in desc:
+        return 'Balanced Drums'
+
+    # Standard Brake Drums (catch-all for drum descriptions)
+    if 'brake drum' in desc or 'drum' in desc or 'front drum' in desc:
+        return 'Brake Drums'
+
+    # 3rd Party Items
+    if '3rd party' in ps_lower:
+        return '3rd Party'
+
+    # Wheel hardware
+    if ps.startswith('WB'):
+        return 'Other'
+
+    # DD-prefix drums
+    if ps.startswith('DD'):
+        return 'Brake Drums'
+
+    # OTR-prefix (relabeled rotors)
+    if ps.startswith('OTR'):
+        return 'Brake Rotors'
+
+    return 'Other'
+
+
+# Higher-level grouping for cross-sell analysis (fewer buckets)
+CROSS_SELL_CATEGORIES = {
+    'Brake Drums': 'Drums',
+    'Balanced Drums': 'Drums',
+    'Steel Shell Drums': 'Drums',
+    'Brake Rotors': 'Rotors',
+    'ADB Components': 'ADB',
+    'Hub Assemblies': 'Hubs',
+    '3rd Party': '3rd Party',
+    'Other': 'Other',
+}
+
+ALL_CROSS_SELL_CATEGORIES = ['Drums', 'Rotors', 'ADB', 'Hubs']
+
+
+# ---------------------------------------------------------------------------
+# Data loading
+# ---------------------------------------------------------------------------
+
 def parse_customer_sales_data(file_path):
-    """Parse the customer sales detail Excel file and extract transactions"""
+    """Parse the customer sales detail Excel file and extract transactions
+    with product category information."""
     df = pd.read_excel(file_path)
     transactions = []
     current_customer = None
@@ -30,6 +125,8 @@ def parse_customer_sales_data(file_path):
             transaction_date = row.iloc[1]
             transaction_type = row.iloc[2]
             amount = row.iloc[8]
+            product_service = row.iloc[4] if len(row) > 4 else None
+            description = row.iloc[5] if len(row) > 5 else None
 
             if transaction_type == 'Invoice' and pd.notna(amount) and amount != 0:
                 try:
@@ -38,10 +135,14 @@ def parse_customer_sales_data(file_path):
                     else:
                         trans_date = transaction_date
 
+                    category = classify_product(product_service, description)
+
                     transactions.append({
                         'customer': current_customer,
                         'date': trans_date,
-                        'amount': float(amount)
+                        'amount': float(amount),
+                        'product_service': str(product_service).strip() if pd.notna(product_service) else '',
+                        'category': category,
                     })
                 except:
                     pass
@@ -69,6 +170,23 @@ def load_customer_income_data(file_path):
 
     return df
 
+
+def load_backlog_customers(period, base_path="."):
+    """Load backlog data and return dict of {customer: backlog_value}."""
+    backlog_file = os.path.join(base_path, f"generated/{period}/backlog_dashboard_data.json")
+    if not os.path.exists(backlog_file):
+        return {}
+    with open(backlog_file, 'r') as f:
+        backlog = json.load(f)
+    result = {}
+    for entry in backlog.get('backlog_by_customer', backlog.get('top_customers', [])):
+        result[entry['customer']] = entry.get('total_value', 0)
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Metrics calculation
+# ---------------------------------------------------------------------------
 
 def calculate_customer_metrics(transactions_df, customer_income_df, l3m_year, l3m_month, year, month):
     """Calculate L3M and L12M metrics for each customer"""
@@ -120,6 +238,78 @@ def calculate_customer_metrics(transactions_df, customer_income_df, l3m_year, l3
     return customer_metrics, total_l3m_sales, total_l12m_sales
 
 
+def calculate_category_metrics(transactions_df, l3m_start):
+    """Calculate per-customer product category breakdown."""
+    # Only consider product transactions (category not None)
+    product_trans = transactions_df[transactions_df['category'].notna()].copy()
+    product_trans['cross_sell_cat'] = product_trans['category'].map(CROSS_SELL_CATEGORIES)
+
+    l3m_product = product_trans[product_trans['date'] >= l3m_start]
+
+    # Per-customer category breakdown (L3M)
+    customer_cats = (
+        l3m_product.groupby(['customer', 'cross_sell_cat'])['amount']
+        .sum()
+        .reset_index()
+    )
+
+    # Build per-customer dict: {customer: {cat: revenue}}
+    customer_category_map = {}
+    for _, row in customer_cats.iterrows():
+        cust = row['customer']
+        if cust not in customer_category_map:
+            customer_category_map[cust] = {}
+        customer_category_map[cust][row['cross_sell_cat']] = float(row['amount'])
+
+    # Overall category summary
+    cat_summary = (
+        l3m_product.groupby('category')
+        .agg(revenue=('amount', 'sum'), transactions=('amount', 'count'),
+             customers=('customer', 'nunique'))
+        .reset_index()
+        .sort_values('revenue', ascending=False)
+    )
+
+    return customer_category_map, cat_summary
+
+
+def calculate_order_frequency(rfm_df, analysis_date):
+    """Calculate expected order interval and overdue status for each customer."""
+    results = []
+    for _, row in rfm_df.iterrows():
+        freq = row['frequency']
+        recency = row['recency_days']
+        first = pd.to_datetime(row['first_purchase_date'])
+        last = pd.to_datetime(row['last_purchase_date'])
+
+        if freq >= 2:
+            span_days = (last - first).days
+            expected_interval = span_days / (freq - 1) if freq > 1 else None
+        else:
+            expected_interval = None
+
+        days_overdue = 0
+        if expected_interval and expected_interval > 0 and recency > 0:
+            days_overdue = max(0, recency - expected_interval * 1.3)
+
+        results.append({
+            'customer': row['customer'],
+            'recency_days': int(recency),
+            'frequency': int(freq),
+            'monetary_value': float(row['monetary_value']),
+            'expected_interval_days': round(expected_interval, 0) if expected_interval else None,
+            'days_overdue': round(days_overdue, 0),
+            'last_purchase_date': str(last.date()),
+            'segment': row['segment'],
+        })
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Main entry point
+# ---------------------------------------------------------------------------
+
 def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path="."):
     """Main function to run customer analysis"""
     print("=" * 80)
@@ -135,10 +325,17 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     output_dir = os.path.join(base_path, f"generated/{period}")
     os.makedirs(output_dir, exist_ok=True)
 
-    # Load and parse transaction data
+    import calendar
+    last_day = calendar.monthrange(year, month)[1]
+    analysis_date = datetime(year, month, last_day)
+    l3m_start = datetime(l3m_year, l3m_month, 1)
+
+    # Load and parse transaction data (now with product categories)
     print("Loading customer sales data...")
     transactions_df = parse_customer_sales_data(sales_file)
     print(f"[OK] Loaded {len(transactions_df):,} transactions")
+    cat_counts = transactions_df['category'].value_counts()
+    print(f"[OK] Product categories: {dict(cat_counts)}")
     print()
 
     # Load customer income data
@@ -156,6 +353,12 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     print(f"[OK] Analyzed {len(customer_metrics)} customers")
     print()
 
+    # Calculate product category metrics
+    print("Analyzing product categories...")
+    customer_category_map, cat_summary = calculate_category_metrics(transactions_df, l3m_start)
+    print(f"[OK] {len(cat_summary)} product categories identified")
+    print()
+
     # Get top 15 customers by L12M sales
     top_15_l12m = customer_metrics.nlargest(15, 'l12m_sales')
 
@@ -163,6 +366,18 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     print("Loading RFM analysis results...")
     rfm_df = pd.read_csv(rfm_file)
     print(f"[OK] Loaded RFM data for {len(rfm_df)} customers")
+    print()
+
+    # Calculate order frequency and overdue status
+    print("Calculating order frequency and overdue status...")
+    frequency_data = calculate_order_frequency(rfm_df, analysis_date)
+    print(f"[OK] Frequency analysis complete")
+    print()
+
+    # Load backlog for cross-reference
+    print("Loading backlog data for cross-reference...")
+    backlog_customers = load_backlog_customers(period, base_path)
+    print(f"[OK] {len(backlog_customers)} customers with active backlog orders")
     print()
 
     # Merge RFM data with top 15
@@ -176,10 +391,15 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
     # Prepare output data
     print("Preparing dashboard data...")
 
+    # --- Top 15 customers (enhanced with categories) ---
     top_customers_list = []
     for idx, row in top_15_with_rfm.iterrows():
+        cust = row['customer']
+        cats = customer_category_map.get(cust, {})
+        cats_list = sorted(cats.keys())
+
         top_customers_list.append({
-            'customer': row['customer'],
+            'customer': cust,
             'l3m_sales': float(row['l3m_sales']),
             'l3m_gross_profit': float(row['l3m_gross_profit']),
             'l3m_gp_margin': float(row['l3m_gp_margin']),
@@ -190,10 +410,12 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
             'l12m_pct_of_total': float(row['l12m_pct_of_total']),
             'rfm_segment': row['segment'] if pd.notna(row['segment']) else 'Unknown',
             'rfm_score': row['rfm_score'] if pd.notna(row['rfm_score']) else 'N/A',
-            'recency_days': int(row['recency_days']) if pd.notna(row['recency_days']) else None
+            'recency_days': int(row['recency_days']) if pd.notna(row['recency_days']) else None,
+            'categories': cats_list,
+            'category_count': len(cats_list),
         })
 
-    # RFM segment summary
+    # --- RFM segment summary ---
     segment_summary = []
     for segment, group in rfm_df.groupby('segment'):
         segment_summary.append({
@@ -204,8 +426,117 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
             'avg_recency_days': float(group['recency_days'].mean()),
             'avg_frequency': float(group['frequency'].mean())
         })
-
     segment_summary = sorted(segment_summary, key=lambda x: x['total_revenue'], reverse=True)
+
+    # --- Overdue customers ---
+    overdue_list = []
+    for fd in frequency_data:
+        if fd['days_overdue'] > 0 and fd['frequency'] >= 3:
+            has_backlog = fd['customer'] in backlog_customers
+            backlog_val = backlog_customers.get(fd['customer'], 0)
+            overdue_list.append({
+                'customer': fd['customer'],
+                'expected_interval_days': fd['expected_interval_days'],
+                'recency_days': fd['recency_days'],
+                'days_overdue': fd['days_overdue'],
+                'last_purchase_date': fd['last_purchase_date'],
+                'l12m_sales': fd['monetary_value'],
+                'segment': fd['segment'],
+                'has_backlog_order': has_backlog,
+                'backlog_value': backlog_val,
+            })
+    overdue_list.sort(key=lambda x: (-x['l12m_sales'] if not x['has_backlog_order'] else 0, -x['days_overdue']))
+
+    # --- Cross-sell opportunities ---
+    cross_sell_list = []
+    # Only consider customers with meaningful L3M activity
+    active_customers = customer_metrics[customer_metrics['l3m_sales'] > 0]
+    for _, row in active_customers.iterrows():
+        cust = row['customer']
+        cats = customer_category_map.get(cust, {})
+        cats_list = [c for c in cats.keys() if c in ALL_CROSS_SELL_CATEGORIES]
+        missing = [c for c in ALL_CROSS_SELL_CATEGORIES if c not in cats_list]
+        if missing and len(cats_list) >= 1 and row['l3m_sales'] >= 5000:
+            cross_sell_list.append({
+                'customer': cust,
+                'categories_purchased': cats_list,
+                'missing_categories': missing,
+                'l3m_sales': float(row['l3m_sales']),
+                'category_count': len(cats_list),
+            })
+    cross_sell_list.sort(key=lambda x: -x['l3m_sales'])
+    cross_sell_list = cross_sell_list[:25]
+
+    # --- Customers needing attention ---
+    attention_list = []
+    rfm_lookup = {r['customer']: r for r in frequency_data}
+    for _, row in customer_metrics.iterrows():
+        cust = row['customer']
+        reasons = []
+        rfm_info = rfm_lookup.get(cust, {})
+        segment = rfm_info.get('segment', '')
+
+        # Signal 1: Overdue to order (excluding backlog-covered)
+        days_overdue = rfm_info.get('days_overdue', 0)
+        has_backlog = cust in backlog_customers
+        if days_overdue > 0 and rfm_info.get('frequency', 0) >= 3 and not has_backlog:
+            reasons.append('Past Due')
+
+        # Signal 2: At Risk or Need Attention segment
+        if segment in ('At Risk', 'Need Attention', 'Cannot Lose Them'):
+            reasons.append('At Risk')
+
+        # Signal 3: Declining trend (L3M monthly rate vs L12M monthly rate)
+        trend_pct = 0
+        if row['l12m_sales'] > 0 and row['l3m_sales'] >= 0:
+            l3m_monthly = row['l3m_sales'] / 3
+            l12m_monthly = row['l12m_sales'] / 12
+            if l12m_monthly > 0:
+                trend_pct = ((l3m_monthly - l12m_monthly) / l12m_monthly) * 100
+                if trend_pct < -25:
+                    reasons.append('Declining')
+
+        # Signal 4: Low margin on significant volume
+        if row['gp_margin_pct'] < 15 and row['l3m_sales'] > 10000:
+            reasons.append('Low Margin')
+
+        if reasons and (row['l3m_sales'] > 0 or row['l12m_sales'] > 5000):
+            attention_list.append({
+                'customer': cust,
+                'reasons': reasons,
+                'l3m_sales': float(row['l3m_sales']),
+                'l12m_sales': float(row['l12m_sales']),
+                'recency_days': rfm_info.get('recency_days', 0),
+                'days_overdue': days_overdue,
+                'trend_pct': round(trend_pct, 1),
+                'gp_margin': float(row['gp_margin_pct']),
+                'rfm_segment': segment,
+                'has_backlog_order': has_backlog,
+                'backlog_value': backlog_customers.get(cust, 0),
+            })
+    # Sort: most reasons first, then by L12M sales descending
+    attention_list.sort(key=lambda x: (-len(x['reasons']), -x['l12m_sales']))
+    attention_list = attention_list[:30]
+
+    # --- Product category summary ---
+    product_categories = []
+    for _, row in cat_summary.iterrows():
+        product_categories.append({
+            'category': row['category'],
+            'l3m_revenue': float(row['revenue']),
+            'l3m_transactions': int(row['transactions']),
+            'l3m_customers': int(row['customers']),
+        })
+
+    # --- Category heatmap data for top customers ---
+    category_heatmap = []
+    for tc in top_customers_list:
+        cust = tc['customer']
+        cats = customer_category_map.get(cust, {})
+        entry = {'customer': cust.split('/')[0].strip()}
+        for cat in ALL_CROSS_SELL_CATEGORIES:
+            entry[cat] = round(cats.get(cat, 0), 0)
+        category_heatmap.append(entry)
 
     # Build output
     month_names = ["January", "February", "March", "April", "May", "June",
@@ -234,7 +565,12 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
             'need_attention': len(rfm_df[rfm_df['segment'] == 'Need Attention']),
             'promising': len(rfm_df[rfm_df['segment'] == 'Promising']),
             'other': len(rfm_df[rfm_df['segment'] == 'Other'])
-        }
+        },
+        'customers_needing_attention': attention_list,
+        'overdue_customers': overdue_list,
+        'cross_sell_opportunities': cross_sell_list,
+        'product_category_summary': product_categories,
+        'category_heatmap': category_heatmap,
     }
 
     # Save to JSON
@@ -243,6 +579,10 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
         json.dump(dashboard_data, f, indent=2)
 
     print(f"[OK] Saved dashboard data to: {output_file}")
+    print(f"[OK] {len(attention_list)} customers needing attention")
+    print(f"[OK] {len(overdue_list)} overdue customers ({sum(1 for o in overdue_list if not o['has_backlog_order'])} truly overdue, {sum(1 for o in overdue_list if o['has_backlog_order'])} covered by backlog)")
+    print(f"[OK] {len(cross_sell_list)} cross-sell opportunities")
+    print(f"[OK] {len(product_categories)} product categories")
     print()
 
     print("=" * 80)

@@ -192,6 +192,35 @@ def _analyze_customers(cust_data, notes, actions):
         notes.append(f"- {len(low_margin_customers)} of top 10 customers have GP margin below 15%: {names}")
         actions.append(f"- Review pricing strategy for low-margin key accounts")
 
+    # Overdue customers
+    overdue = cust_data.get('overdue_customers', [])
+    truly_overdue = [o for o in overdue if not o.get('has_backlog_order')]
+    if truly_overdue:
+        overdue_revenue = sum(o.get('l12m_sales', 0) for o in truly_overdue[:10])
+        top_overdue = [o['customer'].split('/')[0].strip() for o in truly_overdue[:3]]
+        notes.append(f"- {len(truly_overdue)} customers are past due to order (${overdue_revenue:,.0f} L12M at risk): {', '.join(top_overdue)}")
+        actions.append(f"- Contact {len(truly_overdue)} overdue customers — top accounts: {', '.join(top_overdue)}")
+
+    # Cross-sell opportunities
+    cross_sell = cust_data.get('cross_sell_opportunities', [])
+    if cross_sell:
+        top_cs = cross_sell[:3]
+        cs_details = []
+        for cs in top_cs:
+            name = cs['customer'].split('/')[0].strip()
+            missing = ', '.join(cs['missing_categories'])
+            cs_details.append(f"{name} (missing: {missing})")
+        notes.append(f"- {len(cross_sell)} customers have cross-sell opportunities across product categories")
+        actions.append(f"- Top cross-sell targets: {'; '.join(cs_details)}")
+
+    # Customers needing attention summary
+    attention = cust_data.get('customers_needing_attention', [])
+    if attention:
+        multi_flag = [a for a in attention if len(a['reasons']) >= 2]
+        if multi_flag:
+            names = [a['customer'].split('/')[0].strip() for a in multi_flag[:3]]
+            notes.append(f"- {len(multi_flag)} customers flagged with multiple attention signals: {', '.join(names)}")
+
 
 def _analyze_backlog(backlog, notes, actions):
     """Analyze backlog data for key insights."""
