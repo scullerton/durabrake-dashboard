@@ -319,45 +319,29 @@ if data:
         # ==================================================================
         st.header("⚠️ Critical Notes & Action Items")
 
-        # Load saved notes for current period from JSON file
+        # Load auto-generated notes for current period
         import os as _os
         notes_file = _os.path.join('generated', PERIOD, 'dashboard_notes.json')
         saved_notes = {"critical_notes": "", "action_items": ""}
         if _os.path.exists(notes_file):
-            try:
-                with open(notes_file, 'r') as _f:
-                    saved_notes = json.load(_f)
-            except Exception:
-                pass
+            with open(notes_file, 'r') as _f:
+                saved_notes = json.load(_f)
 
-        col1, col2 = st.columns(2)
+        _critical_notes = saved_notes.get("critical_notes", "")
+        _action_items = saved_notes.get("action_items", "")
 
-        with col1:
-            st.subheader("📝 Critical Notes")
-            notes = st.text_area(
-                "Critical notes for this period",
-                value=saved_notes.get("critical_notes", ""),
-                height=200,
-                key="critical_notes"
-            )
+        if _critical_notes or _action_items:
+            col1, col2 = st.columns(2)
 
-        with col2:
-            st.subheader("✅ Action Items")
-            actions = st.text_area(
-                "Action items to address",
-                value=saved_notes.get("action_items", ""),
-                height=200,
-                key="action_items"
-            )
+            with col1:
+                st.subheader("📝 Critical Notes")
+                st.markdown(_critical_notes)
 
-        # Save button for notes
-        if st.button("💾 Save Notes", key="save_notes_btn"):
-            try:
-                with open(notes_file, 'w') as _f:
-                    json.dump({"critical_notes": notes, "action_items": actions}, _f, indent=2)
-                st.success("Notes saved successfully!")
-            except Exception as e:
-                st.error(f"Could not save notes: {e}")
+            with col2:
+                st.subheader("✅ Action Items")
+                st.markdown(_action_items)
+        else:
+            st.info("No critical notes available. Run `generate_dashboard.py` to auto-generate insights from this period's data.")
 
         st.divider()
 
