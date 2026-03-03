@@ -1005,5 +1005,9 @@
         }
       ]
     }
+  },
+  "notes": {
+    "critical_notes": "\u2022 Revenue of $1,278,219 is 56% above the prior 3-month average \u2014 strong performance\n\u2022 Gross margin at 28.6% is 5.4 pts below L3M average \u2014 margin compression\n\u2022 Net income turned positive at $63,962 after averaging $-100,222 over prior 3 months\n\u2022 Operating cash flow is negative at $-218,377\n\u2022 Year-over-year revenue is up 83% vs January 2025\n\u2022 13 customers classified as 'At Risk' with $578,127 in historical revenue\n\u2022 63 customers are Hibernating (no recent purchases)\n\u2022 3 of top 10 customers have GP margin below 15%: Kenworth of  Louisiana, Volvo Group NA, Inc, Peterbilt Pacific\n\u2022 Order backlog of $1,213,202 across 42 orders (avg age: 57 days)\n\u2022 7 orders (17%) are over 90 days old \u2014 potential delivery risk\n\u2022 $625,377 (52%) of backlog expected to ship within 30 days",
+    "action_items": "\u2022 Review product mix and pricing; identify margin erosion sources\n\u2022 Monitor cash position; review AR collections and AP timing\n\u2022 Prioritize outreach to 13 At Risk customers before they churn\n\u2022 Run targeted reactivation campaign for top Hibernating accounts\n\u2022 Review pricing strategy for low-margin key accounts\n\u2022 Review 7 aged orders (>90 days) for delivery status and customer communication"
   }
 }

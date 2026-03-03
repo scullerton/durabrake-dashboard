@@ -319,16 +319,10 @@ if data:
         # ==================================================================
         st.header("⚠️ Critical Notes & Action Items")
 
-        # Load auto-generated notes for current period
-        import os as _os
-        notes_file = _os.path.join('generated', PERIOD, 'dashboard_notes.json')
-        saved_notes = {"critical_notes": "", "action_items": ""}
-        if _os.path.exists(notes_file):
-            with open(notes_file, 'r') as _f:
-                saved_notes = json.load(_f)
-
-        _critical_notes = saved_notes.get("critical_notes", "")
-        _action_items = saved_notes.get("action_items", "")
+        # Read notes from the main dashboard data (injected by generate_notes.py)
+        _notes_data = data.get('notes', {})
+        _critical_notes = _notes_data.get("critical_notes", "")
+        _action_items = _notes_data.get("action_items", "")
 
         if _critical_notes or _action_items:
             col1, col2 = st.columns(2)

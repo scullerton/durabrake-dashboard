@@ -48,8 +48,19 @@ def run_generate_notes(period, year, month):
         "action_items": "\n".join(action_items)
     }
 
+    # Write standalone notes file
     with open(notes_file, 'w') as f:
         json.dump(notes_content, f, indent=2)
+
+    # Also inject notes into dashboard_data.json so the dashboard can
+    # read them via the same load_data() path that already works
+    dashboard_file = os.path.join(output_folder, 'dashboard_data.json')
+    if os.path.exists(dashboard_file):
+        with open(dashboard_file, 'r') as f:
+            dash = json.load(f)
+        dash['notes'] = notes_content
+        with open(dashboard_file, 'w') as f:
+            json.dump(dash, f, indent=2)
 
     print(f"  Generated {len(critical_notes)} notes, {len(action_items)} action items")
     return notes_content
