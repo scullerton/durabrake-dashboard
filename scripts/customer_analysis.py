@@ -189,9 +189,16 @@ def load_backlog_customers(period, base_path="."):
 # ---------------------------------------------------------------------------
 
 def calculate_customer_metrics(transactions_df, customer_income_df, l3m_year, l3m_month, year, month):
-    """Calculate L3M and L12M metrics for each customer"""
+    """Calculate L3M and L12M metrics for each customer.
+    L12M = trailing 12 months ending at the reporting month.
+    """
+    from dateutil.relativedelta import relativedelta
+    import calendar
+    last_day = calendar.monthrange(year, month)[1]
+    analysis_date = datetime(year, month, last_day)
+
     l3m_start = datetime(l3m_year, l3m_month, 1)
-    l12m_start = datetime(year, 1, 1)
+    l12m_start = analysis_date - relativedelta(months=12) + relativedelta(days=1)
 
     l3m_trans = transactions_df[transactions_df['date'] >= l3m_start]
     l12m_trans = transactions_df[transactions_df['date'] >= l12m_start]
@@ -567,11 +574,16 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
                    "July", "August", "September", "October", "November", "December"]
     l3m_period = f"{month_names[l3m_month-1][:3]}-{month_names[month-1][:3]} {year}"
 
+    # L12M period label (trailing 12 months)
+    from dateutil.relativedelta import relativedelta
+    l12m_start_date = analysis_date - relativedelta(months=12) + relativedelta(days=1)
+    l12m_period = f"{month_names[l12m_start_date.month-1][:3]} {l12m_start_date.year}-{month_names[month-1][:3]} {year}"
+
     dashboard_data = {
         'metadata': {
             'generated_at': datetime.now().isoformat(),
             'analysis_period_l3m': l3m_period,
-            'analysis_period_l12m': f'Jan-Dec {year}',
+            'analysis_period_l12m': l12m_period,
             'total_customers': len(customer_metrics),
             'total_l3m_sales': float(total_l3m),
             'total_l12m_sales': float(total_l12m)

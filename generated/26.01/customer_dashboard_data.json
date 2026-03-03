@@ -1,30 +1,32 @@
 {
   "metadata": {
-    "generated_at": "2026-03-03T12:29:49.571658",
+    "generated_at": "2026-03-03T12:40:45.865061",
     "analysis_period_l3m": "Nov-Jan 2026",
-    "analysis_period_l12m": "Jan-Dec 2026",
-    "total_customers": 124,
-    "total_l3m_sales": 3519900.1900000004,
-    "total_l12m_sales": 2147704.9
+    "analysis_period_l12m": "Feb 2025-Jan 2026",
+    "total_customers": 216,
+    "total_l3m_sales": 3519900.19,
+    "total_l12m_sales": 10164659.98
   },
   "top_15_customers": [
     {
-      "customer": "Kenworth of  Louisiana",
-      "l3m_sales": 200400.0,
-      "l3m_gross_profit": 18908.0,
-      "l3m_gp_margin": 9.435129740518962,
-      "l3m_pct_of_total": 5.693343253576744,
-      "l12m_sales": 200400.0,
-      "l12m_gross_profit": 18908.0,
-      "l12m_gp_margin": 9.435129740518962,
-      "l12m_pct_of_total": 9.330890850041829,
+      "customer": "Oshkosh Defense, LLC",
+      "l3m_sales": 247162.50999999998,
+      "l3m_gross_profit": 140810.5816154213,
+      "l3m_gp_margin": 56.970849509264696,
+      "l3m_pct_of_total": 7.021861321584804,
+      "l12m_sales": 1139607.23,
+      "l12m_gross_profit": 649243.92,
+      "l12m_gp_margin": 56.970849509264696,
+      "l12m_pct_of_total": 11.211464350428768,
       "rfm_segment": "Champions",
-      "rfm_score": 445,
-      "recency_days": 4,
+      "rfm_score": 455,
+      "recency_days": 5,
       "categories": [
-        "Drums"
+        "Drums",
+        "Hubs",
+        "Other"
       ],
-      "category_count": 1
+      "category_count": 3
     },
     {
       "customer": "Volvo Group NA, Inc",
@@ -32,10 +34,10 @@
       "l3m_gross_profit": 43660.120212256465,
       "l3m_gp_margin": 14.529316246554986,
       "l3m_pct_of_total": 8.537080990356149,
-      "l12m_sales": 138826.8,
-      "l12m_gross_profit": 20170.584806972394,
+      "l12m_sales": 833595.8,
+      "l12m_gross_profit": 121115.77,
       "l12m_gp_margin": 14.529316246554986,
-      "l12m_pct_of_total": 6.463960667967,
+      "l12m_pct_of_total": 8.200921640666627,
       "rfm_segment": "Champions",
       "rfm_score": 555,
       "recency_days": -23,
@@ -45,38 +47,20 @@
       "category_count": 1
     },
     {
-      "customer": "Washington Foundries",
-      "l3m_sales": 123656.0,
-      "l3m_gross_profit": 78111.45455356542,
-      "l3m_gp_margin": 63.16834973924874,
-      "l3m_pct_of_total": 3.51305415850442,
-      "l12m_sales": 123656.0,
-      "l12m_gross_profit": 78111.45455356542,
-      "l12m_gp_margin": 63.16834973924874,
-      "l12m_pct_of_total": 5.757588018726409,
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "l3m_sales": 187178.1,
+      "l3m_gross_profit": 53687.86899578673,
+      "l3m_gp_margin": 28.682772715283853,
+      "l3m_pct_of_total": 5.317710443374817,
+      "l12m_sales": 531022.86,
+      "l12m_gross_profit": 152312.08,
+      "l12m_gp_margin": 28.682772715283853,
+      "l12m_pct_of_total": 5.224206820934899,
       "rfm_segment": "Champions",
-      "rfm_score": 555,
-      "recency_days": -23,
+      "rfm_score": 455,
+      "recency_days": 18,
       "categories": [
-        "Drums"
-      ],
-      "category_count": 1
-    },
-    {
-      "customer": "Peterbilt Pacific / TRP - Langley",
-      "l3m_sales": 141855.0,
-      "l3m_gross_profit": 9951.38,
-      "l3m_gp_margin": 7.015177469951711,
-      "l3m_pct_of_total": 4.030085864451741,
-      "l12m_sales": 101325.0,
-      "l12m_gross_profit": 7108.128571428571,
-      "l12m_gp_margin": 7.015177469951711,
-      "l12m_pct_of_total": 4.717826923056329,
-      "rfm_segment": "Champions",
-      "rfm_score": 555,
-      "recency_days": -27,
-      "categories": [
-        "Drums"
+        "Rotors"
       ],
       "category_count": 1
     },
@@ -85,11 +69,11 @@
       "l3m_sales": 147470.0,
       "l3m_gross_profit": 32847.477345729334,
       "l3m_gp_margin": 22.27400647299745,
-      "l3m_pct_of_total": 4.1896074331584945,
-      "l12m_sales": 83590.0,
-      "l12m_gross_profit": 18618.842010778568,
+      "l3m_pct_of_total": 4.189607433158495,
+      "l12m_sales": 327761.6,
+      "l12m_gross_profit": 73005.64,
       "l12m_gp_margin": 22.27400647299745,
-      "l12m_pct_of_total": 3.8920617073602615,
+      "l12m_pct_of_total": 3.2245210429557325,
       "rfm_segment": "Champions",
       "rfm_score": 555,
       "recency_days": -10,
@@ -103,11 +87,11 @@
       "l3m_sales": 80895.56999999999,
       "l3m_gross_profit": 48347.02176676578,
       "l3m_gp_margin": 59.764733429489134,
-      "l3m_pct_of_total": 2.2982347689807643,
-      "l12m_sales": 80895.56999999999,
-      "l12m_gross_profit": 48347.02176676578,
+      "l3m_pct_of_total": 2.2982347689807647,
+      "l12m_sales": 282638.54,
+      "l12m_gross_profit": 168918.17,
       "l12m_gp_margin": 59.764733429489134,
-      "l12m_pct_of_total": 3.766605458692206,
+      "l12m_pct_of_total": 2.780600045216662,
       "rfm_segment": "Champions",
       "rfm_score": 555,
       "recency_days": -19,
@@ -118,93 +102,72 @@
       "category_count": 2
     },
     {
-      "customer": "Oshkosh Defense, LLC",
-      "l3m_sales": 247162.50999999998,
-      "l3m_gross_profit": 140810.5816154213,
-      "l3m_gp_margin": 56.970849509264696,
-      "l3m_pct_of_total": 7.021861321584802,
-      "l12m_sales": 72672.87,
-      "l12m_gross_profit": 41402.35140176357,
-      "l12m_gp_margin": 56.970849509264696,
-      "l12m_pct_of_total": 3.383745597451494,
+      "customer": "Washington Foundries",
+      "l3m_sales": 123656.0,
+      "l3m_gross_profit": 78111.45455356542,
+      "l3m_gp_margin": 63.16834973924874,
+      "l3m_pct_of_total": 3.513054158504421,
+      "l12m_sales": 212957.74,
+      "l12m_gross_profit": 134521.89,
+      "l12m_gp_margin": 63.16834973924874,
+      "l12m_pct_of_total": 2.09507981987608,
       "rfm_segment": "Champions",
-      "rfm_score": 455,
-      "recency_days": 5,
-      "categories": [
-        "Drums",
-        "Hubs",
-        "Other"
-      ],
-      "category_count": 3
-    },
-    {
-      "customer": "Rush Enterprises, Inc. - Billing",
-      "l3m_sales": 187178.1,
-      "l3m_gross_profit": 53687.86899578673,
-      "l3m_gp_margin": 28.682772715283853,
-      "l3m_pct_of_total": 5.317710443374816,
-      "l12m_sales": 62139.45,
-      "l12m_gross_profit": 17823.317210027453,
-      "l12m_gp_margin": 28.682772715283853,
-      "l12m_pct_of_total": 2.8932955360859864,
-      "rfm_segment": "Champions",
-      "rfm_score": 455,
-      "recency_days": 18,
-      "categories": [
-        "Rotors"
-      ],
-      "category_count": 1
-    },
-    {
-      "customer": "Potter Webster Company",
-      "l3m_sales": 60240.21000000001,
-      "l3m_gross_profit": 18171.353197406064,
-      "l3m_gp_margin": 30.16482379029898,
-      "l3m_pct_of_total": 1.711418129728275,
-      "l12m_sales": 60240.21000000001,
-      "l12m_gross_profit": 18171.353197406064,
-      "l12m_gp_margin": 30.16482379029898,
-      "l12m_pct_of_total": 2.804864392682626,
-      "rfm_segment": "Champions",
-      "rfm_score": 545,
-      "recency_days": -26,
+      "rfm_score": 555,
+      "recency_days": -23,
       "categories": [
         "Drums"
       ],
       "category_count": 1
     },
     {
-      "customer": "Hogan Mfg., Inc. dba Murray Trailers",
-      "l3m_sales": 75883.34,
-      "l3m_gross_profit": 58064.396754314854,
-      "l3m_gp_margin": 76.51797714006112,
-      "l3m_pct_of_total": 2.155837833572207,
-      "l12m_sales": 58843.34,
-      "l12m_gross_profit": 45025.73344964844,
-      "l12m_gp_margin": 76.51797714006112,
-      "l12m_pct_of_total": 2.7398242654286444,
+      "customer": "Blue Bird Body Co.",
+      "l3m_sales": 66280.0,
+      "l3m_gross_profit": 34138.951021209745,
+      "l3m_gp_margin": 51.50716810683426,
+      "l3m_pct_of_total": 1.8830079383586158,
+      "l12m_sales": 203680.0,
+      "l12m_gross_profit": 104909.80000000002,
+      "l12m_gp_margin": 51.50716810683426,
+      "l12m_pct_of_total": 2.003805345193652,
       "rfm_segment": "Champions",
-      "rfm_score": 545,
-      "recency_days": -26,
+      "rfm_score": 555,
+      "recency_days": -5,
       "categories": [
-        "ADB",
         "Drums"
       ],
-      "category_count": 2
+      "category_count": 1
     },
     {
-      "customer": "Vantage Parts & Service",
-      "l3m_sales": 51745.0,
-      "l3m_gross_profit": 39509.70022873944,
-      "l3m_gp_margin": 76.35462407718512,
-      "l3m_pct_of_total": 1.470070093095452,
-      "l12m_sales": 51745.0,
-      "l12m_gross_profit": 39509.70022873944,
-      "l12m_gp_margin": 76.35462407718512,
-      "l12m_pct_of_total": 2.40931610297113,
-      "rfm_segment": "Loyal Customers",
-      "rfm_score": 435,
-      "recency_days": 16,
+      "customer": "Kenworth of  Louisiana",
+      "l3m_sales": 200400.0,
+      "l3m_gross_profit": 18908.0,
+      "l3m_gp_margin": 9.435129740518962,
+      "l3m_pct_of_total": 5.693343253576744,
+      "l12m_sales": 200400.0,
+      "l12m_gross_profit": 18908.0,
+      "l12m_gp_margin": 9.435129740518962,
+      "l12m_pct_of_total": 1.971536680954477,
+      "rfm_segment": "Champions",
+      "rfm_score": 445,
+      "recency_days": 4,
+      "categories": [
+        "Drums"
+      ],
+      "category_count": 1
+    },
+    {
+      "customer": "E-W Truck & Equipment",
+      "l3m_sales": 85567.6,
+      "l3m_gross_profit": 24579.299081127698,
+      "l3m_gp_margin": 28.725006989944436,
+      "l3m_pct_of_total": 2.4309666576085505,
+      "l12m_sales": 198928.62,
+      "l12m_gross_profit": 57142.26,
+      "l12m_gp_margin": 28.725006989944436,
+      "l12m_pct_of_total": 1.9570612336409898,
+      "rfm_segment": "Champions",
+      "rfm_score": 555,
+      "recency_days": -18,
       "categories": [
         "Drums"
       ],
@@ -215,11 +178,11 @@
       "l3m_sales": 78485.40000000001,
       "l3m_gross_profit": 17186.757950832325,
       "l3m_gp_margin": 21.8980319280176,
-      "l3m_pct_of_total": 2.2297620887937732,
-      "l12m_sales": 51135.0,
-      "l12m_gross_profit": 11197.558626391798,
+      "l3m_pct_of_total": 2.2297620887937737,
+      "l12m_sales": 190491.0,
+      "l12m_gross_profit": 41713.78,
       "l12m_gp_margin": 21.8980319280176,
-      "l12m_pct_of_total": 2.380913690703039,
+      "l12m_pct_of_total": 1.8740518657270424,
       "rfm_segment": "Champions",
       "rfm_score": 555,
       "recency_days": -4,
@@ -229,40 +192,24 @@
       "category_count": 1
     },
     {
-      "customer": "Hunnings Inc.",
-      "l3m_sales": 49727.6,
-      "l3m_gross_profit": 4188.708586702304,
-      "l3m_gp_margin": 8.42330735185753,
-      "l3m_pct_of_total": 1.4127559679469204,
-      "l12m_sales": 49727.6,
-      "l12m_gross_profit": 4188.708586702304,
-      "l12m_gp_margin": 8.42330735185753,
-      "l12m_pct_of_total": 2.3153832726274453,
-      "rfm_segment": "New Customers",
-      "rfm_score": 525,
-      "recency_days": -10,
+      "customer": "Atlantic Utility Trailer Sales",
+      "l3m_sales": 27879.91,
+      "l3m_gross_profit": 10090.72914441389,
+      "l3m_gp_margin": 36.19354992327411,
+      "l3m_pct_of_total": 0.7920653568304731,
+      "l12m_sales": 188150.32,
+      "l12m_gross_profit": 68098.28,
+      "l12m_gp_margin": 36.19354992327411,
+      "l12m_pct_of_total": 1.8510242385894347,
+      "rfm_segment": "Champions",
+      "rfm_score": 555,
+      "recency_days": -9,
       "categories": [
-        "Drums"
+        "ADB",
+        "Drums",
+        "Rotors"
       ],
-      "category_count": 1
-    },
-    {
-      "customer": "Tag Truck Centers",
-      "l3m_sales": 45760.0,
-      "l3m_gross_profit": 6795.272930490011,
-      "l3m_gp_margin": 14.849809725721178,
-      "l3m_pct_of_total": 1.300036862692973,
-      "l12m_sales": 45760.0,
-      "l12m_gross_profit": 6795.272930490011,
-      "l12m_gp_margin": 14.849809725721178,
-      "l12m_pct_of_total": 2.130646533422725,
-      "rfm_segment": "Loyal Customers",
-      "rfm_score": 435,
-      "recency_days": 9,
-      "categories": [
-        "Drums"
-      ],
-      "category_count": 1
+      "category_count": 3
     },
     {
       "customer": "South Sacramento Parts",
@@ -270,10 +217,10 @@
       "l3m_gross_profit": 15553.33881144154,
       "l3m_gp_margin": 29.94927587690956,
       "l3m_pct_of_total": 1.475390414408313,
-      "l12m_sales": 45557.2,
-      "l12m_gross_profit": 13644.051509795441,
+      "l12m_sales": 158279.72,
+      "l12m_gross_profit": 47403.63,
       "l12m_gp_margin": 29.94927587690956,
-      "l12m_pct_of_total": 2.121203895376874,
+      "l12m_pct_of_total": 1.557157055045928,
       "rfm_segment": "Champions",
       "rfm_score": 555,
       "recency_days": -27,
@@ -282,6 +229,59 @@
         "Rotors"
       ],
       "category_count": 2
+    },
+    {
+      "customer": "Traction Heavy Duty Parts-Abbotsford",
+      "l3m_sales": 49875.0,
+      "l3m_gross_profit": 11055.121873081134,
+      "l3m_gp_margin": 22.16565789088949,
+      "l3m_pct_of_total": 1.416943586687326,
+      "l12m_sales": 157319.4,
+      "l12m_gross_profit": 34870.880000000005,
+      "l12m_gp_margin": 22.16565789088949,
+      "l12m_pct_of_total": 1.54770941978917,
+      "rfm_segment": "Loyal Customers",
+      "rfm_score": 355,
+      "recency_days": 40,
+      "categories": [
+        "Drums",
+        "Hubs"
+      ],
+      "category_count": 2
+    },
+    {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "l3m_sales": 0.0,
+      "l3m_gross_profit": 0.0,
+      "l3m_gp_margin": 36.97374881323749,
+      "l3m_pct_of_total": 0.0,
+      "l12m_sales": 147460.0,
+      "l12m_gross_profit": 54521.49000000001,
+      "l12m_gp_margin": 36.97374881323749,
+      "l12m_pct_of_total": 1.4507125697282792,
+      "rfm_segment": "At Risk",
+      "rfm_score": 235,
+      "recency_days": 120,
+      "categories": [],
+      "category_count": 0
+    },
+    {
+      "customer": "Velocity Vehicle Group - CANADA",
+      "l3m_sales": 41311.2,
+      "l3m_gross_profit": 11917.384604250432,
+      "l3m_gp_margin": 28.847829654549933,
+      "l3m_pct_of_total": 1.1736469152552873,
+      "l12m_sales": 146244.0,
+      "l12m_gross_profit": 42188.22,
+      "l12m_gp_margin": 28.847829654549933,
+      "l12m_pct_of_total": 1.4387495527420484,
+      "rfm_segment": "Champions",
+      "rfm_score": 555,
+      "recency_days": -12,
+      "categories": [
+        "Drums"
+      ],
+      "category_count": 1
     }
   ],
   "rfm_segments": [
@@ -364,6 +364,319 @@
   },
   "customers_needing_attention": [
     {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 147460.0,
+      "recency_days": 120,
+      "days_overdue": 91.0,
+      "trend_pct": -100.0,
+      "gp_margin": 36.97374881323749,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Greatwest Kenworth",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 80640.0,
+      "recency_days": 292,
+      "days_overdue": 270.0,
+      "trend_pct": -100.0,
+      "gp_margin": 23.84859871031746,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Webb Wheel Products",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 54725.0,
+      "recency_days": 311,
+      "days_overdue": 302.0,
+      "trend_pct": -100.0,
+      "gp_margin": 62.437786764134074,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Cassens - Aurora",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 52125.0,
+      "recency_days": 213,
+      "days_overdue": 188.0,
+      "trend_pct": -100.0,
+      "gp_margin": 52.198338035492476,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Brake & Eqp (Auto Brake Clutch)",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 48328.6,
+      "recency_days": 108,
+      "days_overdue": 57.0,
+      "trend_pct": -100.0,
+      "gp_margin": 23.17437293859123,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Trailer Craft Inc.",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 35965.0,
+      "recency_days": 113,
+      "days_overdue": 34.0,
+      "trend_pct": -100.0,
+      "gp_margin": 84.52715139719172,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Bremskerl CV",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 32890.0,
+      "recency_days": 109,
+      "days_overdue": 4.0,
+      "trend_pct": -100.0,
+      "gp_margin": 65.26837944664031,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Betts Truck Parts",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 26005.91,
+      "recency_days": 148,
+      "days_overdue": 109.0,
+      "trend_pct": -100.0,
+      "gp_margin": 64.21897945505464,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Plaza Truck Service",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 23760.0,
+      "recency_days": 137,
+      "days_overdue": 59.0,
+      "trend_pct": -100.0,
+      "gp_margin": 38.48324915824916,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "West World Truck & Tr",
+      "reasons": [
+        "Order Overdue",
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 16084.0,
+      "recency_days": 243,
+      "days_overdue": 185.0,
+      "trend_pct": -100.0,
+      "gp_margin": 79.28649589654316,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Haldex Brake Products",
+      "reasons": [
+        "Order Overdue",
+        "Declining"
+      ],
+      "l3m_sales": 7428.82,
+      "l12m_sales": 108688.81,
+      "recency_days": 67,
+      "days_overdue": 1.0,
+      "trend_pct": -72.7,
+      "gp_margin": 55.4698961190209,
+      "rfm_segment": "Loyal Customers",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Municipal Truck Parts",
+      "reasons": [
+        "Order Overdue",
+        "Declining"
+      ],
+      "l3m_sales": 4970.5,
+      "l12m_sales": 41856.16,
+      "recency_days": 39,
+      "days_overdue": 6.0,
+      "trend_pct": -52.5,
+      "gp_margin": 21.784392070366703,
+      "rfm_segment": "Loyal Customers",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "ABS Trucking",
+      "reasons": [
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 27363.0,
+      "recency_days": 309,
+      "days_overdue": 288.0,
+      "trend_pct": -100.0,
+      "gp_margin": 21.638234111756752,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "RWC Group - Phoenix",
+      "reasons": [
+        "Order Overdue",
+        "Declining"
+      ],
+      "l3m_sales": 2580.0,
+      "l12m_sales": 19121.0,
+      "recency_days": 82,
+      "days_overdue": 32.0,
+      "trend_pct": -46.0,
+      "gp_margin": 54.080067274858564,
+      "rfm_segment": "Loyal Customers",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Woodward's Auto Spring",
+      "reasons": [
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 18345.760000000002,
+      "recency_days": 116,
+      "days_overdue": 51.0,
+      "trend_pct": -100.0,
+      "gp_margin": 49.76779375724964,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Cassens Transport - Marysville",
+      "reasons": [
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 14435.0,
+      "recency_days": 137,
+      "days_overdue": 0,
+      "trend_pct": -100.0,
+      "gp_margin": 66.69054381711119,
+      "rfm_segment": "At Risk",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "OZARK UTILITY Trailer",
+      "reasons": [
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 7905.6,
+      "recency_days": 101,
+      "days_overdue": 0,
+      "trend_pct": -100.0,
+      "gp_margin": 32.62497470147743,
+      "rfm_segment": "Need Attention",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "A K Parts & Tires",
+      "reasons": [
+        "At Risk",
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 5150.0,
+      "recency_days": 310,
+      "days_overdue": 0,
+      "trend_pct": -100.0,
+      "gp_margin": 46.84660194174757,
+      "rfm_segment": "Need Attention",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Volvo Group NA, Inc",
+      "reasons": [
+        "Low Margin"
+      ],
+      "l3m_sales": 300496.73,
+      "l12m_sales": 833595.8,
+      "recency_days": -23,
+      "days_overdue": 0,
+      "trend_pct": 44.2,
+      "gp_margin": 14.529316246554986,
+      "rfm_segment": "Champions",
+      "has_backlog_order": true,
+      "backlog_value": 43700.0
+    },
+    {
       "customer": "Kenworth of  Louisiana",
       "reasons": [
         "Low Margin"
@@ -379,19 +692,19 @@
       "backlog_value": 127920.0
     },
     {
-      "customer": "Volvo Group NA, Inc",
+      "customer": "Atlantic Utility Trailer Sales",
       "reasons": [
-        "Low Margin"
+        "Declining"
       ],
-      "l3m_sales": 300496.73,
-      "l12m_sales": 138826.8,
-      "recency_days": -23,
+      "l3m_sales": 27879.91,
+      "l12m_sales": 188150.32,
+      "recency_days": -9,
       "days_overdue": 0,
-      "trend_pct": 765.8,
-      "gp_margin": 14.529316246554986,
+      "trend_pct": -40.7,
+      "gp_margin": 36.19354992327411,
       "rfm_segment": "Champions",
-      "has_backlog_order": true,
-      "backlog_value": 43700.0
+      "has_backlog_order": false,
+      "backlog_value": 0
     },
     {
       "customer": "Peterbilt Pacific / TRP - Langley",
@@ -399,27 +712,27 @@
         "Low Margin"
       ],
       "l3m_sales": 141855.0,
-      "l12m_sales": 101325.0,
+      "l12m_sales": 141855.0,
       "recency_days": -27,
       "days_overdue": 0,
-      "trend_pct": 460.0,
+      "trend_pct": 300.0,
       "gp_margin": 7.015177469951711,
       "rfm_segment": "Champions",
       "has_backlog_order": true,
       "backlog_value": 96500.0
     },
     {
-      "customer": "Hunnings Inc.",
+      "customer": "Central Valley Trailer",
       "reasons": [
-        "Low Margin"
+        "Declining"
       ],
-      "l3m_sales": 49727.6,
-      "l12m_sales": 49727.6,
-      "recency_days": -10,
+      "l3m_sales": 16478.35,
+      "l12m_sales": 107420.28,
+      "recency_days": -24,
       "days_overdue": 0,
-      "trend_pct": 300.0,
-      "gp_margin": 8.42330735185753,
-      "rfm_segment": "New Customers",
+      "trend_pct": -38.6,
+      "gp_margin": 44.17374645650116,
+      "rfm_segment": "Champions",
       "has_backlog_order": false,
       "backlog_value": 0
     },
@@ -429,12 +742,87 @@
         "Low Margin"
       ],
       "l3m_sales": 45760.0,
-      "l12m_sales": 45760.0,
+      "l12m_sales": 90185.6,
       "recency_days": 9,
       "days_overdue": 0,
-      "trend_pct": 300.0,
+      "trend_pct": 103.0,
       "gp_margin": 14.849809725721178,
       "rfm_segment": "Loyal Customers",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "CBS Parts",
+      "reasons": [
+        "Declining"
+      ],
+      "l3m_sales": 8644.45,
+      "l12m_sales": 89275.0,
+      "recency_days": -2,
+      "days_overdue": 0,
+      "trend_pct": -61.3,
+      "gp_margin": 35.90040698261075,
+      "rfm_segment": "Champions",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Hunnings Inc.",
+      "reasons": [
+        "Low Margin"
+      ],
+      "l3m_sales": 49727.6,
+      "l12m_sales": 87395.6,
+      "recency_days": -10,
+      "days_overdue": 0,
+      "trend_pct": 127.6,
+      "gp_margin": 8.42330735185753,
+      "rfm_segment": "New Customers",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Ocean Trailer - Ed CAD",
+      "reasons": [
+        "Low Margin"
+      ],
+      "l3m_sales": 23086.06,
+      "l12m_sales": 71827.45999999999,
+      "recency_days": 18,
+      "days_overdue": 0,
+      "trend_pct": 28.6,
+      "gp_margin": 5.323033836919752,
+      "rfm_segment": "Champions",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Power & Transmission",
+      "reasons": [
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 71376.0,
+      "recency_days": 184,
+      "days_overdue": 19.0,
+      "trend_pct": -100.0,
+      "gp_margin": 68.89039733243666,
+      "rfm_segment": "Hibernating",
+      "has_backlog_order": false,
+      "backlog_value": 0
+    },
+    {
+      "customer": "Supplycore Inc",
+      "reasons": [
+        "Declining"
+      ],
+      "l3m_sales": 0.0,
+      "l12m_sales": 68169.36,
+      "recency_days": 191,
+      "days_overdue": 99.0,
+      "trend_pct": -100.0,
+      "gp_margin": 52.7976645225949,
+      "rfm_segment": "Hibernating",
       "has_backlog_order": false,
       "backlog_value": 0
     },
@@ -444,224 +832,14 @@
         "Low Margin"
       ],
       "l3m_sales": 33980.0,
-      "l12m_sales": 33980.0,
+      "l12m_sales": 67980.0,
       "recency_days": 18,
       "days_overdue": 0,
-      "trend_pct": 300.0,
+      "trend_pct": 99.9,
       "gp_margin": 12.50956163577523,
       "rfm_segment": "New Customers",
       "has_backlog_order": true,
       "backlog_value": 44174.0
-    },
-    {
-      "customer": "Ocean Trailer - Ed CAD",
-      "reasons": [
-        "Low Margin"
-      ],
-      "l3m_sales": 23086.06,
-      "l12m_sales": 23086.06,
-      "recency_days": 18,
-      "days_overdue": 0,
-      "trend_pct": 300.0,
-      "gp_margin": 5.323033836919752,
-      "rfm_segment": "Champions",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Brake & Truck Supply",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 1664.7,
-      "l12m_sales": 0.0,
-      "recency_days": 57,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 100.0,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Cargo Heavy Duty",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 3441.0,
-      "l12m_sales": 0.0,
-      "recency_days": 40,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 46.1729148503342,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Goodson Bus Sales",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 3616.17,
-      "l12m_sales": 0.0,
-      "recency_days": 67,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 64.34183127452525,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Haldex Brake Products",
-      "reasons": [
-        "Order Overdue"
-      ],
-      "l3m_sales": 7428.82,
-      "l12m_sales": 0.0,
-      "recency_days": 67,
-      "days_overdue": 1.0,
-      "trend_pct": 0,
-      "gp_margin": 55.4698961190209,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Miller Transit Mix",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 1250.0,
-      "l12m_sales": 0.0,
-      "recency_days": 46,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 95.68639999999999,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Municipal Truck Parts",
-      "reasons": [
-        "Order Overdue"
-      ],
-      "l3m_sales": 4970.5,
-      "l12m_sales": 0.0,
-      "recency_days": 39,
-      "days_overdue": 6.0,
-      "trend_pct": 0,
-      "gp_margin": 21.784392070366703,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Myers Diesel Repair",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 1007.0,
-      "l12m_sales": 0.0,
-      "recency_days": 32,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 82.90367428003972,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Ocean Trailer - Delta",
-      "reasons": [
-        "Low Margin"
-      ],
-      "l3m_sales": 20979.0,
-      "l12m_sales": 0.0,
-      "recency_days": 85,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": -8.706420706420706,
-      "rfm_segment": "Potential Loyalists",
-      "has_backlog_order": true,
-      "backlog_value": 19580.0
-    },
-    {
-      "customer": "Peck's Heavy Friction",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 5680.0,
-      "l12m_sales": 0.0,
-      "recency_days": 78,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 46.70422535211268,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "RWC Group - Phoenix",
-      "reasons": [
-        "Order Overdue"
-      ],
-      "l3m_sales": 2580.0,
-      "l12m_sales": 0.0,
-      "recency_days": 82,
-      "days_overdue": 32.0,
-      "trend_pct": 0,
-      "gp_margin": 54.080067274858564,
-      "rfm_segment": "Loyal Customers",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Ranger Brake - HQ",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 4540.0,
-      "l12m_sales": 0.0,
-      "recency_days": 89,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 56.330396475770925,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "Southern Automotive Inc",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 7920.0,
-      "l12m_sales": 0.0,
-      "recency_days": 51,
-      "days_overdue": 0,
-      "trend_pct": 0,
-      "gp_margin": 23.333333333333332,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
-    },
-    {
-      "customer": "VALLEY FREIGHTLINER - BROOK PARK",
-      "reasons": [
-        "At Risk"
-      ],
-      "l3m_sales": 4304.860000000001,
-      "l12m_sales": 0.0,
-      "recency_days": 61,
-      "days_overdue": 43.0,
-      "trend_pct": 0,
-      "gp_margin": 29.47505842234126,
-      "rfm_segment": "Need Attention",
-      "has_backlog_order": false,
-      "backlog_value": 0
     }
   ],
   "overdue_customers": [
@@ -1199,11 +1377,11 @@
   ],
   "category_heatmap": [
     {
-      "customer": "Kenworth of  Louisiana",
-      "Drums": 200400.0,
+      "customer": "Oshkosh Defense, LLC",
+      "Drums": 82617.0,
       "Rotors": 0,
       "ADB": 0,
-      "Hubs": 0
+      "Hubs": 152714.0
     },
     {
       "customer": "Volvo Group NA, Inc",
@@ -1213,16 +1391,9 @@
       "Hubs": 0
     },
     {
-      "customer": "Washington Foundries",
-      "Drums": 117260.0,
-      "Rotors": 0,
-      "ADB": 0,
-      "Hubs": 0
-    },
-    {
-      "customer": "Peterbilt Pacific",
-      "Drums": 135100.0,
-      "Rotors": 0,
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "Drums": 0,
+      "Rotors": 187178.0,
       "ADB": 0,
       "Hubs": 0
     },
@@ -1241,36 +1412,29 @@
       "Hubs": 34525.0
     },
     {
-      "customer": "Oshkosh Defense, LLC",
-      "Drums": 82617.0,
-      "Rotors": 0,
-      "ADB": 0,
-      "Hubs": 152714.0
-    },
-    {
-      "customer": "Rush Enterprises, Inc. - Billing",
-      "Drums": 0,
-      "Rotors": 187178.0,
-      "ADB": 0,
-      "Hubs": 0
-    },
-    {
-      "customer": "Potter Webster Company",
-      "Drums": 63103.0,
+      "customer": "Washington Foundries",
+      "Drums": 117260.0,
       "Rotors": 0,
       "ADB": 0,
       "Hubs": 0
     },
     {
-      "customer": "Hogan Mfg., Inc. dba Murray Trailers",
-      "Drums": 29819.0,
+      "customer": "Blue Bird Body Co.",
+      "Drums": 66280.0,
       "Rotors": 0,
-      "ADB": 46064.0,
+      "ADB": 0,
       "Hubs": 0
     },
     {
-      "customer": "Vantage Parts & Service",
-      "Drums": 51745.0,
+      "customer": "Kenworth of  Louisiana",
+      "Drums": 200400.0,
+      "Rotors": 0,
+      "ADB": 0,
+      "Hubs": 0
+    },
+    {
+      "customer": "E-W Truck & Equipment",
+      "Drums": 88886.0,
       "Rotors": 0,
       "ADB": 0,
       "Hubs": 0
@@ -1283,23 +1447,37 @@
       "Hubs": 0
     },
     {
-      "customer": "Hunnings Inc.",
-      "Drums": 49728.0,
-      "Rotors": 0,
-      "ADB": 0,
-      "Hubs": 0
-    },
-    {
-      "customer": "Tag Truck Centers",
-      "Drums": 45760.0,
-      "Rotors": 0,
-      "ADB": 0,
+      "customer": "Atlantic Utility Trailer Sales",
+      "Drums": 4644.0,
+      "Rotors": 5390.0,
+      "ADB": 18908.0,
       "Hubs": 0
     },
     {
       "customer": "South Sacramento Parts",
       "Drums": 42788.0,
       "Rotors": 9328.0,
+      "ADB": 0,
+      "Hubs": 0
+    },
+    {
+      "customer": "Traction Heavy Duty Parts-Abbotsford",
+      "Drums": 44512.0,
+      "Rotors": 0,
+      "ADB": 0,
+      "Hubs": 2988.0
+    },
+    {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "Drums": 0,
+      "Rotors": 0,
+      "ADB": 0,
+      "Hubs": 0
+    },
+    {
+      "customer": "Velocity Vehicle Group - CANADA",
+      "Drums": 39344.0,
+      "Rotors": 0,
       "ADB": 0,
       "Hubs": 0
     }

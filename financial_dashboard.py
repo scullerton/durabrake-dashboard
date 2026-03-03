@@ -1095,13 +1095,14 @@ if data:
 
                 st.caption(f"💡 GP Margin color coded: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}%")
 
-                # L3M Chart
+                # L3M Chart (sorted most to least)
+                df_l3m_sorted = df_top15.sort_values('l3m_sales', ascending=False)
                 fig_l3m = go.Figure()
 
                 fig_l3m.add_trace(go.Bar(
                     name='Sales',
-                    x=df_top15['customer'],
-                    y=df_top15['l3m_sales'],
+                    x=df_l3m_sorted['customer'],
+                    y=df_l3m_sorted['l3m_sales'],
                     marker_color='#1f77b4'
                 ))
 
@@ -1111,7 +1112,8 @@ if data:
                     yaxis_title='Sales ($)',
                     xaxis_tickangle=-45,
                     height=500,
-                    hovermode='x unified'
+                    hovermode='x unified',
+                    xaxis={'categoryorder': 'total descending'},
                 )
 
                 st.plotly_chart(fig_l3m, use_container_width=True)
@@ -1190,13 +1192,14 @@ if data:
 
                 st.caption(f"💡 GP Margin: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}% | Trend %: L3M vs L12M monthly rate (Green >+10%, Yellow ±10%, Red <-10%)")
 
-                # L12M Chart
+                # L12M Chart (sorted most to least)
+                df_l12m_sorted = df_top15.sort_values('l12m_sales', ascending=False)
                 fig_l12m = go.Figure()
 
                 fig_l12m.add_trace(go.Bar(
                     name='Sales',
-                    x=df_top15['customer'],
-                    y=df_top15['l12m_sales'],
+                    x=df_l12m_sorted['customer'],
+                    y=df_l12m_sorted['l12m_sales'],
                     marker_color='#2ca02c'
                 ))
 
@@ -1206,7 +1209,8 @@ if data:
                     yaxis_title='Sales ($)',
                     xaxis_tickangle=-45,
                     height=500,
-                    hovermode='x unified'
+                    hovermode='x unified',
+                    xaxis={'categoryorder': 'total descending'},
                 )
 
                 st.plotly_chart(fig_l12m, use_container_width=True)
@@ -1383,6 +1387,10 @@ if data:
                 cats_in_data = [c for c in ['Drums', 'Rotors', 'ADB', 'Hubs'] if c in df_heatmap.columns]
 
                 if cats_in_data:
+                    # Sort by total L3M revenue across all categories (most to least)
+                    df_heatmap['_total'] = df_heatmap[cats_in_data].sum(axis=1)
+                    df_heatmap = df_heatmap.sort_values('_total', ascending=True)  # ascending for horizontal bar (bottom=largest)
+
                     fig_heatmap = go.Figure()
 
                     colors = {'Drums': '#1f77b4', 'Rotors': '#ff7f0e', 'ADB': '#2ca02c', 'Hubs': '#d62728'}
@@ -1401,7 +1409,6 @@ if data:
                         xaxis_title='Revenue ($)',
                         height=500,
                         legend=dict(orientation='h', yanchor='bottom', y=1.02),
-                        yaxis=dict(autorange='reversed'),
                     )
                     st.plotly_chart(fig_heatmap, use_container_width=True)
 
