@@ -85,43 +85,43 @@ def _analyze_financials(data, prior_data, notes, actions):
     # Revenue vs L3M
     rev_var = l3m.get('revenue', {}).get('variance_pct', 0) or 0
     if rev_var > 20:
-        notes.append(f"• Revenue of ${cm['revenue']:,.0f} is {rev_var:.0f}% above the prior 3-month average — strong performance")
+        notes.append(f"- Revenue of ${cm['revenue']:,.0f} is {rev_var:.0f}% above the prior 3-month average — strong performance")
     elif rev_var < -20:
-        notes.append(f"• Revenue of ${cm['revenue']:,.0f} is {abs(rev_var):.0f}% below the prior 3-month average — significant decline")
-        actions.append(f"• Investigate revenue decline drivers and review sales pipeline")
+        notes.append(f"- Revenue of ${cm['revenue']:,.0f} is {abs(rev_var):.0f}% below the prior 3-month average — significant decline")
+        actions.append(f"- Investigate revenue decline drivers and review sales pipeline")
     elif rev_var < -5:
-        notes.append(f"• Revenue of ${cm['revenue']:,.0f} is {abs(rev_var):.0f}% below L3M average — moderate softness")
+        notes.append(f"- Revenue of ${cm['revenue']:,.0f} is {abs(rev_var):.0f}% below L3M average — moderate softness")
 
     # Gross margin shift
     gm_var = l3m.get('gross_margin_pct', {}).get('variance_pts', 0) or 0
     gm_current = cm.get('gross_margin_pct', 0) or 0
     if gm_var < -3:
-        notes.append(f"• Gross margin at {gm_current:.1f}% is {abs(gm_var):.1f} pts below L3M average — margin compression")
-        actions.append(f"• Review product mix and pricing; identify margin erosion sources")
+        notes.append(f"- Gross margin at {gm_current:.1f}% is {abs(gm_var):.1f} pts below L3M average — margin compression")
+        actions.append(f"- Review product mix and pricing; identify margin erosion sources")
     elif gm_var > 3:
-        notes.append(f"• Gross margin improved to {gm_current:.1f}%, up {gm_var:.1f} pts vs L3M average")
+        notes.append(f"- Gross margin improved to {gm_current:.1f}%, up {gm_var:.1f} pts vs L3M average")
 
     # EBITDA margin
     ebitda_var = l3m.get('ebitda_margin_pct', {}).get('variance_pts', 0) or 0
     ebitda_current = cm.get('ebitda_margin_pct', 0) or 0
     if ebitda_var < -3:
-        notes.append(f"• EBITDA margin at {ebitda_current:.1f}% declined {abs(ebitda_var):.1f} pts vs L3M — operating cost pressure")
-        actions.append(f"• Review operating expenses for cost reduction opportunities")
+        notes.append(f"- EBITDA margin at {ebitda_current:.1f}% declined {abs(ebitda_var):.1f} pts vs L3M — operating cost pressure")
+        actions.append(f"- Review operating expenses for cost reduction opportunities")
 
     # Net income swing
     ni_current = cm.get('net_income', 0) or 0
     ni_l3m_avg = l3m.get('net_income', {}).get('l3m_avg', 0) or 0
     if ni_current > 0 and ni_l3m_avg < 0:
-        notes.append(f"• Net income turned positive at ${ni_current:,.0f} after averaging ${ni_l3m_avg:,.0f} over prior 3 months")
+        notes.append(f"- Net income turned positive at ${ni_current:,.0f} after averaging ${ni_l3m_avg:,.0f} over prior 3 months")
     elif ni_current < 0:
-        notes.append(f"• Net loss of ${abs(ni_current):,.0f} — profitability concern")
-        actions.append(f"• Develop plan to return to profitability")
+        notes.append(f"- Net loss of ${abs(ni_current):,.0f} — profitability concern")
+        actions.append(f"- Develop plan to return to profitability")
 
     # Operating cash flow
     ocf = cm.get('operating_cash_flow', 0) or 0
     if ocf < 0:
-        notes.append(f"• Operating cash flow is negative at ${ocf:,.0f}")
-        actions.append(f"• Monitor cash position; review AR collections and AP timing")
+        notes.append(f"- Operating cash flow is negative at ${ocf:,.0f}")
+        actions.append(f"- Monitor cash position; review AR collections and AP timing")
 
     # NWC level
     nwc = cm.get('nwc', 0) or 0
@@ -129,15 +129,15 @@ def _analyze_financials(data, prior_data, notes, actions):
     if revenue > 0:
         nwc_months = nwc / revenue
         if nwc_months > 2:
-            notes.append(f"• Net working capital of ${nwc:,.0f} represents {nwc_months:.1f}x monthly revenue — elevated")
+            notes.append(f"- Net working capital of ${nwc:,.0f} represents {nwc_months:.1f}x monthly revenue — elevated")
 
     # Inventory level
     inventory = cm.get('inventory', 0) or 0
     if revenue > 0 and inventory > 0:
         inv_days = inventory / (revenue * (1 - gm_current / 100) / 30) if gm_current < 100 else 0
         if inv_days > 90:
-            notes.append(f"• Inventory at ${inventory:,.0f} represents ~{inv_days:.0f} days — above target")
-            actions.append(f"• Review slow-moving inventory; consider reduction plan to target ≤85 days")
+            notes.append(f"- Inventory at ${inventory:,.0f} represents ~{inv_days:.0f} days — above target")
+            actions.append(f"- Review slow-moving inventory; consider reduction plan to target ≤85 days")
 
     # Compare to prior year same month if available
     if prior_data:
@@ -152,7 +152,7 @@ def _analyze_financials(data, prior_data, notes, actions):
             yoy_change = ((revenue - prior_month_data['revenue']) / prior_month_data['revenue']) * 100
             if abs(yoy_change) > 10:
                 direction = "up" if yoy_change > 0 else "down"
-                notes.append(f"• Year-over-year revenue is {direction} {abs(yoy_change):.0f}% vs {month} {data['metadata']['reporting_year'] - 1}")
+                notes.append(f"- Year-over-year revenue is {direction} {abs(yoy_change):.0f}% vs {month} {data['metadata']['reporting_year'] - 1}")
 
 
 def _analyze_customers(cust_data, notes, actions):
@@ -166,14 +166,14 @@ def _analyze_customers(cust_data, notes, actions):
         at_risk_seg = [s for s in rfm_segments if s['segment'] == 'At Risk']
         if at_risk_seg:
             at_risk_rev = at_risk_seg[0].get('total_revenue', 0)
-            notes.append(f"• {at_risk_count} customers classified as 'At Risk' with ${at_risk_rev:,.0f} in historical revenue")
-            actions.append(f"• Prioritize outreach to {at_risk_count} At Risk customers before they churn")
+            notes.append(f"- {at_risk_count} customers classified as 'At Risk' with ${at_risk_rev:,.0f} in historical revenue")
+            actions.append(f"- Prioritize outreach to {at_risk_count} At Risk customers before they churn")
 
     # Hibernating customers
     hibernating_count = rfm_dist.get('hibernating', 0)
     if hibernating_count > 10:
-        notes.append(f"• {hibernating_count} customers are Hibernating (no recent purchases)")
-        actions.append(f"• Run targeted reactivation campaign for top Hibernating accounts")
+        notes.append(f"- {hibernating_count} customers are Hibernating (no recent purchases)")
+        actions.append(f"- Run targeted reactivation campaign for top Hibernating accounts")
 
     # Customer concentration
     top_15 = cust_data.get('top_15_customers', [])
@@ -182,15 +182,15 @@ def _analyze_customers(cust_data, notes, actions):
         top5_l3m = sum(c.get('l3m_sales', 0) for c in top_15[:5])
         top5_pct = (top5_l3m / total_l3m * 100) if total_l3m else 0
         if top5_pct > 40:
-            notes.append(f"• Top 5 customers represent {top5_pct:.0f}% of L3M sales — high concentration risk")
-            actions.append(f"• Diversify customer base; develop pipeline of mid-tier accounts")
+            notes.append(f"- Top 5 customers represent {top5_pct:.0f}% of L3M sales — high concentration risk")
+            actions.append(f"- Diversify customer base; develop pipeline of mid-tier accounts")
 
     # Low-margin top customers
     low_margin_customers = [c for c in top_15[:10] if (c.get('l3m_gp_margin', 100) or 100) < 15]
     if low_margin_customers:
         names = ", ".join(c['customer'].split('/')[0].strip() for c in low_margin_customers[:3])
-        notes.append(f"• {len(low_margin_customers)} of top 10 customers have GP margin below 15%: {names}")
-        actions.append(f"• Review pricing strategy for low-margin key accounts")
+        notes.append(f"- {len(low_margin_customers)} of top 10 customers have GP margin below 15%: {names}")
+        actions.append(f"- Review pricing strategy for low-margin key accounts")
 
 
 def _analyze_backlog(backlog, notes, actions):
@@ -202,7 +202,7 @@ def _analyze_backlog(backlog, notes, actions):
     total_orders = summary.get('total_orders', 0)
     avg_age = summary.get('avg_age_days', 0)
 
-    notes.append(f"• Order backlog of ${total_value:,.0f} across {total_orders} orders (avg age: {avg_age:.0f} days)")
+    notes.append(f"- Order backlog of ${total_value:,.0f} across {total_orders} orders (avg age: {avg_age:.0f} days)")
 
     # Aging concerns
     age_counts = age_dist.get('order_count', {})
@@ -210,12 +210,12 @@ def _analyze_backlog(backlog, notes, actions):
     if old_orders > 0 and total_orders > 0:
         old_pct = old_orders / total_orders * 100
         if old_pct > 15:
-            notes.append(f"• {old_orders} orders ({old_pct:.0f}%) are over 90 days old — potential delivery risk")
-            actions.append(f"• Review {old_orders} aged orders (>90 days) for delivery status and customer communication")
+            notes.append(f"- {old_orders} orders ({old_pct:.0f}%) are over 90 days old — potential delivery risk")
+            actions.append(f"- Review {old_orders} aged orders (>90 days) for delivery status and customer communication")
 
     # Average age threshold
     if avg_age > 60:
-        actions.append(f"• Backlog average age of {avg_age:.0f} days exceeds 60-day target; review production schedule")
+        actions.append(f"- Backlog average age of {avg_age:.0f} days exceeds 60-day target; review production schedule")
 
     # Ship date pipeline
     ship_dist = backlog.get('ship_date_distribution', {})
@@ -223,4 +223,4 @@ def _analyze_backlog(backlog, notes, actions):
     next_30_value = ship_values.get('0-30 days', 0)
     if next_30_value and total_value:
         next_30_pct = next_30_value / total_value * 100
-        notes.append(f"• ${next_30_value:,.0f} ({next_30_pct:.0f}%) of backlog expected to ship within 30 days")
+        notes.append(f"- ${next_30_value:,.0f} ({next_30_pct:.0f}%) of backlog expected to ship within 30 days")
