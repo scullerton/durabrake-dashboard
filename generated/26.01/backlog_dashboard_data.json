@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-03-03T12:29:07.842411",
+    "generated_at": "2026-03-11T17:36:28.598487",
     "analysis_date": "2026-01-31",
     "source_file": "backlog 31Jan26.xlsx"
   },
@@ -66,112 +66,134 @@
     {
       "customer": "Washington Foundries",
       "order_count": 6,
-      "total_value": 190008.0
+      "total_value": 190008.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Kenworth of  Louisiana",
       "order_count": 3,
-      "total_value": 127920.0
+      "total_value": 127920.0,
+      "sales_rep": "Chris Johnson"
     },
     {
       "customer": "Peterbilt Pacific / TRP - Langley",
       "order_count": 5,
-      "total_value": 96500.0
+      "total_value": 96500.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "TTG Thompson Truck Group / Lee Smith - Knoxville",
       "order_count": 2,
-      "total_value": 87880.0
+      "total_value": 87880.0,
+      "sales_rep": "Chris Johnson"
     },
     {
       "customer": "TTG Thompson Truck Group / Lee Smith",
       "order_count": 2,
-      "total_value": 87880.0
+      "total_value": 87880.0,
+      "sales_rep": "Chris Johnson"
     },
     {
       "customer": "KGIndustries  (GD)",
       "order_count": 2,
-      "total_value": 87155.88
+      "total_value": 87155.88,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Oshkosh Defense, LLC",
       "order_count": 4,
-      "total_value": 79664.64
+      "total_value": 79664.64,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "E-W Truck & Equipment",
       "order_count": 2,
-      "total_value": 71139.84
+      "total_value": 71139.84,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "TEC Equipment Inc",
       "order_count": 2,
-      "total_value": 66945.6
+      "total_value": 66945.6,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Allegheny Truck",
       "order_count": 1,
-      "total_value": 44174.0
+      "total_value": 44174.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Volvo Group NA, Inc",
       "order_count": 2,
-      "total_value": 43700.0
+      "total_value": 43700.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Atlanta Safety Brake Service",
       "order_count": 1,
-      "total_value": 33408.0
+      "total_value": 33408.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Traction Heavy Duty Parts-Abbotsford",
       "order_count": 1,
-      "total_value": 32400.0
+      "total_value": 32400.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "TRP Montreal",
       "order_count": 1,
-      "total_value": 26584.0
+      "total_value": 26584.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Westrans Co",
       "order_count": 1,
-      "total_value": 25300.0
+      "total_value": 25300.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Vantage Parts & Service",
       "order_count": 1,
-      "total_value": 24095.0
+      "total_value": 24095.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Transit Trailer Limited - Kitchener",
       "order_count": 1,
-      "total_value": 23000.0
+      "total_value": 23000.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Summit Trailer",
       "order_count": 1,
-      "total_value": 21400.0
+      "total_value": 21400.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Ocean Trailer - Calgary",
       "order_count": 1,
-      "total_value": 20780.0
+      "total_value": 20780.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "Ocean Trailer - Delta",
       "order_count": 1,
-      "total_value": 19580.0
+      "total_value": 19580.0,
+      "sales_rep": "Caroline"
     },
     {
       "customer": "M - B Companies, Inc",
       "order_count": 1,
-      "total_value": 2380.0
+      "total_value": 2380.0,
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Trail King Industries",
       "order_count": 1,
-      "total_value": 1306.8
+      "total_value": 1306.8,
+      "sales_rep": "Shroff"
     }
   ],
   "by_sales_rep": [

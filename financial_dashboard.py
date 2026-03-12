@@ -927,325 +927,62 @@ if data:
 
     with tab4:
         # ==================================================================
-        # CUSTOMER ANALYSIS
+        # CUSTOMER SCORECARD
         # ==================================================================
-        st.header("👥 Customer Analysis")
+        st.header("👥 Customer Scorecard")
 
         if customer_data:
-            # Display metadata
-            st.markdown(f"**Analysis Period:** {customer_data['metadata']['analysis_period_l12m']}")
-            st.markdown(f"**Total Customers:** {customer_data['metadata']['total_customers']:,}")
-            st.caption(f"Data generated: {customer_data['metadata']['generated_at']}")
-            st.divider()
-
-            # ==================================================================
-            # RFM ANALYSIS SUMMARY
-            # ==================================================================
-            st.subheader("🎯 RFM Segmentation Overview")
-            st.markdown("Customer segments based on Recency, Frequency, and Monetary value")
-
-            # RFM Distribution
-            rfm_dist = customer_data['rfm_distribution']
-            rfm_segments = customer_data['rfm_segments']
-
-            # Create segment cards
-            col1, col2, col3, col4 = st.columns(4)
-
-            with col1:
-                champions = [s for s in rfm_segments if s['segment'] == 'Champions']
-                if champions:
-                    st.metric(
-                        "Champions",
-                        f"{rfm_dist['champions']} customers",
-                        f"${champions[0]['total_revenue']:,.0f}"
-                    )
-                    st.caption(f"Avg: ${champions[0]['avg_revenue_per_customer']:,.0f}/customer")
-
-            with col2:
-                loyal = [s for s in rfm_segments if s['segment'] == 'Loyal Customers']
-                if loyal:
-                    st.metric(
-                        "Loyal Customers",
-                        f"{rfm_dist['loyal_customers']} customers",
-                        f"${loyal[0]['total_revenue']:,.0f}"
-                    )
-                    st.caption(f"Avg: ${loyal[0]['avg_revenue_per_customer']:,.0f}/customer")
-
-            with col3:
-                at_risk = [s for s in rfm_segments if s['segment'] == 'At Risk']
-                if at_risk:
-                    st.metric(
-                        "At Risk",
-                        f"{rfm_dist['at_risk']} customers",
-                        f"${at_risk[0]['total_revenue']:,.0f}"
-                    )
-                    st.caption(f"Avg {at_risk[0]['avg_recency_days']:.0f} days since last purchase")
-
-            with col4:
-                hibernating = [s for s in rfm_segments if s['segment'] == 'Hibernating']
-                if hibernating:
-                    st.metric(
-                        "Hibernating",
-                        f"{rfm_dist['hibernating']} customers",
-                        f"${hibernating[0]['total_revenue']:,.0f}"
-                    )
-                    st.caption(f"Need reactivation")
-
-            st.divider()
-
-            # RFM Segment Distribution Chart
-            st.subheader("📊 Customer Segment Distribution")
-
-            # Prepare data for chart
-            segment_chart_data = []
-            for seg in rfm_segments:
-                segment_chart_data.append({
-                    'Segment': seg['segment'],
-                    'Customers': seg['customer_count'],
-                    'Revenue': seg['total_revenue']
-                })
-
-            df_segments = pd.DataFrame(segment_chart_data)
-
-            # Create two columns for charts
-            col1, col2 = st.columns(2)
-
-            with col1:
-                # Segment by customer count
-                fig_seg_count = px.pie(
-                    df_segments,
-                    values='Customers',
-                    names='Segment',
-                    title='Customers by Segment',
-                    color_discrete_sequence=px.colors.qualitative.Set3
-                )
-                fig_seg_count.update_traces(textposition='inside', textinfo='percent+label')
-                st.plotly_chart(fig_seg_count, use_container_width=True)
-
-            with col2:
-                # Segment by revenue
-                fig_seg_rev = px.pie(
-                    df_segments,
-                    values='Revenue',
-                    names='Segment',
-                    title='Revenue by Segment',
-                    color_discrete_sequence=px.colors.qualitative.Set3
-                )
-                fig_seg_rev.update_traces(textposition='inside', textinfo='percent+label')
-                st.plotly_chart(fig_seg_rev, use_container_width=True)
-
-            st.divider()
-
-            # ==================================================================
-            # TOP 15 CUSTOMERS PERFORMANCE
-            # ==================================================================
-            # Dynamic L3M period label
             _l3m_period = customer_data['metadata'].get('analysis_period_l3m', 'L3M')
             _l12m_period = customer_data['metadata'].get('analysis_period_l12m', 'L12M')
 
-            st.subheader("🏆 Top 15 Customers Performance")
-            st.markdown("Sales and Gross Profit over Last 3 Months (L3M) and Last 12 Months (L12M)")
-            st.caption(f"Note: GP margins based on annual income by customer. L3M ({_l3m_period}) and L12M ({_l12m_period}) GP calculated using annual margin %.")
-
-            # Prepare top customers data
-            top_15 = customer_data['top_15_customers']
-            df_top15 = pd.DataFrame(top_15)
-
-            # Create tabs for L3M and L12M views
-            l3m_tab, l12m_tab = st.tabs([f"Last 3 Months ({_l3m_period})", f"Last 12 Months ({_l12m_period})"])
-
-            with l3m_tab:
-                st.markdown(f"### L3M Performance ({_l3m_period})")
-
-                # Display table - use styled dataframe with proper formatting
-                display_l3m = df_top15.copy()
-
-                # Rename columns for display
-                display_l3m = display_l3m.rename(columns={
-                    'customer': 'Customer',
-                    'l3m_sales': 'Sales',
-                    'l3m_gross_profit': 'Gross Profit',
-                    'l3m_gp_margin': 'GP Margin %',
-                    'l3m_pct_of_total': '% of Total Sales',
-                    'rfm_segment': 'RFM Segment'
-                })
-
-                # Select columns to display
-                display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', '% of Total Sales', 'RFM Segment']
-
-                # Calculate company average GP margin for comparison (weighted average from top 15)
-                top_15 = customer_data['top_15_customers']
-                total_sales = sum(c['l12m_sales'] for c in top_15)
-                weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
-                avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
-
-                # Create formatted version for display using Pandas styling with color coding
-                styled_l3m = display_l3m[display_cols].style.format({
-                    'Sales': '${:,.0f}',
-                    'Gross Profit': '${:,.0f}',
-                    'GP Margin %': '{:.1f}%',
-                    '% of Total Sales': '{:.1f}%'
-                }).apply(lambda x: [color_gp_margin(v, avg_gp_margin) if x.name == 'GP Margin %' else '' for v in x], axis=0)
-
-                st.dataframe(
-                    styled_l3m,
-                    use_container_width=True,
-                    hide_index=True
-                )
-
-                st.caption(f"💡 GP Margin color coded: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}%")
-
-                # L3M Chart (sorted most to least)
-                df_l3m_sorted = df_top15.sort_values('l3m_sales', ascending=False)
-                fig_l3m = go.Figure()
-
-                fig_l3m.add_trace(go.Bar(
-                    name='Sales',
-                    x=df_l3m_sorted['customer'],
-                    y=df_l3m_sorted['l3m_sales'],
-                    marker_color='#1f77b4'
-                ))
-
-                fig_l3m.update_layout(
-                    title='L3M Sales by Top 15 Customers',
-                    xaxis_title='Customer',
-                    yaxis_title='Sales ($)',
-                    xaxis_tickangle=-45,
-                    height=500,
-                    hovermode='x unified',
-                    xaxis={'categoryorder': 'total descending'},
-                )
-
-                st.plotly_chart(fig_l3m, use_container_width=True)
-
-                # Summary metrics
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    top15_l3m_sales = df_top15['l3m_sales'].sum()
-                    st.metric("Top 15 L3M Sales", f"${top15_l3m_sales:,.0f}")
-                with col2:
-                    top15_l3m_pct = (top15_l3m_sales / customer_data['metadata']['total_l3m_sales'] * 100)
-                    st.metric("% of Total L3M Sales", f"{top15_l3m_pct:.1f}%")
-                with col3:
-                    avg_l3m_sales = df_top15['l3m_sales'].mean()
-                    st.metric("Avg L3M Sales (Top 15)", f"${avg_l3m_sales:,.0f}")
-
-            with l12m_tab:
-                st.markdown(f"### L12M Performance ({_l12m_period})")
-
-                # Display table - use styled dataframe with proper formatting
-                display_l12m = df_top15.copy()
-
-                # Calculate sales trend (L3M vs L12M monthly run rate)
-                display_l12m['Trend %'] = ((display_l12m['l3m_sales'] / 3) - (display_l12m['l12m_sales'] / 12)) / (display_l12m['l12m_sales'] / 12) * 100
-
-                # Rename columns for display
-                display_l12m = display_l12m.rename(columns={
-                    'customer': 'Customer',
-                    'l12m_sales': 'Sales',
-                    'l12m_gross_profit': 'Gross Profit',
-                    'l12m_gp_margin': 'GP Margin %',
-                    'l12m_pct_of_total': '% of Total Sales',
-                    'rfm_segment': 'RFM Segment'
-                })
-
-                # Select columns to display - now including Trend %
-                display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', 'Trend %', 'RFM Segment']
-
-                # Calculate company average GP margin for comparison (weighted average from top 15)
-                top_15 = customer_data['top_15_customers']
-                total_sales = sum(c['l12m_sales'] for c in top_15)
-                weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
-                avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
-
-                # Create formatted version for display using Pandas styling with color coding
-                def apply_colors(row):
-                    styles = [''] * len(row)
-                    # Color GP Margin
-                    if 'GP Margin %' in row.index:
-                        idx = row.index.get_loc('GP Margin %')
-                        styles[idx] = color_gp_margin(row['GP Margin %'], avg_gp_margin)
-                    # Color Trend %
-                    if 'Trend %' in row.index:
-                        idx = row.index.get_loc('Trend %')
-                        trend_val = row['Trend %']
-                        if trend_val > 10:
-                            styles[idx] = 'background-color: #d4edda'  # Green - growing
-                        elif trend_val < -10:
-                            styles[idx] = 'background-color: #f8d7da'  # Red - declining
-                        else:
-                            styles[idx] = 'background-color: #fff3cd'  # Yellow - stable
-                    return styles
-
-                styled_l12m = display_l12m[display_cols].style.format({
-                    'Sales': '${:,.0f}',
-                    'Gross Profit': '${:,.0f}',
-                    'GP Margin %': '{:.1f}%',
-                    'Trend %': '{:+.1f}%',  # Show + or - sign
-                }).apply(apply_colors, axis=1)
-
-                st.dataframe(
-                    styled_l12m,
-                    use_container_width=True,
-                    hide_index=True
-                )
-
-                st.caption(f"💡 GP Margin: Green ≥ {avg_gp_margin:.1f}% (avg), Yellow ≥ {avg_gp_margin-5:.1f}%, Red < {avg_gp_margin-5:.1f}% | Trend %: L3M vs L12M monthly rate (Green >+10%, Yellow ±10%, Red <-10%)")
-
-                # L12M Chart (sorted most to least)
-                df_l12m_sorted = df_top15.sort_values('l12m_sales', ascending=False)
-                fig_l12m = go.Figure()
-
-                fig_l12m.add_trace(go.Bar(
-                    name='Sales',
-                    x=df_l12m_sorted['customer'],
-                    y=df_l12m_sorted['l12m_sales'],
-                    marker_color='#2ca02c'
-                ))
-
-                fig_l12m.update_layout(
-                    title='L12M Sales by Top 15 Customers',
-                    xaxis_title='Customer',
-                    yaxis_title='Sales ($)',
-                    xaxis_tickangle=-45,
-                    height=500,
-                    hovermode='x unified',
-                    xaxis={'categoryorder': 'total descending'},
-                )
-
-                st.plotly_chart(fig_l12m, use_container_width=True)
-
-                # Summary metrics
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    top15_l12m_sales = df_top15['l12m_sales'].sum()
-                    st.metric("Top 15 L12M Sales", f"${top15_l12m_sales:,.0f}")
-                with col2:
-                    top15_l12m_pct = (top15_l12m_sales / customer_data['metadata']['total_l12m_sales'] * 100)
-                    st.metric("% of Total L12M Sales", f"{top15_l12m_pct:.1f}%")
-                with col3:
-                    avg_l12m_sales = df_top15['l12m_sales'].mean()
-                    st.metric("Avg L12M Sales (Top 15)", f"${avg_l12m_sales:,.0f}")
-
-            st.divider()
-
             # ==================================================================
-            # DETAILED RFM SEGMENTS
+            # SCORECARD KPI HEADER
             # ==================================================================
-            with st.expander("📋 View All RFM Segment Details"):
-                df_rfm_segments = pd.DataFrame(rfm_segments)
-                df_rfm_segments['Revenue'] = df_rfm_segments['total_revenue'].apply(lambda x: f'${x:,.0f}')
-                df_rfm_segments['Avg Revenue/Customer'] = df_rfm_segments['avg_revenue_per_customer'].apply(lambda x: f'${x:,.0f}')
-                df_rfm_segments['Avg Recency (days)'] = df_rfm_segments['avg_recency_days'].apply(lambda x: f'{x:.0f}')
-                df_rfm_segments['Avg Frequency'] = df_rfm_segments['avg_frequency'].apply(lambda x: f'{x:.1f}')
+            scorecard = customer_data.get('scorecard_kpis', {})
+            if scorecard:
+                col1, col2, col3, col4, col5 = st.columns(5)
 
-                display_rfm = df_rfm_segments[['segment', 'customer_count', 'Revenue',
-                                                'Avg Revenue/Customer', 'Avg Recency (days)', 'Avg Frequency']]
-                display_rfm.columns = ['Segment', 'Customers', 'Total Revenue',
-                                       'Avg Revenue/Customer', 'Avg Recency (days)', 'Avg Frequency']
+                # L3M orders vs L12M quarterly average
+                l12m_quarterly_avg = scorecard.get('l12m_orders', 0) / 4
+                order_delta = scorecard.get('l3m_orders', 0) - l12m_quarterly_avg if l12m_quarterly_avg > 0 else None
+                with col1:
+                    st.metric(
+                        f"Orders ({_l3m_period})",
+                        f"{scorecard.get('l3m_orders', 0):,}",
+                        f"{order_delta:+,.0f} vs L12M avg" if order_delta is not None else None,
+                    )
 
-                st.dataframe(display_rfm, use_container_width=True, hide_index=True)
+                # Active customers + new customers
+                with col2:
+                    new_ct = scorecard.get('new_customers_count', 0)
+                    st.metric(
+                        f"Active Customers ({_l3m_period})",
+                        f"{scorecard.get('l3m_unique_customers', 0):,}",
+                        f"{new_ct} new" if new_ct > 0 else None,
+                    )
 
+                # Avg order size vs L12M avg
+                l3m_avg = scorecard.get('l3m_avg_order_size', 0)
+                l12m_avg = scorecard.get('l12m_avg_order_size', 0)
+                avg_delta = l3m_avg - l12m_avg if l12m_avg > 0 else None
+                with col3:
+                    st.metric(
+                        f"Avg Order Size ({_l3m_period})",
+                        f"${l3m_avg:,.0f}",
+                        f"${avg_delta:+,.0f} vs L12M" if avg_delta is not None else None,
+                    )
+
+                # Customers overdue
+                overdue_ct = len([o for o in customer_data.get('overdue_customers', []) if not o.get('has_backlog_order')])
+                with col4:
+                    st.metric("Customers Overdue", f"{overdue_ct}")
+
+                # Cross-sell gaps
+                cross_sell_ct = len(customer_data.get('cross_sell_opportunities', []))
+                with col5:
+                    st.metric("Cross-Sell Gaps", f"{cross_sell_ct}")
+
+            st.caption(f"L3M: {_l3m_period} | L12M: {_l12m_period} | Generated: {customer_data['metadata']['generated_at'][:10]}")
             st.divider()
 
             # ==================================================================
@@ -1253,25 +990,24 @@ if data:
             # ==================================================================
             attention_list = customer_data.get('customers_needing_attention', [])
             if attention_list:
-                st.subheader("🚨 Customers Needing Attention")
-                st.markdown("Customers flagged by one or more signals: **Order Overdue** (overdue to order), **At Risk** (RFM segment), **Declining** (L3M trend down >25%), **Low Margin** (<15% GP on significant volume)")
+                st.subheader("Customers Needing Attention")
+                st.markdown("**Order Overdue** | **At Risk** (RFM) | **Declining** (>25% down) | **Low Margin** (<15% GP)")
 
                 attention_rows = []
                 for a in attention_list:
                     reason_tags = ', '.join(a['reasons'])
-                    backlog_note = ''
-                    if a.get('has_backlog_order'):
-                        backlog_note = f" (${a['backlog_value']:,.0f} in backlog)"
+                    rep = a.get('sales_rep', '')
+                    action = a.get('suggested_action', '')
                     attention_rows.append({
                         'Customer': a['customer'].split('/')[0].strip(),
                         'Flags': reason_tags,
+                        'Action': action,
+                        'Rep': rep if rep else '—',
                         'L3M Sales': a['l3m_sales'],
                         'L12M Sales': a['l12m_sales'],
                         'Trend %': a['trend_pct'],
-                        'GP Margin %': a['gp_margin'],
-                        'Days Since Order': a['recency_days'],
-                        'Segment': a['rfm_segment'],
-                        'Backlog': backlog_note,
+                        'GP %': a['gp_margin'],
+                        'Days Since': a['recency_days'],
                     })
 
                 df_attention = pd.DataFrame(attention_rows)
@@ -1289,13 +1025,11 @@ if data:
                     'L3M Sales': '${:,.0f}',
                     'L12M Sales': '${:,.0f}',
                     'Trend %': '{:+.0f}%',
-                    'GP Margin %': '{:.1f}%',
-                    'Days Since Order': '{:.0f}',
+                    'GP %': '{:.1f}%',
+                    'Days Since': '{:.0f}',
                 }).applymap(color_attention_flags, subset=['Flags'])
 
                 st.dataframe(styled_attention, use_container_width=True, hide_index=True)
-
-                st.caption("Customers with active backlog orders are noted — they may not need immediate outreach despite overdue signals.")
 
             st.divider()
 
@@ -1304,10 +1038,9 @@ if data:
             # ==================================================================
             overdue_list = customer_data.get('overdue_customers', [])
             if overdue_list:
-                st.subheader("⏰ Overdue to Order")
-                st.markdown("Customers past their expected purchase interval based on historical ordering patterns. Minimum 3 prior orders required for interval calculation.")
+                st.subheader("Overdue to Order")
+                st.markdown("Customers past their expected purchase interval (L12M). Minimum 3 prior orders required.")
 
-                # Split into truly overdue vs backlog-covered
                 truly_overdue = [o for o in overdue_list if not o['has_backlog_order']]
                 backlog_covered = [o for o in overdue_list if o['has_backlog_order']]
 
@@ -1317,8 +1050,8 @@ if data:
                         overdue_rows.append({
                             'Customer': o['customer'].split('/')[0].strip(),
                             'Last Order': o['last_purchase_date'],
-                            'Avg Interval (days)': o['expected_interval_days'],
-                            'Days Since Order': o['recency_days'],
+                            'Avg Interval': o['expected_interval_days'],
+                            'Days Since': o['recency_days'],
                             'Days Overdue': o['days_overdue'],
                             'L12M Sales': o['l12m_sales'],
                             'Segment': o['segment'],
@@ -1326,15 +1059,15 @@ if data:
 
                     df_overdue = pd.DataFrame(overdue_rows)
                     styled_overdue = df_overdue.style.format({
-                        'Avg Interval (days)': '{:.0f}',
-                        'Days Since Order': '{:.0f}',
+                        'Avg Interval': '{:.0f}',
+                        'Days Since': '{:.0f}',
                         'Days Overdue': '{:.0f}',
                         'L12M Sales': '${:,.0f}',
                     })
                     st.dataframe(styled_overdue, use_container_width=True, hide_index=True)
 
                 if backlog_covered:
-                    with st.expander(f"📦 {len(backlog_covered)} Overdue Customers Covered by Active Backlog"):
+                    with st.expander(f"{len(backlog_covered)} Overdue Customers Covered by Active Backlog"):
                         covered_rows = []
                         for o in backlog_covered:
                             covered_rows.append({
@@ -1351,7 +1084,6 @@ if data:
                             'Backlog Value': '${:,.0f}',
                         })
                         st.dataframe(styled_covered, use_container_width=True, hide_index=True)
-                        st.caption("These customers are technically past their expected order interval but have active orders in the backlog.")
 
             st.divider()
 
@@ -1361,8 +1093,8 @@ if data:
             cross_sell = customer_data.get('cross_sell_opportunities', [])
             category_heatmap = customer_data.get('category_heatmap', [])
             if cross_sell:
-                st.subheader("🎯 Cross-Sell Opportunities")
-                st.markdown("Active customers buying from fewer product categories than available. Categories: **Drums**, **Rotors**, **ADB** (calipers/pads/shoes), **Hubs**")
+                st.subheader("Cross-Sell Opportunities")
+                st.markdown("Customers buying fewer than 4 categories: **Drums** | **Rotors** | **ADB** | **Hubs**")
 
                 cross_rows = []
                 for cs in cross_sell[:20]:
@@ -1371,7 +1103,7 @@ if data:
                         'Buying': ', '.join(cs['categories_purchased']),
                         'Missing': ', '.join(cs['missing_categories']),
                         'L3M Sales': cs['l3m_sales'],
-                        'Categories': f"{cs['category_count']}/4",
+                        'Coverage': f"{cs['category_count']}/4",
                     })
 
                 df_cross = pd.DataFrame(cross_rows)
@@ -1387,12 +1119,10 @@ if data:
                 cats_in_data = [c for c in ['Drums', 'Rotors', 'ADB', 'Hubs'] if c in df_heatmap.columns]
 
                 if cats_in_data:
-                    # Sort by total L3M revenue across all categories (most to least)
                     df_heatmap['_total'] = df_heatmap[cats_in_data].sum(axis=1)
-                    df_heatmap = df_heatmap.sort_values('_total', ascending=True)  # ascending for horizontal bar (bottom=largest)
+                    df_heatmap = df_heatmap.sort_values('_total', ascending=True)
 
                     fig_heatmap = go.Figure()
-
                     colors = {'Drums': '#1f77b4', 'Rotors': '#ff7f0e', 'ADB': '#2ca02c', 'Hubs': '#d62728'}
                     for cat in cats_in_data:
                         fig_heatmap.add_trace(go.Bar(
@@ -1415,44 +1145,153 @@ if data:
             st.divider()
 
             # ==================================================================
-            # PRODUCT CATEGORY SUMMARY
+            # CUSTOMER PERFORMANCE DETAILS (collapsed)
+            # ==================================================================
+            with st.expander("Customer Performance Details"):
+                # Top 15 Customers
+                st.subheader("Top 15 Customers Performance")
+                st.caption(f"GP margins based on annual income by customer. L3M ({_l3m_period}) and L12M ({_l12m_period}).")
+
+                top_15 = customer_data['top_15_customers']
+                df_top15 = pd.DataFrame(top_15)
+
+                l3m_tab, l12m_tab = st.tabs([f"Last 3 Months ({_l3m_period})", f"Last 12 Months ({_l12m_period})"])
+
+                with l3m_tab:
+                    display_l3m = df_top15.copy()
+                    display_l3m = display_l3m.rename(columns={
+                        'customer': 'Customer', 'l3m_sales': 'Sales',
+                        'l3m_gross_profit': 'Gross Profit', 'l3m_gp_margin': 'GP Margin %',
+                        'l3m_pct_of_total': '% of Total Sales', 'rfm_segment': 'RFM Segment'
+                    })
+                    display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', '% of Total Sales', 'RFM Segment']
+
+                    total_sales = sum(c['l12m_sales'] for c in top_15)
+                    weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
+                    avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
+
+                    styled_l3m = display_l3m[display_cols].style.format({
+                        'Sales': '${:,.0f}', 'Gross Profit': '${:,.0f}',
+                        'GP Margin %': '{:.1f}%', '% of Total Sales': '{:.1f}%'
+                    }).apply(lambda x: [color_gp_margin(v, avg_gp_margin) if x.name == 'GP Margin %' else '' for v in x], axis=0)
+                    st.dataframe(styled_l3m, use_container_width=True, hide_index=True)
+
+                    df_l3m_sorted = df_top15.sort_values('l3m_sales', ascending=False)
+                    fig_l3m = go.Figure()
+                    fig_l3m.add_trace(go.Bar(name='Sales', x=df_l3m_sorted['customer'], y=df_l3m_sorted['l3m_sales'], marker_color='#1f77b4'))
+                    fig_l3m.update_layout(title='L3M Sales by Top 15 Customers', xaxis_title='Customer', yaxis_title='Sales ($)',
+                                          xaxis_tickangle=-45, height=500, hovermode='x unified', xaxis={'categoryorder': 'total descending'})
+                    st.plotly_chart(fig_l3m, use_container_width=True)
+
+                with l12m_tab:
+                    display_l12m = df_top15.copy()
+                    display_l12m['Trend %'] = ((display_l12m['l3m_sales'] / 3) - (display_l12m['l12m_sales'] / 12)) / (display_l12m['l12m_sales'] / 12) * 100
+                    display_l12m = display_l12m.rename(columns={
+                        'customer': 'Customer', 'l12m_sales': 'Sales',
+                        'l12m_gross_profit': 'Gross Profit', 'l12m_gp_margin': 'GP Margin %',
+                        'l12m_pct_of_total': '% of Total Sales', 'rfm_segment': 'RFM Segment'
+                    })
+                    display_cols = ['Customer', 'Sales', 'Gross Profit', 'GP Margin %', 'Trend %', 'RFM Segment']
+
+                    total_sales = sum(c['l12m_sales'] for c in top_15)
+                    weighted_gp = sum(c['l12m_sales'] * c['l12m_gp_margin'] for c in top_15)
+                    avg_gp_margin = weighted_gp / total_sales if total_sales else 53.9
+
+                    def apply_colors(row):
+                        styles = [''] * len(row)
+                        if 'GP Margin %' in row.index:
+                            styles[row.index.get_loc('GP Margin %')] = color_gp_margin(row['GP Margin %'], avg_gp_margin)
+                        if 'Trend %' in row.index:
+                            idx = row.index.get_loc('Trend %')
+                            t = row['Trend %']
+                            styles[idx] = 'background-color: #d4edda' if t > 10 else ('background-color: #f8d7da' if t < -10 else 'background-color: #fff3cd')
+                        return styles
+
+                    styled_l12m = display_l12m[display_cols].style.format({
+                        'Sales': '${:,.0f}', 'Gross Profit': '${:,.0f}',
+                        'GP Margin %': '{:.1f}%', 'Trend %': '{:+.1f}%',
+                    }).apply(apply_colors, axis=1)
+                    st.dataframe(styled_l12m, use_container_width=True, hide_index=True)
+
+                    df_l12m_sorted = df_top15.sort_values('l12m_sales', ascending=False)
+                    fig_l12m = go.Figure()
+                    fig_l12m.add_trace(go.Bar(name='Sales', x=df_l12m_sorted['customer'], y=df_l12m_sorted['l12m_sales'], marker_color='#2ca02c'))
+                    fig_l12m.update_layout(title='L12M Sales by Top 15 Customers', xaxis_title='Customer', yaxis_title='Sales ($)',
+                                           xaxis_tickangle=-45, height=500, hovermode='x unified', xaxis={'categoryorder': 'total descending'})
+                    st.plotly_chart(fig_l12m, use_container_width=True)
+
+                st.divider()
+
+                # RFM Segment Details
+                st.subheader("RFM Segmentation")
+                rfm_segments = customer_data['rfm_segments']
+                rfm_dist = customer_data['rfm_distribution']
+
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    champions = [s for s in rfm_segments if s['segment'] == 'Champions']
+                    if champions:
+                        st.metric("Champions", f"{rfm_dist['champions']} customers", f"${champions[0]['total_revenue']:,.0f}")
+                with col2:
+                    loyal = [s for s in rfm_segments if s['segment'] == 'Loyal Customers']
+                    if loyal:
+                        st.metric("Loyal Customers", f"{rfm_dist['loyal_customers']} customers", f"${loyal[0]['total_revenue']:,.0f}")
+                with col3:
+                    at_risk = [s for s in rfm_segments if s['segment'] == 'At Risk']
+                    if at_risk:
+                        st.metric("At Risk", f"{rfm_dist['at_risk']} customers", f"${at_risk[0]['total_revenue']:,.0f}")
+                with col4:
+                    hibernating = [s for s in rfm_segments if s['segment'] == 'Hibernating']
+                    if hibernating:
+                        st.metric("Hibernating", f"{rfm_dist['hibernating']} customers", f"${hibernating[0]['total_revenue']:,.0f}")
+
+                segment_chart_data = [{'Segment': s['segment'], 'Customers': s['customer_count'], 'Revenue': s['total_revenue']} for s in rfm_segments]
+                df_segments = pd.DataFrame(segment_chart_data)
+                col1, col2 = st.columns(2)
+                with col1:
+                    fig_seg_count = px.pie(df_segments, values='Customers', names='Segment', title='Customers by Segment', color_discrete_sequence=px.colors.qualitative.Set3)
+                    fig_seg_count.update_traces(textposition='inside', textinfo='percent+label')
+                    st.plotly_chart(fig_seg_count, use_container_width=True)
+                with col2:
+                    fig_seg_rev = px.pie(df_segments, values='Revenue', names='Segment', title='Revenue by Segment', color_discrete_sequence=px.colors.qualitative.Set3)
+                    fig_seg_rev.update_traces(textposition='inside', textinfo='percent+label')
+                    st.plotly_chart(fig_seg_rev, use_container_width=True)
+
+                # Detailed RFM table
+                df_rfm_segments = pd.DataFrame(rfm_segments)
+                df_rfm_segments['Revenue'] = df_rfm_segments['total_revenue'].apply(lambda x: f'${x:,.0f}')
+                df_rfm_segments['Avg Revenue/Customer'] = df_rfm_segments['avg_revenue_per_customer'].apply(lambda x: f'${x:,.0f}')
+                df_rfm_segments['Avg Recency (days)'] = df_rfm_segments['avg_recency_days'].apply(lambda x: f'{x:.0f}')
+                df_rfm_segments['Avg Frequency'] = df_rfm_segments['avg_frequency'].apply(lambda x: f'{x:.1f}')
+                display_rfm = df_rfm_segments[['segment', 'customer_count', 'Revenue', 'Avg Revenue/Customer', 'Avg Recency (days)', 'Avg Frequency']]
+                display_rfm.columns = ['Segment', 'Customers', 'Total Revenue', 'Avg Revenue/Customer', 'Avg Recency (days)', 'Avg Frequency']
+                st.dataframe(display_rfm, use_container_width=True, hide_index=True)
+
+            # ==================================================================
+            # PRODUCT CATEGORY MIX (collapsed)
             # ==================================================================
             product_cats = customer_data.get('product_category_summary', [])
             if product_cats:
-                st.subheader("📊 Product Category Mix (L3M)")
-
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    df_cats = pd.DataFrame(product_cats)
-                    fig_pie = go.Figure(data=[go.Pie(
-                        labels=df_cats['category'],
-                        values=df_cats['l3m_revenue'],
-                        textinfo='label+percent',
-                        hovertemplate='%{label}<br>Revenue: $%{value:,.0f}<br>%{percent}<extra></extra>',
-                    )])
-                    fig_pie.update_layout(title='Revenue by Product Category', height=400)
-                    st.plotly_chart(fig_pie, use_container_width=True)
-
-                with col2:
-                    cat_rows = []
-                    for pc in product_cats:
-                        cat_rows.append({
-                            'Category': pc['category'],
-                            'L3M Revenue': pc['l3m_revenue'],
-                            'Transactions': pc['l3m_transactions'],
-                            'Customers': pc['l3m_customers'],
-                        })
-                    df_cat_table = pd.DataFrame(cat_rows)
-                    styled_cats = df_cat_table.style.format({
-                        'L3M Revenue': '${:,.0f}',
-                    })
-                    st.dataframe(styled_cats, use_container_width=True, hide_index=True)
-
-            st.divider()
+                with st.expander("Product Category Mix (L3M)"):
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        df_cats = pd.DataFrame(product_cats)
+                        fig_pie = go.Figure(data=[go.Pie(
+                            labels=df_cats['category'], values=df_cats['l3m_revenue'],
+                            textinfo='label+percent',
+                            hovertemplate='%{label}<br>Revenue: $%{value:,.0f}<br>%{percent}<extra></extra>',
+                        )])
+                        fig_pie.update_layout(title='Revenue by Product Category', height=400)
+                        st.plotly_chart(fig_pie, use_container_width=True)
+                    with col2:
+                        cat_rows = [{'Category': pc['category'], 'L3M Revenue': pc['l3m_revenue'],
+                                     'Transactions': pc['l3m_transactions'], 'Customers': pc['l3m_customers']} for pc in product_cats]
+                        df_cat_table = pd.DataFrame(cat_rows)
+                        styled_cats = df_cat_table.style.format({'L3M Revenue': '${:,.0f}'})
+                        st.dataframe(styled_cats, use_container_width=True, hide_index=True)
 
             # Footer
-            st.caption(f"Customer analysis based on RFM segmentation | L3M: {_l3m_period} | L12M: {_l12m_period}")
+            st.caption(f"L3M: {_l3m_period} | L12M: {_l12m_period}")
 
         else:
             st.warning("Customer data not available. Please run the RFM analysis first.")

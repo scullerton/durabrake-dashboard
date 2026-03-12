@@ -1,11 +1,52 @@
 {
   "metadata": {
-    "generated_at": "2026-03-03T12:40:45.865061",
+    "generated_at": "2026-03-11T17:36:28.569710",
     "analysis_period_l3m": "Nov-Jan 2026",
     "analysis_period_l12m": "Feb 2025-Jan 2026",
     "total_customers": 216,
     "total_l3m_sales": 3519900.19,
     "total_l12m_sales": 10164659.98
+  },
+  "scorecard_kpis": {
+    "l3m_orders": 270,
+    "l12m_orders": 815,
+    "l3m_unique_customers": 124,
+    "l12m_unique_customers": 216,
+    "l3m_avg_order_size": 13036.667370370371,
+    "l12m_avg_order_size": 12471.975435582823,
+    "new_customers_count": 30,
+    "new_customer_names": [
+      "Ace Bus Charter",
+      "Brake & Truck Supply",
+      "Canyon State Bus Sales",
+      "Cargo Heavy Duty",
+      "Del-Val International",
+      "Diesel Depot",
+      "Edmonton Brake & Clutch",
+      "Fresno Truck Parts",
+      "Goodson Bus Sales",
+      "JX Truck Centers - Morton",
+      "Kenworth of  Louisiana",
+      "Kenworth of Louisiana - HQ",
+      "Metro Truck Group - Hamilton",
+      "Miller Transit Mix",
+      "Myers Diesel Repair",
+      "Ocean Trailer - Delta",
+      "Parts South of Georgia",
+      "Peck's Heavy Friction",
+      "Peterbilt Pacific / TRP - Langley",
+      "Pueblo Brake",
+      "R. James WSF - CAD",
+      "R. James Western Star",
+      "Randon Auto Parts - AXN HD",
+      "Ranger Brake - HQ",
+      "Red Coach Inc - FL",
+      "Russ Equipment Co. Inc.",
+      "Southern Automotive Inc",
+      "Tri-City Truck Parts",
+      "Truckpro - Phoenix (AZ Brake)",
+      "VALLEY FREIGHTLINER - BROOK PARK"
+    ]
   },
   "top_15_customers": [
     {
@@ -378,7 +419,9 @@
       "gp_margin": 36.97374881323749,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Greatwest Kenworth",
@@ -395,7 +438,9 @@
       "gp_margin": 23.84859871031746,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Webb Wheel Products",
@@ -412,7 +457,9 @@
       "gp_margin": 62.437786764134074,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Cassens - Aurora",
@@ -429,7 +476,9 @@
       "gp_margin": 52.198338035492476,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Brake & Eqp (Auto Brake Clutch)",
@@ -446,7 +495,9 @@
       "gp_margin": 23.17437293859123,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Trailer Craft Inc.",
@@ -463,7 +514,9 @@
       "gp_margin": 84.52715139719172,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Bremskerl CV",
@@ -480,7 +533,9 @@
       "gp_margin": 65.26837944664031,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Betts Truck Parts",
@@ -497,7 +552,9 @@
       "gp_margin": 64.21897945505464,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Plaza Truck Service",
@@ -514,7 +571,9 @@
       "gp_margin": 38.48324915824916,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "West World Truck & Tr",
@@ -531,7 +590,9 @@
       "gp_margin": 79.28649589654316,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Haldex Brake Products",
@@ -547,7 +608,9 @@
       "gp_margin": 55.4698961190209,
       "rfm_segment": "Loyal Customers",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Municipal Truck Parts",
@@ -563,7 +626,9 @@
       "gp_margin": 21.784392070366703,
       "rfm_segment": "Loyal Customers",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "ABS Trucking",
@@ -579,7 +644,9 @@
       "gp_margin": 21.638234111756752,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "RWC Group - Phoenix",
@@ -595,7 +662,9 @@
       "gp_margin": 54.080067274858564,
       "rfm_segment": "Loyal Customers",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Follow up on reorder",
+      "sales_rep": ""
     },
     {
       "customer": "Woodward's Auto Spring",
@@ -611,7 +680,9 @@
       "gp_margin": 49.76779375724964,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Cassens Transport - Marysville",
@@ -627,7 +698,9 @@
       "gp_margin": 66.69054381711119,
       "rfm_segment": "At Risk",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "OZARK UTILITY Trailer",
@@ -643,7 +716,9 @@
       "gp_margin": 32.62497470147743,
       "rfm_segment": "Need Attention",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "A K Parts & Tires",
@@ -659,7 +734,9 @@
       "gp_margin": 46.84660194174757,
       "rfm_segment": "Need Attention",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Volvo Group NA, Inc",
@@ -674,7 +751,9 @@
       "gp_margin": 14.529316246554986,
       "rfm_segment": "Champions",
       "has_backlog_order": true,
-      "backlog_value": 43700.0
+      "backlog_value": 43700.0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Kenworth of  Louisiana",
@@ -689,7 +768,9 @@
       "gp_margin": 9.435129740518962,
       "rfm_segment": "Champions",
       "has_backlog_order": true,
-      "backlog_value": 127920.0
+      "backlog_value": 127920.0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": "Chris Johnson"
     },
     {
       "customer": "Atlantic Utility Trailer Sales",
@@ -704,7 +785,9 @@
       "gp_margin": 36.19354992327411,
       "rfm_segment": "Champions",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Peterbilt Pacific / TRP - Langley",
@@ -719,7 +802,9 @@
       "gp_margin": 7.015177469951711,
       "rfm_segment": "Champions",
       "has_backlog_order": true,
-      "backlog_value": 96500.0
+      "backlog_value": 96500.0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": "Shroff"
     },
     {
       "customer": "Central Valley Trailer",
@@ -734,7 +819,9 @@
       "gp_margin": 44.17374645650116,
       "rfm_segment": "Champions",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Tag Truck Centers",
@@ -749,7 +836,9 @@
       "gp_margin": 14.849809725721178,
       "rfm_segment": "Loyal Customers",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": ""
     },
     {
       "customer": "CBS Parts",
@@ -764,7 +853,9 @@
       "gp_margin": 35.90040698261075,
       "rfm_segment": "Champions",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Hunnings Inc.",
@@ -779,7 +870,9 @@
       "gp_margin": 8.42330735185753,
       "rfm_segment": "New Customers",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": ""
     },
     {
       "customer": "Ocean Trailer - Ed CAD",
@@ -794,7 +887,9 @@
       "gp_margin": 5.323033836919752,
       "rfm_segment": "Champions",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": ""
     },
     {
       "customer": "Power & Transmission",
@@ -809,7 +904,9 @@
       "gp_margin": 68.89039733243666,
       "rfm_segment": "Hibernating",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Supplycore Inc",
@@ -824,7 +921,9 @@
       "gp_margin": 52.7976645225949,
       "rfm_segment": "Hibernating",
       "has_backlog_order": false,
-      "backlog_value": 0
+      "backlog_value": 0,
+      "suggested_action": "Review pricing/service",
+      "sales_rep": ""
     },
     {
       "customer": "Allegheny Truck",
@@ -839,7 +938,9 @@
       "gp_margin": 12.50956163577523,
       "rfm_segment": "New Customers",
       "has_backlog_order": true,
-      "backlog_value": 44174.0
+      "backlog_value": 44174.0,
+      "suggested_action": "Review pricing strategy",
+      "sales_rep": "Caroline"
     }
   ],
   "overdue_customers": [

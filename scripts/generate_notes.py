@@ -221,6 +221,30 @@ def _analyze_customers(cust_data, notes, actions):
             names = [a['customer'].split('/')[0].strip() for a in multi_flag[:3]]
             notes.append(f"- {len(multi_flag)} customers flagged with multiple attention signals: {', '.join(names)}")
 
+    # Scorecard KPIs
+    kpis = cust_data.get('scorecard_kpis', {})
+    if kpis:
+        l3m_orders = kpis.get('l3m_orders', 0)
+        l3m_avg = kpis.get('l3m_avg_order_size', 0)
+        if l3m_orders:
+            notes.append(f"- {l3m_orders} orders placed in L3M (avg ${l3m_avg:,.0f} per order)")
+
+        new_ct = kpis.get('new_customers_count', 0)
+        if new_ct > 0:
+            new_names = kpis.get('new_customer_names', [])[:3]
+            name_str = ', '.join(n.split('/')[0].strip() for n in new_names)
+            notes.append(f"- {new_ct} new customers acquired in L3M: {name_str}")
+            actions.append(f"- Nurture {new_ct} new customers to build repeat purchasing habits")
+
+        l12m_orders = kpis.get('l12m_orders', 0)
+        if l12m_orders and l3m_orders:
+            l12m_quarterly = l12m_orders / 4
+            if l3m_orders < l12m_quarterly * 0.85:
+                notes.append(f"- L3M order volume ({l3m_orders}) is below L12M quarterly average ({l12m_quarterly:.0f})")
+                actions.append(f"- Investigate declining order volume — down {((l12m_quarterly - l3m_orders) / l12m_quarterly * 100):.0f}% vs trailing average")
+            elif l3m_orders > l12m_quarterly * 1.15:
+                notes.append(f"- L3M order volume ({l3m_orders}) is above L12M quarterly average ({l12m_quarterly:.0f})")
+
 
 def _analyze_backlog(backlog, notes, actions):
     """Analyze backlog data for key insights."""

@@ -172,16 +172,20 @@ def load_customer_income_data(file_path):
 
 
 def load_backlog_customers(period, base_path="."):
-    """Load backlog data and return dict of {customer: backlog_value}."""
+    """Load backlog data and return dict of {customer: backlog_value}
+    and dict of {customer: sales_rep}."""
     backlog_file = os.path.join(base_path, f"generated/{period}/backlog_dashboard_data.json")
     if not os.path.exists(backlog_file):
-        return {}
+        return {}, {}
     with open(backlog_file, 'r') as f:
         backlog = json.load(f)
-    result = {}
+    values = {}
+    reps = {}
     for entry in backlog.get('backlog_by_customer', backlog.get('top_customers', [])):
-        result[entry['customer']] = entry.get('total_value', 0)
-    return result
+        values[entry['customer']] = entry.get('total_value', 0)
+        if entry.get('sales_rep'):
+            reps[entry['customer']] = entry['sales_rep']
+    return values, reps
 
 
 # ---------------------------------------------------------------------------
@@ -335,6 +339,62 @@ def calculate_order_frequency(transactions_df, rfm_df, analysis_date, l12m_start
     return results
 
 
+def calculate_scorecard_kpis(transactions_df, l3m_start, analysis_date):
+    """Calculate aggregate KPIs for the scorecard header.
+
+    Returns dict with L3M and L12M order counts, unique customers,
+    average order size, and new customer count.
+    """
+    from dateutil.relativedelta import relativedelta
+
+    l12m_start = analysis_date - relativedelta(months=12) + relativedelta(days=1)
+
+    l3m_trans = transactions_df[transactions_df['date'] >= l3m_start].copy()
+    l12m_trans = transactions_df[transactions_df['date'] >= l12m_start].copy()
+
+    # Unique orders = unique (customer, date) pairs
+    l3m_trans['order_date'] = l3m_trans['date'].dt.date
+    l12m_trans['order_date'] = l12m_trans['date'].dt.date
+
+    l3m_orders = l3m_trans.drop_duplicates(subset=['customer', 'order_date'])
+    l12m_orders = l12m_trans.drop_duplicates(subset=['customer', 'order_date'])
+
+    l3m_order_count = len(l3m_orders)
+    l12m_order_count = len(l12m_orders)
+
+    l3m_unique_customers = l3m_trans['customer'].nunique()
+    l12m_unique_customers = l12m_trans['customer'].nunique()
+
+    l3m_total_revenue = l3m_trans['amount'].sum()
+    l12m_total_revenue = l12m_trans['amount'].sum()
+
+    l3m_avg_order_size = l3m_total_revenue / l3m_order_count if l3m_order_count > 0 else 0
+    l12m_avg_order_size = l12m_total_revenue / l12m_order_count if l12m_order_count > 0 else 0
+
+    # New customers: active in L3M but NO orders in the 12 months before L3M start
+    prior_12m_start = l3m_start - relativedelta(months=12)
+    prior_12m_end = l3m_start - relativedelta(days=1)
+    prior_trans = transactions_df[
+        (transactions_df['date'] >= prior_12m_start) &
+        (transactions_df['date'] <= prior_12m_end)
+    ]
+    prior_customers = set(prior_trans['customer'].unique())
+    l3m_customers = set(l3m_trans['customer'].unique())
+    new_customers = l3m_customers - prior_customers
+    new_customer_names = sorted(new_customers)
+
+    return {
+        'l3m_orders': int(l3m_order_count),
+        'l12m_orders': int(l12m_order_count),
+        'l3m_unique_customers': int(l3m_unique_customers),
+        'l12m_unique_customers': int(l12m_unique_customers),
+        'l3m_avg_order_size': float(l3m_avg_order_size),
+        'l12m_avg_order_size': float(l12m_avg_order_size),
+        'new_customers_count': len(new_customers),
+        'new_customer_names': new_customer_names,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Main entry point
 # ---------------------------------------------------------------------------
@@ -407,8 +467,15 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
 
     # Load backlog for cross-reference
     print("Loading backlog data for cross-reference...")
-    backlog_customers = load_backlog_customers(period, base_path)
+    backlog_customers, backlog_reps = load_backlog_customers(period, base_path)
     print(f"[OK] {len(backlog_customers)} customers with active backlog orders")
+    print()
+
+    # Calculate scorecard KPIs
+    print("Calculating scorecard KPIs...")
+    scorecard_kpis = calculate_scorecard_kpis(transactions_df, l3m_start, analysis_date)
+    print(f"[OK] L3M: {scorecard_kpis['l3m_orders']} orders, {scorecard_kpis['l3m_unique_customers']} customers, avg ${scorecard_kpis['l3m_avg_order_size']:,.0f}")
+    print(f"[OK] New customers in L3M: {scorecard_kpis['new_customers_count']}")
     print()
 
     # Merge RFM data with top 15
@@ -532,6 +599,18 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
             reasons.append('Low Margin')
 
         if reasons and (row['l3m_sales'] > 0 or row['l12m_sales'] > 5000):
+            # Suggest action based on highest-priority flag
+            if 'Order Overdue' in reasons:
+                action = 'Follow up on reorder'
+            elif 'Low Margin' in reasons:
+                action = 'Review pricing strategy'
+            elif 'Declining' in reasons:
+                action = 'Review pricing/service'
+            elif 'At Risk' in reasons:
+                action = 'Schedule retention call'
+            else:
+                action = 'Review account'
+
             attention_list.append({
                 'customer': cust,
                 'reasons': reasons,
@@ -544,6 +623,8 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
                 'rfm_segment': segment,
                 'has_backlog_order': has_backlog,
                 'backlog_value': backlog_customers.get(cust, 0),
+                'suggested_action': action,
+                'sales_rep': backlog_reps.get(cust, ''),
             })
     # Sort: most reasons first, then by L12M sales descending
     attention_list.sort(key=lambda x: (-len(x['reasons']), -x['l12m_sales']))
@@ -588,6 +669,7 @@ def run_customer_analysis(period, year, month, l3m_year, l3m_month, base_path=".
             'total_l3m_sales': float(total_l3m),
             'total_l12m_sales': float(total_l12m)
         },
+        'scorecard_kpis': scorecard_kpis,
         'top_15_customers': top_customers_list,
         'rfm_segments': segment_summary,
         'rfm_distribution': {

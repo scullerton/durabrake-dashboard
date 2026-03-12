@@ -44,6 +44,16 @@ def calculate_backlog_metrics(df, analysis_date):
     orders_by_customer.columns = ['customer', 'order_count', 'total_value']
     orders_by_customer = orders_by_customer.sort_values('total_value', ascending=False)
 
+    # Primary sales rep per customer (rep with most order value)
+    customer_rep = (
+        df.groupby(['InvoicesCustomers::DisplayName', 'SalesRep'])['SubTotal_c for Reports']
+        .sum()
+        .reset_index()
+    )
+    customer_rep.columns = ['customer', 'sales_rep', 'rep_value']
+    customer_rep = customer_rep.sort_values('rep_value', ascending=False).drop_duplicates('customer')
+    customer_rep_map = dict(zip(customer_rep['customer'], customer_rep['sales_rep']))
+
     orders_by_rep = df.groupby('SalesRep').agg({
         'DocNumber': 'count',
         'SubTotal_c for Reports': 'sum'
@@ -110,7 +120,8 @@ def calculate_backlog_metrics(df, analysis_date):
         'age_value_buckets': age_value_buckets,
         'ship_date_buckets': ship_date_buckets,
         'ship_value_buckets': ship_value_buckets,
-        'avg_age_days': float(df['days_old'].mean())
+        'avg_age_days': float(df['days_old'].mean()),
+        'customer_rep_map': customer_rep_map
     }
 
 
@@ -169,7 +180,8 @@ def run_backlog_analysis(period, year, month, last_day, base_path="."):
             {
                 'customer': row['customer'],
                 'order_count': int(row['order_count']),
-                'total_value': float(row['total_value'])
+                'total_value': float(row['total_value']),
+                'sales_rep': metrics['customer_rep_map'].get(row['customer'], 'Unassigned'),
             }
             for _, row in metrics['orders_by_customer'].iterrows()
         ],
