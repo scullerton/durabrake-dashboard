@@ -1,8 +1,37 @@
 # DuraBrake Dashboard - Monthly Management Guide
 
-## 📅 Monthly Update Process
+## 🤖 Automated Monthly Process (Primary)
 
-Follow these steps each month to update the dashboard with new data.
+The dashboard now runs itself. Two Windows Task Scheduler jobs handle the full pipeline:
+
+| Job | When | What it does |
+|---|---|---|
+| **A — Backlog Snapshot** | Last day of month, 11:45 PM | Pulls live backlog from FileMaker Cloud (required because it's a live view — can't be retrieved later) |
+| **B — Monthly Dashboard** | Daily 6 AM from the 22nd | Pulls QBO Sales + Income reports, copies internal financial package from Box, runs pipeline, git-pushes; retries daily until internal report is ready |
+
+**Where things live:**
+- Logs: `logs/backlog_snapshot_{YY.MM}.log` and `logs/monthly_automation_{YY.MM}.log`
+- Email drafts: `drafts/monthly_report_{YY.MM}.eml` (never auto-sent — review and send manually)
+- Scheduler wrappers: `scheduler/job_a_backlog_snapshot.bat`, `scheduler/job_b_monthly_dashboard.bat`
+
+**Re-running manually (if scheduler failed or you want to re-process):**
+```bash
+cd "C:\Users\scull\Box\DuraParts\Finance\KPI Dashboard"
+python scripts\monthly_automation.py --period 26.02 --force
+```
+
+**Credential management (one-time setup or rotation):**
+```bash
+python scripts\qbo_client.py --setup    # QuickBooks Online OAuth
+python scripts\fmp_client.py --setup    # FileMaker Cloud Data API
+python scripts\secrets_helper.py list   # verify what's stored (no values shown)
+```
+
+---
+
+## 📅 Manual Monthly Process (Fallback / Legacy)
+
+If automation is broken or being reconfigured, follow the steps below.
 
 ---
 
