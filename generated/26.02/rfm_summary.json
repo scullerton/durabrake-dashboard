@@ -1,0 +1,155 @@
+{
+  "total_customers": 216,
+  "total_revenue": 10146353.620000001,
+  "avg_revenue_per_customer": 46973.859351851854,
+  "avg_recency_days": 120.3425925925926,
+  "avg_frequency": 8.217592592592593,
+  "top_10_customers": [
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "monetary_value": 1139607.2300000002,
+      "frequency": 83,
+      "recency_days": 33,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Volvo Group NA, Inc",
+      "monetary_value": 833595.7999999999,
+      "frequency": 78,
+      "recency_days": 5,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "monetary_value": 531022.86,
+      "frequency": 89,
+      "recency_days": 46,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "monetary_value": 327761.6,
+      "frequency": 16,
+      "recency_days": 18,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "monetary_value": 282638.54,
+      "frequency": 20,
+      "recency_days": 9,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Washington Foundries",
+      "monetary_value": 212957.74,
+      "frequency": 19,
+      "recency_days": 1,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Blue Bird Body Co.",
+      "monetary_value": 203680.0,
+      "frequency": 16,
+      "recency_days": 23,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Kenworth of  Louisiana",
+      "monetary_value": 200400.0,
+      "frequency": 6,
+      "recency_days": 32,
+      "rfm_score": "445",
+      "segment": "Champions"
+    },
+    {
+      "customer": "E-W Truck & Equipment",
+      "monetary_value": 198928.62000000002,
+      "frequency": 15,
+      "recency_days": 10,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Atlantic Utility Trailer Sales",
+      "monetary_value": 188150.31999999998,
+      "frequency": 50,
+      "recency_days": 19,
+      "rfm_score": "555",
+      "segment": "Champions"
+    }
+  ],
+  "segment_summary": [
+    {
+      "segment": "At Risk",
+      "customer_count": 13,
+      "total_revenue": 578127.27,
+      "avg_revenue": 44471.32846153846,
+      "avg_recency": 209.23076923076923,
+      "avg_frequency": 6.615384615384615
+    },
+    {
+      "segment": "Champions",
+      "customer_count": 45,
+      "total_revenue": 6724958.230000001,
+      "avg_revenue": 149443.51622222224,
+      "avg_recency": 18.488888888888887,
+      "avg_frequency": 22.8
+    },
+    {
+      "segment": "Hibernating",
+      "customer_count": 64,
+      "total_revenue": 645031.54,
+      "avg_revenue": 10078.6178125,
+      "avg_recency": 237.8125,
+      "avg_frequency": 1.59375
+    },
+    {
+      "segment": "Loyal Customers",
+      "customer_count": 36,
+      "total_revenue": 1467479.56,
+      "avg_revenue": 40763.321111111116,
+      "avg_recency": 50.916666666666664,
+      "avg_frequency": 9.972222222222221
+    },
+    {
+      "segment": "Need Attention",
+      "customer_count": 17,
+      "total_revenue": 63118.99,
+      "avg_revenue": 3712.8817647058822,
+      "avg_recency": 150.2941176470588,
+      "avg_frequency": 2.7058823529411766
+    },
+    {
+      "segment": "New Customers",
+      "customer_count": 18,
+      "total_revenue": 275885.4,
+      "avg_revenue": 15326.966666666667,
+      "avg_recency": 32.333333333333336,
+      "avg_frequency": 2.111111111111111
+    },
+    {
+      "segment": "Other",
+      "customer_count": 12,
+      "total_revenue": 77123.67,
+      "avg_revenue": 6426.9725,
+      "avg_recency": 101.66666666666667,
+      "avg_frequency": 8.083333333333334
+    },
+    {
+      "segment": "Potential Loyalists",
+      "customer_count": 11,
+      "total_revenue": 314628.96,
+      "avg_revenue": 28602.63272727273,
+      "avg_recency": 93.81818181818181,
+      "avg_frequency": 1.9090909090909092
+    }
+  ]
+}

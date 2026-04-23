@@ -1,0 +1,155 @@
+{
+  "total_customers": 213,
+  "total_revenue": 10008428.69,
+  "avg_revenue_per_customer": 46987.92812206573,
+  "avg_recency_days": 114.1830985915493,
+  "avg_frequency": 7.990610328638498,
+  "top_10_customers": [
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "monetary_value": 1128894.0299999998,
+      "frequency": 83,
+      "recency_days": 18,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Volvo Group NA, Inc",
+      "monetary_value": 860363.8,
+      "frequency": 81,
+      "recency_days": 14,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Rush Enterprises, Inc. - Billing",
+      "monetary_value": 372341.94000000006,
+      "frequency": 56,
+      "recency_days": 77,
+      "rfm_score": "355",
+      "segment": "Loyal Customers"
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "monetary_value": 360361.6,
+      "frequency": 17,
+      "recency_days": 15,
+      "rfm_score": "555",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Kenworth of  Louisiana",
+      "monetary_value": 328320.0,
+      "frequency": 9,
+      "recency_days": 25,
+      "rfm_score": "445",
+      "segment": "Champions"
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "monetary_value": 282638.54,
+      "frequency": 20,
+      "recency_days": 40,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Washington Foundries",
+      "monetary_value": 208507.74,
+      "frequency": 18,
+      "recency_days": 32,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "monetary_value": 198076.0,
+      "frequency": 6,
+      "recency_days": 8,
+      "rfm_score": "545",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Atlantic Utility Trailer Sales",
+      "monetary_value": 193452.27,
+      "frequency": 54,
+      "recency_days": 27,
+      "rfm_score": "455",
+      "segment": "Champions"
+    },
+    {
+      "customer": "Westrans Co",
+      "monetary_value": 193271.4,
+      "frequency": 14,
+      "recency_days": 5,
+      "rfm_score": "555",
+      "segment": "Champions"
+    }
+  ],
+  "segment_summary": [
+    {
+      "segment": "At Risk",
+      "customer_count": 11,
+      "total_revenue": 360056.01,
+      "avg_revenue": 32732.364545454548,
+      "avg_recency": 186.1818181818182,
+      "avg_frequency": 7.2727272727272725
+    },
+    {
+      "segment": "Champions",
+      "customer_count": 45,
+      "total_revenue": 6746511.899999999,
+      "avg_revenue": 149922.48666666666,
+      "avg_recency": 19.555555555555557,
+      "avg_frequency": 22.2
+    },
+    {
+      "segment": "Hibernating",
+      "customer_count": 67,
+      "total_revenue": 788682.51,
+      "avg_revenue": 11771.380746268656,
+      "avg_recency": 230.56716417910448,
+      "avg_frequency": 1.5671641791044777
+    },
+    {
+      "segment": "Loyal Customers",
+      "customer_count": 33,
+      "total_revenue": 1415678.3900000001,
+      "avg_revenue": 42899.345151515154,
+      "avg_recency": 52.696969696969695,
+      "avg_frequency": 10.0
+    },
+    {
+      "segment": "Need Attention",
+      "customer_count": 16,
+      "total_revenue": 50455.64,
+      "avg_revenue": 3153.4775,
+      "avg_recency": 124.5625,
+      "avg_frequency": 2.875
+    },
+    {
+      "segment": "New Customers",
+      "customer_count": 19,
+      "total_revenue": 249849.65000000002,
+      "avg_revenue": 13149.98157894737,
+      "avg_recency": 27.63157894736842,
+      "avg_frequency": 1.9473684210526316
+    },
+    {
+      "segment": "Other",
+      "customer_count": 12,
+      "total_revenue": 78459.47,
+      "avg_revenue": 6538.2891666666665,
+      "avg_recency": 78.08333333333333,
+      "avg_frequency": 7.0
+    },
+    {
+      "segment": "Potential Loyalists",
+      "customer_count": 10,
+      "total_revenue": 318735.12,
+      "avg_revenue": 31873.512,
+      "avg_recency": 75.1,
+      "avg_frequency": 2.1
+    }
+  ]
+}

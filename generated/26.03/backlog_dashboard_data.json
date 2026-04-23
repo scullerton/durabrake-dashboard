@@ -1,0 +1,410 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-22T17:48:02.221683",
+    "analysis_date": "2026-03-31",
+    "source_file": "Backlog 31Mar26.xlsx"
+  },
+  "summary": {
+    "total_backlog_value": 1738817.597008,
+    "total_orders": 73,
+    "avg_order_value": 23819.41913709589,
+    "avg_age_days": 37.73972602739726
+  },
+  "top_customers": [
+    {
+      "customer": "Volvo Group NA, Inc",
+      "order_count": 17,
+      "total_value": 358843.2
+    },
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "order_count": 12,
+      "total_value": 230056.64
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "order_count": 4,
+      "total_value": 159418.62
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "order_count": 3,
+      "total_value": 106497.2
+    },
+    {
+      "customer": "TTG Thompson Truck Group / Lee Smith - Knoxville",
+      "order_count": 2,
+      "total_value": 87880.0
+    },
+    {
+      "customer": "TTG Thompson Truck Group / Lee Smith",
+      "order_count": 2,
+      "total_value": 87880.0
+    },
+    {
+      "customer": "Worldwide Equipment - PRESTONBURG",
+      "order_count": 1,
+      "total_value": 52980.48
+    },
+    {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "order_count": 1,
+      "total_value": 52440.0
+    },
+    {
+      "customer": "Kenworth of  Louisiana",
+      "order_count": 2,
+      "total_value": 50280.0
+    },
+    {
+      "customer": "Hunnings Inc.",
+      "order_count": 1,
+      "total_value": 49727.6
+    }
+  ],
+  "backlog_by_customer": [
+    {
+      "customer": "Volvo Group NA, Inc",
+      "order_count": 17,
+      "total_value": 358843.2,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Oshkosh Defense, LLC",
+      "order_count": 12,
+      "total_value": 230056.64,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "KGIndustries  (GD)",
+      "order_count": 4,
+      "total_value": 159418.62,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "TEC Equipment Inc",
+      "order_count": 3,
+      "total_value": 106497.2,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "TTG Thompson Truck Group / Lee Smith - Knoxville",
+      "order_count": 2,
+      "total_value": 87880.0,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "TTG Thompson Truck Group / Lee Smith",
+      "order_count": 2,
+      "total_value": 87880.0,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "Worldwide Equipment - PRESTONBURG",
+      "order_count": 1,
+      "total_value": 52980.48,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "Jackson Group Peterbilt - HQ",
+      "order_count": 1,
+      "total_value": 52440.0,
+      "sales_rep": "Unassigned"
+    },
+    {
+      "customer": "Kenworth of  Louisiana",
+      "order_count": 2,
+      "total_value": 50280.0,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "Hunnings Inc.",
+      "order_count": 1,
+      "total_value": 49727.6,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "TRP Montreal",
+      "order_count": 2,
+      "total_value": 48396.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Dorsey Trailer",
+      "order_count": 1,
+      "total_value": 46020.0,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "Municipal Truck Parts",
+      "order_count": 1,
+      "total_value": 45760.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Allegheny Truck",
+      "order_count": 1,
+      "total_value": 44174.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Peterbilt Pacific / TRP - Langley",
+      "order_count": 2,
+      "total_value": 38600.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Washington Foundries",
+      "order_count": 2,
+      "total_value": 29000.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Atlanta Safety Brake Service",
+      "order_count": 1,
+      "total_value": 25056.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Vantage Parts & Service",
+      "order_count": 1,
+      "total_value": 24095.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Unisource Technology Inc",
+      "order_count": 1,
+      "total_value": 23700.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Westrans Co",
+      "order_count": 1,
+      "total_value": 22652.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Ocean Trailer - Winnipeg",
+      "order_count": 1,
+      "total_value": 21800.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Ocean Trailer - Ed CAD",
+      "order_count": 1,
+      "total_value": 21330.817008,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Ocean Trailer - Calgary",
+      "order_count": 1,
+      "total_value": 20780.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Traction Heavy Duty Parts-Abbotsford",
+      "order_count": 1,
+      "total_value": 20480.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "San Diego Friction Products",
+      "order_count": 2,
+      "total_value": 19250.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Blue Bird Body Co.",
+      "order_count": 2,
+      "total_value": 17724.0,
+      "sales_rep": "Shroff"
+    },
+    {
+      "customer": "Tri-City Truck Parts",
+      "order_count": 1,
+      "total_value": 12868.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Capitol Clutch and Brake, Inc.",
+      "order_count": 2,
+      "total_value": 10107.64,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Bluegrass InternationaL Trucks",
+      "order_count": 1,
+      "total_value": 4950.0,
+      "sales_rep": "Chris Johnson"
+    },
+    {
+      "customer": "Brake & Clutch Supply",
+      "order_count": 1,
+      "total_value": 2268.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Hercules Equipment",
+      "order_count": 1,
+      "total_value": 2060.0,
+      "sales_rep": "Caroline"
+    },
+    {
+      "customer": "Trail King Industries",
+      "order_count": 1,
+      "total_value": 1742.4,
+      "sales_rep": "Shroff"
+    }
+  ],
+  "by_sales_rep": [
+    {
+      "sales_rep": "Shroff",
+      "order_count": 44,
+      "total_value": 927960.86
+    },
+    {
+      "sales_rep": "Caroline",
+      "order_count": 19,
+      "total_value": 428426.257008
+    },
+    {
+      "sales_rep": "Chris Johnson",
+      "order_count": 9,
+      "total_value": 329990.48
+    }
+  ],
+  "by_region": [
+    {
+      "region": "BC",
+      "order_count": 11,
+      "total_value": 278274.62
+    },
+    {
+      "region": "WI",
+      "order_count": 12,
+      "total_value": 230056.64
+    },
+    {
+      "region": "TN",
+      "order_count": 5,
+      "total_value": 228740.48
+    },
+    {
+      "region": "AB",
+      "order_count": 8,
+      "total_value": 163214.817008
+    },
+    {
+      "region": "CA",
+      "order_count": 8,
+      "total_value": 145830.84
+    },
+    {
+      "region": "QC",
+      "order_count": 6,
+      "total_value": 140228.8
+    },
+    {
+      "region": "ON",
+      "order_count": 4,
+      "total_value": 89890.4
+    },
+    {
+      "region": "MB",
+      "order_count": 3,
+      "total_value": 66452.0
+    },
+    {
+      "region": "PA",
+      "order_count": 2,
+      "total_value": 63198.0
+    },
+    {
+      "region": "OR",
+      "order_count": 1,
+      "total_value": 52440.0
+    },
+    {
+      "region": "LA",
+      "order_count": 2,
+      "total_value": 50280.0
+    },
+    {
+      "region": "NC",
+      "order_count": 1,
+      "total_value": 49727.6
+    },
+    {
+      "region": "AL",
+      "order_count": 1,
+      "total_value": 46020.0
+    },
+    {
+      "region": "CT",
+      "order_count": 1,
+      "total_value": 45760.0
+    },
+    {
+      "region": "GA",
+      "order_count": 1,
+      "total_value": 25056.0
+    },
+    {
+      "region": "AK",
+      "order_count": 1,
+      "total_value": 24095.0
+    },
+    {
+      "region": "OH",
+      "order_count": 2,
+      "total_value": 17724.0
+    },
+    {
+      "region": "WA",
+      "order_count": 2,
+      "total_value": 15136.0
+    },
+    {
+      "region": "KY",
+      "order_count": 1,
+      "total_value": 4950.0
+    },
+    {
+      "region": "SD",
+      "order_count": 1,
+      "total_value": 1742.4
+    }
+  ],
+  "age_distribution": {
+    "order_count": {
+      "0-30 days": 39,
+      "31-60 days": 20,
+      "61-90 days": 12,
+      "91-180 days": 2,
+      "180+ days": 0
+    },
+    "order_value": {
+      "0-30 days": 800644.6570080002,
+      "31-60 days": 491437.36000000004,
+      "61-90 days": 387133.98,
+      "91-180 days": 59601.6,
+      "180+ days": 0.0
+    }
+  },
+  "ship_date_distribution": {
+    "order_count": {
+      "Past due": 0,
+      "0-30 days": 28,
+      "31-60 days": 20,
+      "61-90 days": 19,
+      "90+ days": 6
+    },
+    "order_value": {
+      "Past due": 0.0,
+      "0-30 days": 781568.78,
+      "31-60 days": 453879.95999999996,
+      "61-90 days": 372385.497008,
+      "90+ days": 130983.36
+    }
+  }
+}
