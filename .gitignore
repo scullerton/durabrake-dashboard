@@ -38,3 +38,16 @@ Thumbs.db
 # Temporary files
 *.log
 *.tmp
+
+# Automation artifacts — never commit
+logs/
+drafts/
+
+# Local developer config for QBO OAuth (contains client_id/secret placeholders after setup)
+.qbo_app.json
+
+# Claude Code local config and worktrees
+.claude/
+
+# Local planning documents
+docs/
