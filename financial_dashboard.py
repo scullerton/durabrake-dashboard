@@ -108,6 +108,21 @@ BACKLOG_THRESHOLDS = {
     "old_orders_pct": {"green": 10, "yellow": 20}  # % of orders > 90 days
 }
 
+def fmt_money(value, placeholder="—"):
+    """Format a dollar value, gracefully handling None (e.g., draft months
+    where Neil has filled in the P&L but not yet the Balance Sheet)."""
+    if value is None:
+        return placeholder
+    return f"${value:,.0f}"
+
+
+def fmt_pct(value, placeholder="—", decimals=1):
+    """Format a percentage; returns placeholder when None."""
+    if value is None:
+        return placeholder
+    return f"{value:.{decimals}f}%"
+
+
 # Helper functions for color coding
 def get_color_for_metric(value, green_threshold, yellow_threshold, reverse=False):
     """
@@ -309,8 +324,8 @@ if data:
             st.metric("EBITDA Margin %", f"{cm['ebitda_margin_pct']:.1f}%")
 
         with col4:
-            st.metric("NWC", f"${cm['nwc']:,.0f}")
-            st.metric("Operating CF", f"${cm['operating_cash_flow']:,.0f}")
+            st.metric("NWC", fmt_money(cm['nwc']))
+            st.metric("Operating CF", fmt_money(cm['operating_cash_flow']))
 
         st.divider()
 
@@ -736,28 +751,42 @@ if data:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            st.metric("Accounts Receivable", f"${cm['accounts_receivable']:,.0f}")
+            st.metric("Accounts Receivable", fmt_money(cm['accounts_receivable']))
 
         with col2:
-            st.metric("Inventory", f"${cm['inventory']:,.0f}")
+            st.metric("Inventory", fmt_money(cm['inventory']))
 
         with col3:
-            st.metric("Accounts Payable", f"${cm['accounts_payable']:,.0f}")
+            st.metric("Accounts Payable", fmt_money(cm['accounts_payable']))
 
         with col4:
-            st.metric("Net Working Capital", f"${cm['nwc']:,.0f}")
+            st.metric("Net Working Capital", fmt_money(cm['nwc']))
 
         st.divider()
 
         # NWC as % of Revenue
         st.subheader("NWC Ratios")
 
+        # Balance-sheet-derived ratios need all four BS fields. When any are
+        # missing (draft months), show an info banner and use 0 so the existing
+        # display logic doesn't crash. Ratios auto-populate when Final lands.
+        _bs_missing = any(cm.get(k) is None for k in
+                          ['nwc', 'accounts_receivable', 'inventory', 'accounts_payable'])
+        if _bs_missing:
+            st.info("ℹ️ Balance Sheet not yet available for this period — "
+                    "NWC ratios below will populate once the Final reporting package is in place.")
+
+        _nwc = cm.get('nwc') or 0
+        _ar = cm.get('accounts_receivable') or 0
+        _inv = cm.get('inventory') or 0
+        _ap = cm.get('accounts_payable') or 0
+
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
             # Use LTM (Last Twelve Months) revenue for more meaningful ratio
             ltm_total_revenue = sum(m.get('revenue', 0) or 0 for m in ltm_series) if ltm_series else data['ytd_summary']['total_revenue']
-            nwc_pct_revenue = (cm['nwc'] / ltm_total_revenue * 100) if ltm_total_revenue else 0
+            nwc_pct_revenue = (_nwc / ltm_total_revenue * 100) if ltm_total_revenue else 0
 
             # Determine color for NWC %
             if nwc_pct_revenue <= WC_THRESHOLDS['nwc_pct']['green']:
@@ -772,7 +801,7 @@ if data:
 
         with col2:
             # DSO = (A/R / Revenue) * 365
-            ar_days = (cm['accounts_receivable'] / (cm['revenue'] / 30)) if cm['revenue'] else 0
+            ar_days = (_ar / (cm['revenue'] / 30)) if cm['revenue'] else 0
 
             # Determine color for DSO (lower is better)
             if ar_days <= WC_THRESHOLDS['dso']['green']:
@@ -787,7 +816,7 @@ if data:
         with col3:
             # DIO = (Inventory / COGS) * 365, approximating monthly COGS from revenue
             cogs_monthly = cm['revenue'] * (1 - cm['gross_margin_pct'] / 100) if cm['revenue'] and cm['gross_margin_pct'] else cm['revenue']
-            inv_days = (cm['inventory'] / (cogs_monthly / 30)) if cogs_monthly else 0
+            inv_days = (_inv / (cogs_monthly / 30)) if cogs_monthly else 0
 
             # Determine color for DIO (lower is better)
             if inv_days <= WC_THRESHOLDS['dio']['green']:
@@ -801,7 +830,7 @@ if data:
 
         with col4:
             # DPO = (A/P / COGS) * 365
-            ap_days = (cm['accounts_payable'] / (cogs_monthly / 30)) if cogs_monthly else 0
+            ap_days = (_ap / (cogs_monthly / 30)) if cogs_monthly else 0
 
             # Determine color for DPO (higher is better - reverse logic)
             if ap_days >= WC_THRESHOLDS['dpo']['green']:
@@ -1697,8 +1726,8 @@ if data:
                         st.metric("EBITDA Margin %", f"{cm['ebitda_margin_pct']:.1f}%")
 
                     with col4:
-                        st.metric("NWC", f"${cm['nwc']:,.0f}")
-                        st.metric("Operating CF", f"${cm['operating_cash_flow']:,.0f}")
+                        st.metric("NWC", fmt_money(cm['nwc']))
+                        st.metric("Operating CF", fmt_money(cm['operating_cash_flow']))
 
                     st.divider()
 

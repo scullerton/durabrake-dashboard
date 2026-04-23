@@ -2,20 +2,34 @@
 Export Financial Dashboard Data to JSON
 Generates a JSON file with monthly financial metrics for web dashboard consumption
 
-Usage: Update the FILE_PATH and CURRENT_MONTH variables, then run
-Output: Creates dashboard_data.json with all key metrics
+Usage:
+    python export_dashboard_data.py                 # defaults to previous calendar month
+    python export_dashboard_data.py --period 26.02  # explicit period
+Output: Creates generated/YY.MM/dashboard_data.json with all key metrics
 """
 
+import argparse
 import pandas as pd
 import numpy as np
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+
+
+def _default_period() -> str:
+    """Previous calendar month in YY.MM."""
+    today = datetime.now()
+    first_of_this_month = today.replace(day=1)
+    last_of_prev = first_of_this_month - timedelta(days=1)
+    return last_of_prev.strftime("%y.%m")
+
 
 # ============================================================================
-# CONFIGURATION - Update this each month
+# CONFIGURATION - Accepts --period CLI flag; defaults to previous month
 # ============================================================================
-# Format: YY.MM (e.g., 26.01 for January 2026)
-PERIOD = "26.01"
+_parser = argparse.ArgumentParser(description="Export financial dashboard data.")
+_parser.add_argument("--period", default=None, help='Period as YY.MM (default: previous month)')
+_args, _ = _parser.parse_known_args()
+PERIOD = _args.period or _default_period()
 
 # Derived configuration
 CURRENT_YEAR = 2000 + int(PERIOD.split('.')[0])
@@ -30,16 +44,16 @@ import sys, os
 sys.path.insert(0, os.path.join(os.getcwd(), 'scripts'))
 from file_utils import find_input_file
 
-INPUT_FOLDER = rf"inputs\{PERIOD}"
+INPUT_FOLDER = os.path.join("inputs", PERIOD)
 FILE_PATH = find_input_file(INPUT_FOLDER, ["financial", "package"])
-OUTPUT_PATH = rf"generated\{PERIOD}\dashboard_data.json"
+OUTPUT_PATH = os.path.join("generated", PERIOD, "dashboard_data.json")
 
 # Cross-year L3M: load prior year data when current month < 4
 prior_year_monthly = None
 prior_year_products = None
 if CURRENT_MONTH_INDEX < 3:
     prior_period = f"{CURRENT_YEAR - 2001:02d}.12"
-    prior_data_path = rf"generated\{prior_period}\dashboard_data.json"
+    prior_data_path = os.path.join("generated", prior_period, "dashboard_data.json")
     if os.path.exists(prior_data_path):
         import json as json_module
         with open(prior_data_path, 'r') as f:
