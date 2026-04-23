@@ -48,6 +48,27 @@ def find_input_file(folder, keywords, extensions=None):
         )
 
     if len(matches) > 1:
+        # Prefer structured Excel formats over loose CSV when both exist —
+        # CSVs are often legacy header-less exports kept alongside a repaired
+        # .xlsx (see scripts/repair_legacy_backlog.py).
+        preference = [".xlsx", ".xlsm", ".xls", ".csv"]
+
+        def rank(name):
+            _, ext = os.path.splitext(name)
+            try:
+                return preference.index(ext.lower())
+            except ValueError:
+                return len(preference)
+
+        ranked = sorted(matches, key=rank)
+        best, *rest = ranked
+        best_ext = os.path.splitext(best)[1].lower()
+        rest_exts = {os.path.splitext(r)[1].lower() for r in rest}
+        # Only auto-disambiguate when the winner is unambiguously preferred
+        if rest_exts and all(preference.index(best_ext) < preference.index(e)
+                             for e in rest_exts if e in preference):
+            return os.path.join(folder, best)
+
         raise FileNotFoundError(
             f"Multiple files matching keywords {keywords} in {folder}: {matches}\n"
             f"Please ensure only one matching file exists."

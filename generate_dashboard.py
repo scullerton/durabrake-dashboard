@@ -2,16 +2,33 @@
 DuraBrake Dashboard Generator
 Generates all required data files for the monthly dashboard
 Run this script after copying input files to inputs/YY.MM/
+
+Usage:
+    python generate_dashboard.py                    # defaults to previous calendar month
+    python generate_dashboard.py --period 26.02     # explicit period
 """
 
+import argparse
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
+
+
+def _default_period() -> str:
+    """Previous calendar month in YY.MM."""
+    today = datetime.now()
+    first_of_this_month = today.replace(day=1)
+    last_of_prev = first_of_this_month - timedelta(days=1)
+    return last_of_prev.strftime("%y.%m")
+
 
 # ============================================================================
-# CONFIGURATION - Update this each month
+# CONFIGURATION - Accepts --period CLI flag; defaults to previous month
 # ============================================================================
-PERIOD = "26.01"  # Format: YY.MM
+parser = argparse.ArgumentParser(description="Generate DuraBrake monthly dashboard data.")
+parser.add_argument("--period", default=None, help='Period as YY.MM (default: previous month)')
+_args, _ = parser.parse_known_args()  # parse_known_args so legacy callers w/o args still work
+PERIOD = _args.period or _default_period()
 
 # Derived configuration
 YEAR = 2000 + int(PERIOD.split('.')[0])
@@ -51,7 +68,8 @@ import subprocess
 
 result = subprocess.run([
     sys.executable,
-    "export_dashboard_data.py"
+    "export_dashboard_data.py",
+    "--period", PERIOD,
 ], capture_output=True, text=True)
 
 print(result.stdout)
