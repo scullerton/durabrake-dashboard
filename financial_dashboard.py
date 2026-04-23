@@ -123,6 +123,21 @@ def fmt_pct(value, placeholder="—", decimals=1):
     return f"{value:.{decimals}f}%"
 
 
+# ============================================================================
+# Color-coded cell styles for DataFrame Styler
+# ----------------------------------------------------------------------------
+# Pairs pastel backgrounds with explicit dark text colors so labels remain
+# WCAG AA readable in Streamlit's dark theme. (Without an explicit `color:`
+# rule, dark-mode browsers default to near-white text, which renders as
+# ~1.2:1 contrast on these pastels — effectively invisible.)
+#
+# Palette mirrors Bootstrap 5's "subtle" semantic colors: ~8-10:1 contrast.
+CELL_GOOD        = 'background-color: #d4edda; color: #0f5132'  # green
+CELL_WARN        = 'background-color: #fff3cd; color: #664d03'  # amber
+CELL_BAD         = 'background-color: #f8d7da; color: #842029'  # red
+CELL_BAD_STRONG  = CELL_BAD + '; font-weight: bold'             # red + bold
+# ============================================================================
+
 # Helper functions for color coding
 def get_color_for_metric(value, green_threshold, yellow_threshold, reverse=False):
     """
@@ -133,30 +148,30 @@ def get_color_for_metric(value, green_threshold, yellow_threshold, reverse=False
     if not reverse:
         # Lower is better
         if value <= green_threshold:
-            return 'background-color: #d4edda'  # Light green
+            return CELL_GOOD  # Light green
         elif value <= yellow_threshold:
-            return 'background-color: #fff3cd'  # Light yellow
+            return CELL_WARN  # Light yellow
         else:
-            return 'background-color: #f8d7da'  # Light red
+            return CELL_BAD  # Light red
     else:
         # Higher is better
         if value >= green_threshold:
-            return 'background-color: #d4edda'  # Light green
+            return CELL_GOOD  # Light green
         elif value >= yellow_threshold:
-            return 'background-color: #fff3cd'  # Light yellow
+            return CELL_WARN  # Light yellow
         else:
-            return 'background-color: #f8d7da'  # Light red
+            return CELL_BAD  # Light red
 
 def color_gp_margin(val, avg_margin):
     """Color code GP margin based on company average"""
     try:
         margin = float(val)
         if margin >= avg_margin:
-            return 'background-color: #d4edda'  # Green - above average
+            return CELL_GOOD  # Green - above average
         elif margin >= avg_margin - 5:
-            return 'background-color: #fff3cd'  # Yellow - within 5% of average
+            return CELL_WARN  # Yellow - within 5% of average
         else:
-            return 'background-color: #f8d7da'  # Red - more than 5% below average
+            return CELL_BAD  # Red - more than 5% below average
     except:
         return ''
 
@@ -172,11 +187,11 @@ def color_sales_trend(l3m_sales, l12m_sales):
         change_pct = ((l3m_monthly - l12m_monthly) / l12m_monthly) * 100
 
         if change_pct > 10:
-            return 'background-color: #d4edda'  # Green - growing >10%
+            return CELL_GOOD  # Green - growing >10%
         elif change_pct < -10:
-            return 'background-color: #f8d7da'  # Red - declining >10%
+            return CELL_BAD  # Red - declining >10%
         else:
-            return 'background-color: #fff3cd'  # Yellow - stable ±10%
+            return CELL_WARN  # Yellow - stable ±10%
     except:
         return ''
 
@@ -1043,11 +1058,11 @@ if data:
 
                 def color_attention_flags(val):
                     if 'Order Overdue' in str(val) and 'At Risk' in str(val):
-                        return 'background-color: #f8d7da; font-weight: bold'
+                        return CELL_BAD_STRONG
                     elif 'Order Overdue' in str(val) or 'At Risk' in str(val):
-                        return 'background-color: #fff3cd'
+                        return CELL_WARN
                     elif 'Declining' in str(val):
-                        return 'background-color: #fff3cd'
+                        return CELL_WARN
                     return ''
 
                 styled_attention = df_attention.style.format({
@@ -1233,7 +1248,7 @@ if data:
                         if 'Trend %' in row.index:
                             idx = row.index.get_loc('Trend %')
                             t = row['Trend %']
-                            styles[idx] = 'background-color: #d4edda' if t > 10 else ('background-color: #f8d7da' if t < -10 else 'background-color: #fff3cd')
+                            styles[idx] = CELL_GOOD if t > 10 else (CELL_BAD if t < -10 else CELL_WARN)
                         return styles
 
                     styled_l12m = display_l12m[display_cols].style.format({
