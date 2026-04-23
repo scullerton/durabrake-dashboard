@@ -1,0 +1,23 @@
+# Default: detect text, normalize to LF in repo
+* text=auto eol=lf
+
+# Text sources — LF in repo regardless of OS
+*.json text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.txt text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Windows batch files — require CRLF to run on Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.xlsx binary
+*.xls binary
+*.xlsm binary
+*.png binary
+*.jpg binary
