@@ -561,20 +561,20 @@ if data:
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            st.metric("Total Revenue", f"${ytd['total_revenue']:,.0f}")
-            st.metric("Avg Gross Margin %", f"{ytd['avg_gross_margin_pct']:.1f}%")
+            st.metric("Total Revenue", fmt_money(ytd['total_revenue']))
+            st.metric("Avg Gross Margin %", fmt_pct(ytd['avg_gross_margin_pct']))
 
         with col2:
-            st.metric("Total Gross Profit", f"${ytd['total_gross_profit']:,.0f}")
-            st.metric("Avg EBITDA Margin %", f"{ytd['avg_ebitda_margin_pct']:.1f}%")
+            st.metric("Total Gross Profit", fmt_money(ytd['total_gross_profit']))
+            st.metric("Avg EBITDA Margin %", fmt_pct(ytd['avg_ebitda_margin_pct']))
 
         with col3:
-            st.metric("Total EBITDA", f"${ytd['total_ebitda']:,.0f}")
-            st.metric("Total Net Income", f"${ytd['total_net_income']:,.0f}")
+            st.metric("Total EBITDA", fmt_money(ytd['total_ebitda']))
+            st.metric("Total Net Income", fmt_money(ytd['total_net_income']))
 
         with col4:
-            st.metric("Avg NWC", f"${ytd['avg_nwc']:,.0f}")
-            st.metric("Total Operating CF", f"${ytd['total_operating_cf']:,.0f}")
+            st.metric("Avg NWC", fmt_money(ytd['avg_nwc']))
+            st.metric("Total Operating CF", fmt_money(ytd['total_operating_cf']))
 
         st.divider()
 
