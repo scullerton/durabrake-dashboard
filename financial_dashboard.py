@@ -1056,7 +1056,7 @@ if data:
                     'Trend %': '{:+.0f}%',
                     'GP %': '{:.1f}%',
                     'Days Since': '{:.0f}',
-                }).applymap(color_attention_flags, subset=['Flags'])
+                }).map(color_attention_flags, subset=['Flags'])
 
                 st.dataframe(styled_attention, use_container_width=True, hide_index=True)
 
