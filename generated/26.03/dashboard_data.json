@@ -2,7 +2,7 @@
   "metadata": {
     "reporting_month": "March",
     "reporting_year": 2026,
-    "generated_at": "2026-05-05T14:26:20.099580",
+    "generated_at": "2026-05-05T15:47:38.162866",
     "source_file": "inputs/26.03/DuraBrake Monthly Financial Package.xlsx"
   },
   "current_month": {
@@ -12,10 +12,10 @@
     "ebitda": 149907.23,
     "ebitda_margin_pct": 16.17697089293587,
     "net_income": -28001.52,
-    "accounts_receivable": null,
-    "inventory": null,
-    "accounts_payable": null,
-    "nwc": null,
+    "accounts_receivable": 899151.46,
+    "inventory": 2463937.95,
+    "accounts_payable": 1742229.8,
+    "nwc": 1620859.61,
     "operating_cash_flow": 152859.18
   },
   "l3m_comparison": {
@@ -60,11 +60,11 @@
       "ebitda": 256277.64,
       "ebitda_margin_pct": 20.049595118919143,
       "net_income": 73684.23,
-      "nwc": null,
+      "nwc": 2309933.5300000003,
       "operating_cf": -218376.76,
-      "accounts_receivable": null,
-      "inventory": null,
-      "accounts_payable": null
+      "accounts_receivable": 1371135.68,
+      "inventory": 2241040.44,
+      "accounts_payable": 1302242.59
     },
     {
       "month": "Feb",
@@ -75,11 +75,11 @@
       "ebitda": 221847.16,
       "ebitda_margin_pct": 27.916709315119164,
       "net_income": 50922.34,
-      "nwc": null,
+      "nwc": 1819924.85,
       "operating_cf": 544407.0,
-      "accounts_receivable": null,
-      "inventory": null,
-      "accounts_payable": null
+      "accounts_receivable": 911353.73,
+      "inventory": 2478333.77,
+      "accounts_payable": 1569762.65
     },
     {
       "month": "Mar",
@@ -90,11 +90,11 @@
       "ebitda": 149907.23,
       "ebitda_margin_pct": 16.17697089293587,
       "net_income": -28001.52,
-      "nwc": null,
+      "nwc": 1620859.61,
       "operating_cf": 152859.18,
-      "accounts_receivable": null,
-      "inventory": null,
-      "accounts_payable": null
+      "accounts_receivable": 899151.46,
+      "inventory": 2463937.95,
+      "accounts_payable": 1742229.8
     },
     {
       "month": "Apr",
@@ -325,7 +325,7 @@
     "total_ebitda": 628032.03,
     "avg_ebitda_margin_pct": 21.38109177565806,
     "total_net_income": 96605.04999999999,
-    "avg_nwc": null,
+    "avg_nwc": 1916905.9966666668,
     "total_operating_cf": 478889.42
   },
   "q4_summary": {
@@ -1007,7 +1007,7 @@
     }
   },
   "notes": {
-    "critical_notes": "- Gross margin at 24.2% is 10.4 pts below L3M average \u2014 margin compression\n- EBITDA margin at 16.2% declined 7.2 pts vs L3M \u2014 operating cost pressure\n- Net loss of $28,002 \u2014 profitability concern\n- Year-over-year revenue is up 32% vs March 2025\n- 11 customers classified as 'At Risk' with $360,056 in historical revenue\n- 67 customers are Hibernating (no recent purchases)\n- 2 of top 10 customers have GP margin below 15%: Volvo Group NA, Inc, Kenworth of  Louisiana\n- 13 customers are overdue to order ($779,317 L12M at risk): Rush Enterprises, Inc. - Billing, CBS Parts, Western Trailers\n- 25 customers have cross-sell opportunities across product categories\n- 20 customers flagged with multiple attention signals: Cassens - Aurora, Bremskerl CV, RWC Group - Phoenix\n- 241 orders placed in L3M (avg $12,614 per order)\n- 24 new customers acquired in L3M: Ace Bus Charter, Bluegrass InternationaL Trucks, Cascade Friction   (GD)\n- L3M order volume (241) is above L12M quarterly average (204)\n- Order backlog of $1,738,818 across 73 orders (avg age: 38 days)\n- $781,569 (45%) of backlog expected to ship within 30 days",
-    "action_items": "- Review product mix and pricing; identify margin erosion sources\n- Review operating expenses for cost reduction opportunities\n- Develop plan to return to profitability\n- Prioritize outreach to 11 At Risk customers before they churn\n- Run targeted reactivation campaign for top Hibernating accounts\n- Review pricing strategy for low-margin key accounts\n- Contact 13 overdue customers \u2014 top accounts: Rush Enterprises, Inc. - Billing, CBS Parts, Western Trailers\n- Top cross-sell targets: Kenworth of  Louisiana (missing: Rotors, ADB, Hubs); Volvo Group NA, Inc (missing: Rotors, ADB, Hubs); Washington Foundries (missing: Rotors, ADB, Hubs)\n- Nurture 24 new customers to build repeat purchasing habits"
+    "critical_notes": "- Gross margin at 24.2% is 10.4 pts below L3M average \u2014 margin compression\n- EBITDA margin at 16.2% declined 7.2 pts vs L3M \u2014 operating cost pressure\n- Net loss of $28,002 \u2014 profitability concern\n- Inventory at $2,463,938 represents ~105 days \u2014 above target\n- Year-over-year revenue is up 32% vs March 2025\n- 11 customers classified as 'At Risk' with $360,056 in historical revenue\n- 67 customers are Hibernating (no recent purchases)\n- 2 of top 10 customers have GP margin below 15%: Volvo Group NA, Inc, Kenworth of  Louisiana\n- 13 customers are overdue to order ($779,317 L12M at risk): Rush Enterprises, Inc. - Billing, CBS Parts, Western Trailers\n- 25 customers have cross-sell opportunities across product categories\n- 20 customers flagged with multiple attention signals: Cassens - Aurora, Bremskerl CV, RWC Group - Phoenix\n- 241 orders placed in L3M (avg $12,614 per order)\n- 24 new customers acquired in L3M: Ace Bus Charter, Bluegrass InternationaL Trucks, Cascade Friction   (GD)\n- L3M order volume (241) is above L12M quarterly average (204)\n- Order backlog of $1,738,818 across 73 orders (avg age: 38 days)\n- $781,569 (45%) of backlog expected to ship within 30 days",
+    "action_items": "- Review product mix and pricing; identify margin erosion sources\n- Review operating expenses for cost reduction opportunities\n- Develop plan to return to profitability\n- Review slow-moving inventory; consider reduction plan to target \u226485 days\n- Prioritize outreach to 11 At Risk customers before they churn\n- Run targeted reactivation campaign for top Hibernating accounts\n- Review pricing strategy for low-margin key accounts\n- Contact 13 overdue customers \u2014 top accounts: Rush Enterprises, Inc. - Billing, CBS Parts, Western Trailers\n- Top cross-sell targets: Kenworth of  Louisiana (missing: Rotors, ADB, Hubs); Volvo Group NA, Inc (missing: Rotors, ADB, Hubs); Washington Foundries (missing: Rotors, ADB, Hubs)\n- Nurture 24 new customers to build repeat purchasing habits"
   }
 }
