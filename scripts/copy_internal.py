@@ -24,7 +24,16 @@ from datetime import datetime, timedelta
 # Month abbreviations matching the Box folder naming: "Jan", "Feb", ...
 MONTH_ABBR = list(calendar.month_abbr)  # index 0 is ''; 1..12 = 'Jan'..'Dec'
 
-BOX_ROOT = r"C:\Users\scull\Box\DuraParts\Finance\Monthly Financials"
+# Derive BOX_ROOT relative to this file rather than hardcoding the platform-
+# specific Box sync path. The project structure under `Finance/` is identical
+# on Windows (C:\Users\scull\Box\...) and Mac (~/Library/CloudStorage/Box-Box/...),
+# so this resolves correctly regardless of host OS or username.
+#   __file__         -> .../Finance/KPI Dashboard/scripts/copy_internal.py
+#   .parent          -> .../Finance/KPI Dashboard/scripts/
+#   .parent.parent   -> .../Finance/KPI Dashboard/
+#   .parent.parent.parent -> .../Finance/
+from pathlib import Path
+BOX_ROOT = str(Path(__file__).resolve().parent.parent.parent / "Monthly Financials")
 DEST_FILENAME = "DuraBrake Monthly Financial Package.xlsx"
 
 # Exit codes — Task Scheduler uses these to decide retry behavior
@@ -72,9 +81,17 @@ def find_source_file(source_folders_or_folder) -> str | None:
     for folder in folders:
         if not os.path.isdir(folder):
             continue
-        found = glob.glob(os.path.join(folder, "Final_DuraBrake ME Package*.xlsx"))
-        # Filter out Excel lock files (~$Final_DuraBrake...)
-        found = [c for c in found if not os.path.basename(c).startswith("~$")]
+        # Match both legacy "Final_DuraBrake..." (no space) and current
+        # "Final _DuraBrake..." (Neil added a space starting March 2026).
+        # The Final*DuraBrake glob covers both; trailing space variations
+        # in "Package -  Month YYYY" are absorbed by the trailing wildcard.
+        found = glob.glob(os.path.join(folder, "Final*DuraBrake ME Package*.xlsx"))
+        # Filter out Excel lock files (~$Final_DuraBrake...) and explicit
+        # OLD/Draft variants the user has marked as superseded.
+        found = [c for c in found
+                 if not os.path.basename(c).startswith("~$")
+                 and "OLD" not in os.path.basename(c).upper()
+                 and "DRAFT" not in os.path.basename(c).upper()]
         candidates.extend(found)
 
     if not candidates:
