@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.durabrake.backlog-snapshot</string>
+
+    <!-- Wrapper script. Plist file path inside Box is the source-of-truth;
+         install.sh symlinks/copies this into ~/Library/LaunchAgents/ -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/sculls/Library/CloudStorage/Box-Box/DuraParts/Finance/KPI Dashboard/scheduler/job_a.sh</string>
+    </array>
+
+    <!-- Fires every night at 23:45. The Python date-gate inside the script
+         ensures it only does real work on the last calendar day of the
+         month; other nights it logs "skipping" and exits in <1s. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>45</integer>
+    </dict>
+
+    <!-- Capture launchd-level stdout/stderr (separate from the Python log).
+         Useful for debugging launchd-side issues like venv bootstrap failures. -->
+    <key>StandardOutPath</key>
+    <string>/Users/sculls/Library/CloudStorage/Box-Box/DuraParts/Finance/KPI Dashboard/logs/launchd_stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/sculls/Library/CloudStorage/Box-Box/DuraParts/Finance/KPI Dashboard/logs/launchd_stderr.log</string>
+
+    <!-- One-shot per trigger. Don't run on agent load (we'll trigger
+         manually for testing) and don't auto-restart on exit. -->
+    <key>RunAtLoad</key>
+    <false/>
+    <key>KeepAlive</key>
+    <false/>
+
+    <!-- Note on missed-run behavior: if the Mac is off at 23:45, launchd
+         fires ONE catch-up event when the Mac wakes. That's safe here
+         because capture_backlog_snapshot.py reads the current date at
+         invocation time and the date-gate filters out non-last-day runs.
+         A catch-up that fires June 1 sees "day 1 of June, last day is 30"
+         and correctly skips — preventing a stale "June 1 snapshot" from
+         being mislabeled as the May 31 EoD capture. Manual --force
+         --period 26.05 covers the genuine recovery case. -->
+</dict>
+</plist>
