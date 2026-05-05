@@ -75,6 +75,24 @@ def find_row_by_text(df, text, col=0):
             return idx
     return None
 
+
+def find_row_by_tokens(df, tokens, col=0):
+    """Find the first row whose column-0 cell contains ALL listed tokens
+    (case-insensitive, in any order, regardless of intermediate words).
+
+    Handles QuickBooks export-format drift — the BS YTD section labels
+    rows like "Total Accounts Receivable" through Feb 2026 and
+    "Total for Accounts Receivable" from March 2026 onward. A token-based
+    match accepts both without us guessing every future filler word.
+    """
+    lowered = [t.lower() for t in tokens]
+    for idx, val in df.iloc[:, col].items():
+        if pd.notna(val) and isinstance(val, str):
+            v_low = val.lower()
+            if all(t in v_low for t in lowered):
+                return idx
+    return None
+
 def extract_monthly_data(df, row_idx, start_col=1, num_months=12):
     """Extract monthly values from a specific row"""
     if row_idx is None:
@@ -146,11 +164,11 @@ ebitda_margin = [(eb/rev * 100) if eb is not None and rev is not None and rev !=
 # BALANCE SHEET DATA
 df_bs = pd.read_excel(FILE_PATH, sheet_name=f'BS YTD {CURRENT_YEAR}', header=None)
 
-ar_row = find_row_by_text(df_bs, 'total accounts receivable')
-inventory_row = find_row_by_text(df_bs, 'total 130 inventory asset')
-ap_row = find_row_by_text(df_bs, 'total accounts payable')
-current_assets_row = find_row_by_text(df_bs, 'total current assets')
-current_liabilities_row = find_row_by_text(df_bs, 'total current liabilities')
+ar_row = find_row_by_tokens(df_bs, ['total', 'accounts', 'receivable'])
+inventory_row = find_row_by_tokens(df_bs, ['total', '130', 'inventory', 'asset'])
+ap_row = find_row_by_tokens(df_bs, ['total', 'accounts', 'payable'])
+current_assets_row = find_row_by_tokens(df_bs, ['total', 'current', 'assets'])
+current_liabilities_row = find_row_by_tokens(df_bs, ['total', 'current', 'liabilities'])
 
 ar = extract_monthly_data(df_bs, ar_row)
 inventory = extract_monthly_data(df_bs, inventory_row)
